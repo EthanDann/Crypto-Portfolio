@@ -21,26 +21,31 @@ const Image = styled.img`
 `;
 class Home extends React.Component {
   render() {
-    const { list } = this.props;
-    const HasError = this.props.hasError;
+    const { list, isLoading, hasError } = this.props;
+    const HasCoin = !this.props.isLoading && this.props.list;
+
     return (
       <Container>
         <Nav>
           <Link to="/Coin">Coin</Link>
         </Nav>
-        <div>
-          {list.map((coin) => {
-            return (
-              <CoinList key={coin.id}>
-                <Image src={coin.image} alt={coin.name} />
-                <span>
-                  {coin.symbol.toUpperCase()} - {coin.name}{" "}
-                </span>
-              </CoinList>
-            );
-          })}
-        </div>
-        {HasError && <span>There was an error.</span>}
+        {isLoading && <span>Fetching all coins...</span>}
+        {HasCoin && !hasError && (
+          <div>
+            {list.map((coin) => {
+              return (
+                <CoinList key={coin.id}>
+                  <Image src={coin.image} alt={coin.name} />
+                  <span>
+                    {coin.symbol.toUpperCase()} - {coin.name}{" "}
+                  </span>
+                </CoinList>
+              );
+            })}
+          </div>
+        )}
+
+        {hasError && <span>There was an error.</span>}
       </Container>
     );
   }

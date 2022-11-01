@@ -7,20 +7,23 @@ import Coin from "./pages/Coin";
 class App extends React.Component {
   state = {
     coinList: [],
+    isLoading: false,
     hasError: false,
   };
   getAllCoins = async () => {
     try {
+      this.setState({ isLoading: true });
       const { data } = await axios.get(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
       );
-      console.log(data);
       this.setState({
         coinList: data,
+        isLoading: false,
         hasError: false,
       });
     } catch (err) {
       this.setState({
+        isLoading: false,
         hasError: true,
       });
     }
@@ -35,7 +38,11 @@ class App extends React.Component {
           <Route
             path="/"
             element={
-              <Home hasError={this.state.hasError} list={this.state.coinList} />
+              <Home
+                isLoading={this.state.isLoading}
+                hasError={this.state.hasError}
+                list={this.state.coinList}
+              />
             }
           />
           <Route path="Coin/*" element={<Coin />} />
