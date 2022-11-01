@@ -1,50 +1,42 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import styled from "styled-components";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-export default function App() {
+const Container = styled.div``;
+const Header = styled.h2``;
+const Nav = styled.nav``;
+
+function App() {
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="users/*" element={<Users />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
+  return (
+    <Container>
+      <Nav>
+        <Link to="/users">Users</Link>
+      </Nav>
+      <Header>Home</Header>
+    </Container>
+  );
 }
 
 function Users() {
-  return <h2>Users</h2>;
+  return (
+    <Container>
+      <Nav>
+        <Link to="/">Home</Link>
+      </Nav>
+      <Header>Users</Header>
+    </Container>
+  );
 }
+
+export default App;
