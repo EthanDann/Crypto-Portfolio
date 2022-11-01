@@ -1,42 +1,48 @@
 import React from "react";
-import styled from "styled-components";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import axios from "axios";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Coin from "./pages/Coin";
 
-const Container = styled.div``;
-const Header = styled.h2``;
-const Nav = styled.nav``;
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="users/*" element={<Users />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-function Home() {
-  return (
-    <Container>
-      <Nav>
-        <Link to="/users">Users</Link>
-      </Nav>
-      <Header>Home</Header>
-    </Container>
-  );
-}
-
-function Users() {
-  return (
-    <Container>
-      <Nav>
-        <Link to="/">Home</Link>
-      </Nav>
-      <Header>Users</Header>
-    </Container>
-  );
+class App extends React.Component {
+  state = {
+    coinList: [],
+    hasError: false,
+  };
+  getAllCoins = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
+      );
+      console.log(data);
+      this.setState({
+        coinList: data,
+        hasError: false,
+      });
+    } catch (err) {
+      this.setState({
+        hasError: true,
+      });
+    }
+  };
+  componentDidMount = () => {
+    this.getAllCoins();
+  };
+  render() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home hasError={this.state.hasError} list={this.state.coinList} />
+            }
+          />
+          <Route path="Coin/*" element={<Coin />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
