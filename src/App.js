@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Coin from "./pages/Coin";
-
+import Navbar from "./components/Navbar";
+import CoinList from "./pages/CoinList";
+import CoinPage from "./pages/CoinPage";
 class App extends React.Component {
   state = {
     coinList: [],
@@ -34,18 +34,20 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route
+            exact
             path="/"
             element={
-              <Home
+              <CoinList
                 isLoading={this.state.isLoading}
                 hasError={this.state.hasError}
                 list={this.state.coinList}
               />
             }
           />
-          <Route path="Coin/*" element={<Coin />} />
+          <Route exact path="CoinPage/*" element={<CoinPage />} />
         </Routes>
       </BrowserRouter>
     );
