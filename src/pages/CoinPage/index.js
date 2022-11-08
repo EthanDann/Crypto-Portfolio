@@ -6,13 +6,13 @@ const Container = styled.div``;
 const Nav = styled.nav``;
 const Header = styled.h2``;
 
-class Coin extends React.Component {
+class CoinPage extends React.Component {
   render() {
     return (
       <Container>
         <Nav>
           <Link index to="/">
-            Home
+            Coin
           </Link>
         </Nav>
         <Header>Coin</Header>
@@ -21,4 +21,4 @@ class Coin extends React.Component {
   }
 }
 
-export default Coin;
+export default CoinPage;
