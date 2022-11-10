@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 // import React from "react";
 // import { Line } from "react-chartjs-2";
 // import styled from "styled-components";
@@ -134,11 +132,3 @@ export class Sparkline extends React.Component {
     );
   }
 }
-=======
-import React from "react";
-import { Line } from "react-chartjs-2";
->>>>>>> coin-table
-=======
-import React from "react";
-import { Line } from "react-chartjs-2";
->>>>>>> 507c7b4f87d98f276b7f6875bab324dc28027f01
