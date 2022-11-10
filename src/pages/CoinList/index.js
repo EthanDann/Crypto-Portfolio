@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import nFormatter from "../../utilities/nformatter";
+import { Sparkline } from "../../components/Sparkline";
 import { Progress, Container } from "../../styles/ProgressBar.styled";
 
 const Body = styled.body`
@@ -20,25 +21,32 @@ const CoinContainer = styled.div`
   transition: ${(props) => props.theme.transition};
 `;
 const CoinTable = styled.table`
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin: auto;
   padding: 1rem;
   border-radius: 10px;
+  border-collapse: collapse;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
 `;
 const TableHeader = styled.thead``;
+const Styledth = styled.th`
+  padding: 2rem 0 1rem 0;
+  &: nth-child(2) {
+    width: 10%;
+  } ;
+`;
 const TableBody = styled.tbody`
   vertical-align: middle;
 `;
 const TableRow = styled.tr`
   text-align: center;
   vertical-align: middle;
+  border-top: 1px solid gray;
 `;
 const Td = styled.td`
   color: white;
   text-align: left;
-  border-bottom: 1px solid gray;
   padding: 0;
   &:nth-child(7) > div,
   &:nth-child(8) > div {
@@ -56,7 +64,7 @@ const Td = styled.td`
 const TableDiv = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0 1rem 1rem;
 `;
 const PercentDiv = styled(TableDiv)`
   color: ${({ type }) => (type === "negative" ? "red" : "green")};
@@ -64,11 +72,6 @@ const PercentDiv = styled(TableDiv)`
 const ProgressContainer = styled.div`
   display: flex;
   flex-direction: row;
-`;
-const Line = styled.div`
-  display: flex;
-  width: 100%;
-  border: 0.5px solid rgba(255, 255, 255, 0.3);
 `;
 const Image = styled.img`
   margin: 0.5rem;
@@ -104,15 +107,15 @@ class CoinList extends React.Component {
               <CoinTable>
                 <TableHeader>
                   <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>1h</th>
-                    <th>24h</th>
-                    <th>7d</th>
-                    <th>24h Vol / Market Cap</th>
-                    <th>Circulating / Total Sup</th>
-                    <th>Last 7d</th>
+                    <Styledth>#</Styledth>
+                    <Styledth>Name</Styledth>
+                    <Styledth>Price</Styledth>
+                    <Styledth>1h</Styledth>
+                    <Styledth>24h</Styledth>
+                    <Styledth>7d</Styledth>
+                    <Styledth>24h Vol / Market Cap</Styledth>
+                    <Styledth>Circulating / Total Sup</Styledth>
+                    <Styledth>Last 7d</Styledth>
                   </tr>
                 </TableHeader>
                 <TableBody>
@@ -124,7 +127,7 @@ class CoinList extends React.Component {
                         </Td>
                         <Td>
                           <TableDiv>
-                            <Image src={coin.image} alt={coin.name} />{" "}
+                            <Image src={coin.image} alt={coin.name} />
                             {coin.name}({coin.symbol.toUpperCase()})
                           </TableDiv>
                         </Td>
@@ -184,7 +187,7 @@ class CoinList extends React.Component {
                               {nFormatter(coin.market_cap, 2)}
                             </p>
                           </ProgressContainer>
-                          <Container width={80}>
+                          <Container width={80} padding={0.25}>
                             <Progress
                               percent={
                                 (coin.total_volume / coin.market_cap) * 100
@@ -205,8 +208,7 @@ class CoinList extends React.Component {
                                 : "∞"}
                             </p>
                           </ProgressContainer>
-                          <Container width={80}>
-                            {coin.circulating_supply && coin.total_supply}
+                          <Container width={80} padding={0.25}>
                             <Progress
                               percent={
                                 (coin.circulating_supply / coin.total_supply) *
@@ -215,7 +217,9 @@ class CoinList extends React.Component {
                             />
                           </Container>
                         </Td>
-                        <Line />
+                        <Td>
+                          <Sparkline />
+                        </Td>
                       </TableRow>
                     );
                   })}
