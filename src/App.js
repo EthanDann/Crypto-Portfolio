@@ -2,10 +2,8 @@ import React from "react";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import Navbar from "./components/Navbar";
-import CoinList from "./pages/CoinList";
-import Portfolio from "./pages/Portfolio";
-import CoinPage from "./pages/CoinPage";
+import { Navbar } from "components";
+import { CoinList, Coin, Portfolio } from "pages";
 
 const Container = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -82,7 +80,7 @@ class App extends React.Component {
                 path="/portfolio"
                 element={<Portfolio list={this.state.coinList} />}
               />
-              <Route exact path="CoinPage/*" element={<CoinPage />} />
+              <Route exact path="CoinPage/*" element={<Coin />} />
             </Routes>
           </BrowserRouter>
         </Container>
