@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: ${({ width }) => width}%;
   padding: ${({ padding }) => padding}rem;
+  background: rgb(71, 76, 119);
   position: relative;
   border-radius: 10px;
   margin: auto 0;
@@ -22,7 +23,7 @@ const BaseBox = styled.div`
 `;
 
 export const Progress = styled(BaseBox)`
-  background: #fff;
+  background: rgb(138, 146, 178);
   width: ${({ percent }) => percent}%;
   min-width: ${({ percent }) => (percent < 2 ? "2" : percent)}%;
 `;

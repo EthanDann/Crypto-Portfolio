@@ -2,9 +2,8 @@ import React from "react";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import Navbar from "./components/Navbar";
-import CoinList from "./pages/CoinList";
-import CoinPage from "./pages/CoinPage";
+import { Navbar } from "components";
+import { CoinList, Coin, Portfolio } from "pages";
 
 const Container = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -39,7 +38,7 @@ class App extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
       );
       this.setState({
         coinList: data,
@@ -76,7 +75,12 @@ class App extends React.Component {
                   />
                 }
               />
-              <Route exact path="CoinPage/*" element={<CoinPage />} />
+              <Route
+                exact
+                path="/portfolio"
+                element={<Portfolio list={this.state.coinList} />}
+              />
+              <Route exact path="CoinPage/*" element={<Coin />} />
             </Routes>
           </BrowserRouter>
         </Container>
