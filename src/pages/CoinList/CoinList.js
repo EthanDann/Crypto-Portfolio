@@ -1,6 +1,7 @@
 import React from "react";
 import nFormatter from "utils";
 import { Sparkline } from "components";
+import { PriceChart } from "components";
 import { Progress, Container } from "./progressbar.styled";
 import {
   Body,
@@ -24,10 +25,12 @@ class CoinList extends React.Component {
   };
 
   render() {
-    const { list, isLoading, hasError } = this.props;
+    const { list, chartList, isLoading, hasError } = this.props;
     const HasCoin = !this.props.isLoading && this.props.list;
+    const HasChartData = !this.props.isLoading && this.props.chartList;
     return (
       <Body>
+        {HasChartData && <PriceChart prices={chartList} />}
         <TableContainer>
           {isLoading && <span>Fetching all coins...</span>}
           {HasCoin && !hasError && (
