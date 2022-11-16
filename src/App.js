@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
 import { CoinList, Coin, Portfolio } from "pages";
-import nFormatter from "utils";
 
 const Container = styled.div`
   color: ${(props) => props.theme.fontColor};
