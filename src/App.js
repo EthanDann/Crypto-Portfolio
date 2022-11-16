@@ -25,6 +25,7 @@ const lightTheme = {
 class App extends React.Component {
   state = {
     coinList: [],
+    chartData: [],
     isLoading: false,
     hasError: false,
     theme: "dark",
@@ -52,8 +53,28 @@ class App extends React.Component {
       });
     }
   };
+  getChartInfo = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const { data } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
+      );
+      const marketPrices = data.prices.map((el) => el[1].toFixed(3));
+      this.setState({
+        chartData: marketPrices,
+        isLoading: false,
+        hasError: false,
+      });
+    } catch (err) {
+      this.setState({
+        isLoading: false,
+        hasError: true,
+      });
+    }
+  };
   componentDidMount = () => {
     this.getAllCoins();
+    this.getChartInfo();
   };
   render() {
     return (
@@ -72,15 +93,12 @@ class App extends React.Component {
                     isLoading={this.state.isLoading}
                     hasError={this.state.hasError}
                     list={this.state.coinList}
+                    chartList={this.state.chartData}
                   />
                 }
               />
-              <Route
-                exact
-                path="/portfolio"
-                element={<Portfolio list={this.state.coinList} />}
-              />
-              <Route exact path="CoinPage/*" element={<Coin />} />
+              <Route exact path="/Portfolio" element={<Portfolio />} />
+              <Route exact path="Coin/*" element={<Coin />} />
             </Routes>
           </BrowserRouter>
         </Container>
