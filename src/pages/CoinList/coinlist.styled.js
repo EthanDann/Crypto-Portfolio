@@ -6,6 +6,12 @@ export const Body = styled.body`
   background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
 `;
+
+export const ChartsContainer = styled.div`
+  display: flex;
+  width: 97.5%;
+`;
+
 export const TableContainer = styled.div`
   display: flex;
   padding: 5rem;

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
 import { CoinList, Coin, Portfolio } from "pages";
+import nFormatter from "utils";
 
 const Container = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -25,7 +26,8 @@ const lightTheme = {
 class App extends React.Component {
   state = {
     coinList: [],
-    chartData: [],
+    priceData: [],
+    volumeData: [],
     isLoading: false,
     hasError: false,
     theme: "dark",
@@ -59,9 +61,11 @@ class App extends React.Component {
       const { data } = await axios.get(
         "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
       );
-      const marketPrices = data.prices.map((el) => el[1].toFixed(3));
+      const priceData = data.prices.map((el) => el[1].toFixed(3));
+      const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
       this.setState({
-        chartData: marketPrices,
+        priceData,
+        volumeData,
         isLoading: false,
         hasError: false,
       });
@@ -93,7 +97,8 @@ class App extends React.Component {
                     isLoading={this.state.isLoading}
                     hasError={this.state.hasError}
                     list={this.state.coinList}
-                    chartList={this.state.chartData}
+                    priceList={this.state.priceData}
+                    volumeList={this.state.volumeData}
                   />
                 }
               />

@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
+  order: ${(props) => props.order};
   background: ${(props) => props.theme.main};
   width: 35%;
   padding: 0.2rem 2.5rem;
