@@ -9,12 +9,11 @@ export const Body = styled.body`
 
 export const ChartsContainer = styled.div`
   display: flex;
-  width: auto;
 `;
 
 export const TableContainer = styled.div`
-  display: flex;
-  width: 89vw;
+  width: auto;
+  margin: auto;
   padding: 5rem;
 `;
 export const CoinContainer = styled.div`
@@ -46,15 +45,6 @@ export const Styledth = styled.th`
   }
   &: nth-child(2) {
     width: 10%;
-  }
-  &:nth-child(7) {
-    width: 11rem;
-  }
-  &:nth-child(8) {
-    width: 11rem;
-  }
-  &:nth-child(9) {
-    width: 5rem;
   }
 `;
 export const TableBody = styled.tbody``;

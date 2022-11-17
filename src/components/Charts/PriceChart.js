@@ -56,7 +56,7 @@ const PriceChart = (props) => {
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData()} options={options} width={420} height={275} />
+      <Line data={chartData()} options={options} width={405} height={200} />
     </Wrapper>
   );
 };
