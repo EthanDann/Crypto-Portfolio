@@ -9,11 +9,12 @@ export const Body = styled.body`
 
 export const ChartsContainer = styled.div`
   display: flex;
-  width: 97.5%;
+  width: auto;
 `;
 
 export const TableContainer = styled.div`
   display: flex;
+  width: 89vw;
   padding: 5rem;
 `;
 export const CoinContainer = styled.div`
