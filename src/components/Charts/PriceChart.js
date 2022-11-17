@@ -17,7 +17,7 @@ const PriceChart = (props) => {
   const chartData = () => {
     const getLabels = () => {
       let labels = [];
-      for (let num = 0; num <= 31; num++) {
+      for (let num = 1; num < 33; num++) {
         const date = new Date();
         date.setDate(date.getDate() - num);
         const day = ("0" + date.getUTCDate()).slice(-2);
@@ -33,8 +33,14 @@ const PriceChart = (props) => {
           data: props.prices,
           tension: 0.6,
           borderColor: "rgb(1,226,37)",
-          fill: false,
-          backgroundColor: "rgba(23, 82, 34, .2)",
+          fill: true,
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, "rgba(1, 226, 37, .4)");
+            gradient.addColorStop(1, "rgba(23, 82, 34, .4)");
+            return gradient;
+          },
         },
       ],
     };
@@ -50,7 +56,7 @@ const PriceChart = (props) => {
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData()} options={options} width={415} height={250} />
+      <Line data={chartData()} options={options} width={420} height={275} />
     </Wrapper>
   );
 };

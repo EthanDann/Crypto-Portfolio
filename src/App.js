@@ -29,12 +29,12 @@ class App extends React.Component {
     volumeData: [],
     isLoading: false,
     hasError: false,
-    theme: "dark",
+    theme: true,
   };
   handleTheme = () => {
-    this.state.theme === "dark"
-      ? this.setState({ theme: "light" })
-      : this.setState({ theme: "dark" });
+    this.state.theme
+      ? this.setState({ theme: false })
+      : this.setState({ theme: true });
   };
   getAllCoins = async () => {
     try {
@@ -81,9 +81,7 @@ class App extends React.Component {
   };
   render() {
     return (
-      <ThemeProvider
-        theme={this.state.theme === "dark" ? darkTheme : lightTheme}
-      >
+      <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
             <Navbar theme={this.state.theme} handleTheme={this.handleTheme} />

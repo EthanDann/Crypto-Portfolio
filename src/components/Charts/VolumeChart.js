@@ -6,6 +6,7 @@ import {
   PointElement,
   LineElement,
   Tooltip,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import nFormatter from "utils";
@@ -17,13 +18,14 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  Tooltip
+  Tooltip,
+  Filler
 );
 
 const VolumeChart = (props) => {
   const getLabels = () => {
     let labels = [];
-    for (let num = 0; num <= 31; num++) {
+    for (let num = 1; num < 33; num++) {
       const date = new Date();
       date.setDate(date.getDate() - num);
       const day = ("0" + date.getUTCDate()).slice(-2);
@@ -40,8 +42,14 @@ const VolumeChart = (props) => {
           data: props.volumes,
           tension: 0.6,
           borderColor: "rgb(33, 114, 229)",
-          fill: false,
-          backgroundColor: "rgba(33, 50, 150, 0.5)",
+          fill: true,
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, "rgba(33, 114, 229, 0.8)");
+            gradient.addColorStop(1, "rgba(33, 50, 150, 0.5)");
+            return gradient;
+          },
         },
       ],
     };
@@ -57,7 +65,7 @@ const VolumeChart = (props) => {
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData()} options={options} width={415} height={250} />
+      <Line data={chartData()} options={options} width={415} height={275} />
     </Wrapper>
   );
 };

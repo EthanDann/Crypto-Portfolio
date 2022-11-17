@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ReactComponent as SearchIcon } from "./Icons/SearchIcon.svg";
+import { ReactComponent as DarkSearchIcon } from "./Icons/DarkSearchIcon.svg";
+import { ReactComponent as LightSearchIcon } from "./Icons/LightSearchIcon.svg";
 import { ReactComponent as DownArrow } from "./Icons/DownArrow.svg";
 import {
   Nav,
@@ -48,7 +49,7 @@ const Navbar = (props) => {
           );
         })}
         <StyledSearchIcon>
-          <SearchIcon />
+          {props.theme ? <DarkSearchIcon /> : <LightSearchIcon />}
         </StyledSearchIcon>
         <Container>
           <StyledInput type="text" placeholder="Search..." />
@@ -63,7 +64,7 @@ const Navbar = (props) => {
         </StyledSelect>
         <StyledThemeButton>
           <Button onClick={props.handleTheme}>
-            {props.theme === "dark" ? <StyledDarkIcon /> : <StyledLightIcon />}
+            {props.theme ? <StyledDarkIcon /> : <StyledLightIcon />}
           </Button>
         </StyledThemeButton>
       </Nav>

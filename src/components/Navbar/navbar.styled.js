@@ -32,7 +32,7 @@ export const StyledSelect = styled.select`
   direction: rtl;
   border: none;
   margin: 1rem;
-  color: white;
+  color: ${(props) => props.theme.fontColor};
   outline: none;
   display: grid;
   align-items: center;
