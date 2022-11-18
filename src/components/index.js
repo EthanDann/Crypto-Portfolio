@@ -1,3 +1,4 @@
+export { default as CurrencyToggle } from "./Navbar/CurrencyToggle";
 export { default as Navbar } from "./Navbar";
 export { default as Sparkline } from "./Sparkline";
 export { default as PriceChart } from "components/Charts/PriceChart";
