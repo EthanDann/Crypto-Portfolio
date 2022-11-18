@@ -6,8 +6,14 @@ export const Body = styled.body`
   background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
 `;
-export const TableContainer = styled.div`
+
+export const ChartsContainer = styled.div`
   display: flex;
+`;
+
+export const TableContainer = styled.div`
+  width: auto;
+  margin: auto;
   padding: 5rem;
 `;
 export const CoinContainer = styled.div`
@@ -39,15 +45,6 @@ export const Styledth = styled.th`
   }
   &: nth-child(2) {
     width: 10%;
-  }
-  &:nth-child(7) {
-    width: 11rem;
-  }
-  &:nth-child(8) {
-    width: 11rem;
-  }
-  &:nth-child(9) {
-    width: 5rem;
   }
 `;
 export const TableBody = styled.tbody``;

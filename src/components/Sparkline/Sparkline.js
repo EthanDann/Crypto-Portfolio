@@ -11,6 +11,16 @@ import { Wrapper } from "./sparkline.styled";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
 const Sparkline = (props) => {
+  const getLabels = () => {
+    let labels = [];
+    for (let num = 1; num < 9; num++) {
+      const date = new Date();
+      date.setDate(date.getDate() - num);
+      const day = ("0" + date.getUTCDate()).slice(-2);
+      labels.push(day);
+    }
+    return labels;
+  };
   let borderColor;
   props.prices[0] > props.prices[props.prices.length - 1]
     ? (borderColor = "rgba(254, 16, 64, 1)")
@@ -19,7 +29,7 @@ const Sparkline = (props) => {
     labels: new Array(props.prices?.length).fill(""),
     datasets: [
       {
-        label: "",
+        label: "Price",
         data: props.prices,
         tension: 0.4,
         borderColor,

@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
+  order: ${(props) => props.order};
   background: ${(props) => props.theme.main};
-  width: 35%;
-  padding: 0.2rem 2.5rem;
-  margin: 5rem 0 0 5rem;
-  border-radius: 10px;
+  width: auto;
+  padding: 2vw;
+  margin: auto;
+  margin-top: 5rem;
+  border-radius: 25px;
 `;
 
 export const StyledLegend = styled.div`

@@ -25,15 +25,16 @@ const lightTheme = {
 class App extends React.Component {
   state = {
     coinList: [],
-    chartData: [],
+    priceData: [],
+    volumeData: [],
     isLoading: false,
     hasError: false,
-    theme: "dark",
+    theme: true,
   };
   handleTheme = () => {
-    this.state.theme === "dark"
-      ? this.setState({ theme: "light" })
-      : this.setState({ theme: "dark" });
+    this.state.theme
+      ? this.setState({ theme: false })
+      : this.setState({ theme: true });
   };
   getAllCoins = async () => {
     try {
@@ -59,9 +60,11 @@ class App extends React.Component {
       const { data } = await axios.get(
         "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
       );
-      const marketPrices = data.prices.map((el) => el[1].toFixed(3));
+      const priceData = data.prices.map((el) => el[1].toFixed(3));
+      const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
       this.setState({
-        chartData: marketPrices,
+        priceData,
+        volumeData,
         isLoading: false,
         hasError: false,
       });
@@ -78,9 +81,7 @@ class App extends React.Component {
   };
   render() {
     return (
-      <ThemeProvider
-        theme={this.state.theme === "dark" ? darkTheme : lightTheme}
-      >
+      <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
             <Navbar theme={this.state.theme} handleTheme={this.handleTheme} />
@@ -93,7 +94,8 @@ class App extends React.Component {
                     isLoading={this.state.isLoading}
                     hasError={this.state.hasError}
                     list={this.state.coinList}
-                    chartList={this.state.chartData}
+                    priceList={this.state.priceData}
+                    volumeList={this.state.volumeData}
                   />
                 }
               />

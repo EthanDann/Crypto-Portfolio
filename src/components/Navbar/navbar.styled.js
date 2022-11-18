@@ -2,12 +2,19 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as DarkIcon } from "./Icons/DarkIcon.svg";
 import { ReactComponent as LightIcon } from "./Icons/LightIcon.svg";
-import { ReactComponent as DownArrow } from "./Icons/DownArrow.svg";
 
-export const Nav = styled.nav`
+export const Nav = styled.header`
   display: flex;
+  flex-direction: column;
+  width: 100%;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
+`;
+export const Container = styled.div`
+  display: flex;
+  order: 1;
+  justify-content: space-between;
+  align-items: center;
 `;
 export const NavLink = styled(Link)`
   background-color: ${(props) => props.theme.main};
@@ -23,48 +30,20 @@ export const NavLink = styled(Link)`
     cursor: pointer;
   }
 `;
-export const StyledSelect = styled.select`
-  position: absolute;
-  right: 6.5%;
-  appearance: none;
-  text-align-last: right;
-  padding-right: 2rem;
-  direction: rtl;
-  border: none;
-  margin: 1rem;
-  color: white;
-  outline: none;
-  display: grid;
-  align-items: center;
-  width: 7rem;
-  height: 3rem;
-  border-radius: 10px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  background-color: ${(props) => props.theme.secondary};
+
+export const SearchContainer = styled.div`
+  display: flex;
+  order: 2;
+  flex-direction: row;
 `;
-export const StyledOption = styled.option`
-  text-align: center;
-`;
-export const Container = styled.div`
-  position: absolute;
-  left: 47%;
-  width: 30%;
-`;
-export const StyledThemeButton = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0.7rem;
-`;
+
 export const StyledSearchIcon = styled.div`
   display: flex;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  margin: 0;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 2.3%;
-  left: 44%;
   background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   height: 2.95rem;
@@ -75,10 +54,11 @@ export const StyledInput = styled.input`
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
-  border-radius: 10px;
-  margin: 1.1rem;
-  width: 100%;
-  padding: 0.8rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: auto;
+  width: 35vw;
+  padding: 0.8rem 0;
   font-size: 1.1rem;
   &::placeholder {
     color: ${(props) => props.theme.fontColor};
@@ -87,6 +67,11 @@ export const StyledInput = styled.input`
     outline: none;
   }
 `;
+
+export const ThemeContainer = styled.div`
+  order: 4;
+`;
+
 export const Button = styled.button`
   border: none;
   width: 5rem;
@@ -115,29 +100,4 @@ export const StyledLightIcon = styled(LightIcon)`
   &:hover {
     width: 59%;
   }
-`;
-export const StyledDownArrow = styled(DownArrow)`
-  position: absolute;
-  right: 8.5%;
-  top: 4.7%;
-  z-index: 2;
-`;
-export const StyledCurrencyIcon = styled.div`
-  position: absolute;
-  right: 14.6%;
-  top: 3.8%;
-  z-index: 4;
-  color: rgb(0, 252, 42);
-  font-size: 1.2rem;
-`;
-export const Circle = styled.div`
-  position: absolute;
-  right: 13.8%;
-  top: 3.4%;
-  z-index: 3;
-  background-color: ${(props) => props.theme.main};
-  border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
-  display: inline-block;
 `;
