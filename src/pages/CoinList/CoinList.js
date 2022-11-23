@@ -1,7 +1,7 @@
 import React from "react";
+import axios from "axios";
 import nFormatter from "utils";
-import { Sparkline } from "components";
-import { PriceChart, VolumeChart } from "components";
+import { Sparkline, PriceChart, VolumeChart, PercentDiv } from "components";
 import { Progress, Container } from "./progressbar.styled";
 import {
   Body,
@@ -14,7 +14,6 @@ import {
   TableRow,
   Td,
   TableDiv,
-  PercentDiv,
   ProgressContainer,
   Image,
   Circle,
@@ -22,20 +21,70 @@ import {
 
 class CoinList extends React.Component {
   state = {
-    theme: "dark",
+    coinList: [],
+    priceData: [],
+    volumeData: [],
   };
-
+  getAllCoins = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const { data } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
+      );
+      this.setState({
+        coinList: data,
+        isLoading: false,
+        hasError: false,
+      });
+    } catch (err) {
+      this.setState({
+        isLoading: false,
+        hasError: true,
+      });
+    }
+  };
+  getChartInfo = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const { data } = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
+      );
+      const priceData = data.prices.map((el) => el[1].toFixed(3));
+      const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
+      this.setState({
+        priceData,
+        volumeData,
+        isLoading: false,
+        hasError: false,
+      });
+    } catch (err) {
+      this.setState({
+        isLoading: false,
+        hasError: true,
+      });
+    }
+  };
+  getPercentColor = (num) => {
+    if (num < 0) return "true";
+    return "false";
+  };
+  componentDidMount = () => {
+    this.getAllCoins();
+    this.getChartInfo();
+  };
   render() {
-    const { list, priceList, volumeList, isLoading, hasError } = this.props;
+    const { coinList, priceData, volumeData } = this.state;
+    const { isLoading, hasError } = this.props;
     const HasCoin = !this.props.isLoading && this.props.list;
     const HasPriceData = !this.props.isLoading && this.props.priceList;
     const HasVolumeData = !this.props.isLoading && this.props.volumeList;
+
     return (
       <Body>
         {HasPriceData && HasVolumeData && (
           <ChartsContainer>
-            <PriceChart prices={priceList} />
-            <VolumeChart volumes={volumeList} />
+            <PriceChart prices={priceData} />
+            <VolumeChart volumes={volumeData} />
           </ChartsContainer>
         )}
         <TableContainer>
@@ -57,7 +106,7 @@ class CoinList extends React.Component {
                   </tr>
                 </thead>
                 <TableBody>
-                  {list.map((coin, id) => {
+                  {coinList.map((coin, id) => {
                     return (
                       <TableRow key={coin.id}>
                         <Td>
@@ -72,48 +121,34 @@ class CoinList extends React.Component {
                         <Td>
                           <TableDiv>${coin.current_price}</TableDiv>
                         </Td>
-                        <Td>
-                          <PercentDiv
-                            type={
-                              coin.price_change_percentage_1h_in_currency < 0
-                                ? "true"
-                                : "false"
-                            }
-                          >
-                            {coin.price_change_percentage_1h_in_currency.toFixed(
+                        <PercentDiv
+                          list={coinList}
+                          hourType={this.getPercentColor(
+                            coin.price_change_percentage_1h_in_currency
+                          )}
+                          hourText={
+                            coin.price_change_percentage_1h_in_currency.toFixed(
                               2
-                            )}
-                            %
-                          </PercentDiv>
-                        </Td>
-                        <Td>
-                          <PercentDiv
-                            type={
-                              coin.price_change_percentage_24h_in_currency < 0
-                                ? "true"
-                                : "false"
-                            }
-                          >
-                            {coin.price_change_percentage_24h_in_currency.toFixed(
+                            ) + "%"
+                          }
+                          dayType={this.getPercentColor(
+                            coin.price_change_percentage_24h_in_currency
+                          )}
+                          dayText={
+                            coin.price_change_percentage_24h_in_currency.toFixed(
                               2
-                            )}
-                            %
-                          </PercentDiv>
-                        </Td>
-                        <Td>
-                          <PercentDiv
-                            type={
-                              coin.price_change_percentage_7d_in_currency < 0
-                                ? "true"
-                                : "false"
-                            }
-                          >
-                            {coin.price_change_percentage_7d_in_currency.toFixed(
+                            ) + "%"
+                          }
+                          weekType={this.getPercentColor(
+                            coin.price_change_percentage_7d_in_currency
+                          )}
+                          weekText={
+                            coin.price_change_percentage_7d_in_currency.toFixed(
                               2
-                            )}
-                            %
-                          </PercentDiv>
-                        </Td>
+                            ) + "%"
+                          }
+                        />
+
                         <Td>
                           <ProgressContainer>
                             <p>

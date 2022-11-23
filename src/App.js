@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
@@ -36,49 +35,7 @@ class App extends React.Component {
       ? this.setState({ theme: false })
       : this.setState({ theme: true });
   };
-  getAllCoins = async () => {
-    try {
-      this.setState({ isLoading: true });
-      const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
-      );
-      this.setState({
-        coinList: data,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-    }
-  };
-  getChartInfo = async () => {
-    try {
-      this.setState({ isLoading: true });
-      const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
-      );
-      const priceData = data.prices.map((el) => el[1].toFixed(3));
-      const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
-      this.setState({
-        priceData,
-        volumeData,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-    }
-  };
-  componentDidMount = () => {
-    this.getAllCoins();
-    this.getChartInfo();
-  };
+
   render() {
     return (
       <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>

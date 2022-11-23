@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
-
 import {
   DropDownContainer,
   DropDownHeader,
@@ -12,16 +11,30 @@ import {
   Circle,
 } from "./currencyToggle.styled";
 
-const currencies = ["usd", "eur", "cad"];
+const currencies = {
+  data: [
+    {
+      name: "USD",
+      symbol: "$",
+    },
+    {
+      name: "EUR",
+      symbol: "€",
+    },
+    {
+      name: "CAD",
+      symbol: "CAD$",
+    },
+  ],
+};
 
 function CurrencyToggle() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
-
+  const [selectedCurrency, setSelectedCurrency] = useState(null);
   const handleClick = () => setIsOpen(!isOpen);
 
   const onOptionClicked = (value) => () => {
-    setSelectedOption(value);
+    setSelectedCurrency(value);
     setIsOpen(false);
   };
 
@@ -32,7 +45,7 @@ function CurrencyToggle() {
           <Circle>
             <StyledCurrencyIcon value="USD">$</StyledCurrencyIcon>
           </Circle>
-          {selectedOption || currencies[0].toUpperCase()}
+          {selectedCurrency ?? currencies.data[0].name}
           <DownArrowContainer>
             <DownArrow />
           </DownArrowContainer>
@@ -40,12 +53,13 @@ function CurrencyToggle() {
         {isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              {currencies.map((currency) => (
+              {currencies.data.map((currency) => (
                 <ListItem
-                  onClick={onOptionClicked(currency)}
+                  onClick={onOptionClicked(currency.name)}
                   key={Math.random()}
+                  value={currency.symbol}
                 >
-                  <span>{currency}</span>
+                  <span>{currency.name}</span>
                 </ListItem>
               ))}
             </DropDownList>
