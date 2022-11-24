@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactComponent as DarkSearchIcon } from "./Icons/DarkSearchIcon.svg";
 import { ReactComponent as LightSearchIcon } from "./Icons/LightSearchIcon.svg";
 import { CurrencyToggle } from "components";
@@ -31,7 +31,12 @@ const Navbar = (props) => {
           </StyledSearchIcon>
           <StyledInput type="text" placeholder="Search..." />
         </SearchContainer>
-        <CurrencyToggle />
+        <CurrencyToggle
+          isOpen={props.isOpen}
+          handleOpen={props.handleOpen}
+          activeCurrency={props.activeCurrency}
+          handleCurrency={props.handleCurrency}
+        />
         <ThemeContainer>
           <Button onClick={props.handleTheme}>
             {props.theme ? <StyledDarkIcon /> : <StyledLightIcon />}

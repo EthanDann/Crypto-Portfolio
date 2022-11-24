@@ -24,12 +24,14 @@ class CoinList extends React.Component {
     coinList: [],
     priceData: [],
     volumeData: [],
+    isLoading: false,
+    hasError: false,
   };
   getAllCoins = async () => {
     try {
       this.setState({ isLoading: true });
       const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.activeCurrency}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
       );
       this.setState({
         coinList: data,
@@ -47,7 +49,7 @@ class CoinList extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
+        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${this.props.activeCurrency}&days=30&interval=daily`
       );
       const priceData = data.prices.map((el) => el[1].toFixed(3));
       const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
@@ -74,14 +76,14 @@ class CoinList extends React.Component {
   };
   render() {
     const { coinList, priceData, volumeData } = this.state;
-    const { isLoading, hasError } = this.props;
-    const HasCoin = !this.props.isLoading && this.props.list;
-    const HasPriceData = !this.props.isLoading && this.props.priceList;
-    const HasVolumeData = !this.props.isLoading && this.props.volumeList;
+    const { isLoading, hasError } = this.state;
+    const HasCoin = !this.state.isLoading && this.state.coinList;
+    const HasPriceData = !this.state.isLoading && this.state.priceData;
+    const HasVolumeData = !this.state.isLoading && this.state.volumeData;
 
     return (
       <Body>
-        {HasPriceData && HasVolumeData && (
+        {HasPriceData && HasVolumeData && !hasError && (
           <ChartsContainer>
             <PriceChart prices={priceData} />
             <VolumeChart volumes={volumeData} />

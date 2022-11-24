@@ -23,11 +23,8 @@ const lightTheme = {
 };
 class App extends React.Component {
   state = {
-    coinList: [],
-    priceData: [],
-    volumeData: [],
-    isLoading: false,
-    hasError: false,
+    activeCurrency: "USD",
+    isOpen: false,
     theme: true,
   };
   handleTheme = () => {
@@ -35,25 +32,32 @@ class App extends React.Component {
       ? this.setState({ theme: false })
       : this.setState({ theme: true });
   };
-
+  handleOpen = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+  handleCurrency = (e) => {
+    this.setState({ activeCurrency: e.target.innerHTML });
+    this.setState({ isOpen: false });
+  };
   render() {
     return (
       <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
-            <Navbar theme={this.state.theme} handleTheme={this.handleTheme} />
+            <Navbar
+              isOpen={this.state.isOpen}
+              handleOpen={this.handleOpen}
+              activeCurrency={this.state.activeCurrency}
+              handleCurrency={this.handleCurrency}
+              theme={this.state.theme}
+              handleTheme={this.handleTheme}
+            />
             <Routes>
               <Route
                 exact
                 path="/"
                 element={
-                  <CoinList
-                    isLoading={this.state.isLoading}
-                    hasError={this.state.hasError}
-                    list={this.state.coinList}
-                    priceList={this.state.priceData}
-                    volumeList={this.state.volumeData}
-                  />
+                  <CoinList activeCurrency={this.state.activeCurrency} />
                 }
               />
               <Route exact path="/Portfolio" element={<Portfolio />} />
