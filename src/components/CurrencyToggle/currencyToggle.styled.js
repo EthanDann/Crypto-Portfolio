@@ -23,11 +23,30 @@ export const DropDownHeader = styled.div`
   height: 100%;
 `;
 
+export const Input = styled.input`
+  display: flex;
+  align-items: center;
+  background: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.fontColor};
+  font-size: 1rem;
+  padding-left: 0.5rem;
+  width: 70%;
+  border-radius: 0 12px 12px 0;
+  border: none;
+  box-shadow: none;
+  &:focus,
+  &:hover {
+    outline: none;
+  }
+`;
+
 export const DropDownListContainer = styled.div`
   display: flex;
 `;
-
 export const DropDownList = styled.ul`
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
   list-style: none;
   position: absolute;
   right: 14.7vw;

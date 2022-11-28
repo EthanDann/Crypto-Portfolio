@@ -49,6 +49,9 @@ class App extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   };
   handleCurrency = (e) => {
+    if (this.state.activeCurrency === e.target.innerHTML) {
+      document.querySelectorAll("li").focus();
+    }
     this.setState({
       activeCurrency: e.target.innerHTML,
       isOpen: false,
@@ -57,6 +60,9 @@ class App extends React.Component {
     localStorage.setItem("currency", e.target.innerHTML);
     localStorage.setItem("symbol", getSymbolFromCurrency(e.target.innerHTML));
     window.location.reload();
+  };
+  handleTextChange = (e) => {
+    this.setState({ activeCurrency: e.target.value });
   };
   componentDidMount = () => {
     this.getSupportedCurrencies();
@@ -73,6 +79,7 @@ class App extends React.Component {
               handleOpen={this.handleOpen}
               activeCurrency={this.state.activeCurrency}
               handleCurrency={this.handleCurrency}
+              handleTextChange={this.handleTextChange}
               theme={this.state.theme}
               handleTheme={this.handleTheme}
             />

@@ -38,6 +38,7 @@ const Navbar = (props) => {
           handleOpen={props.handleOpen}
           activeCurrency={props.activeCurrency}
           handleCurrency={props.handleCurrency}
+          handleTextChange={props.handleTextChange}
         />
         <ThemeContainer>
           <Button onClick={props.handleTheme}>

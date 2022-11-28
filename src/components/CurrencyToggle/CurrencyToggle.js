@@ -4,6 +4,7 @@ import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import {
   DropDownContainer,
   DropDownHeader,
+  Input,
   DropDownListContainer,
   DropDownList,
   ListItem,
@@ -13,6 +14,14 @@ import {
 } from "./currencyToggle.styled";
 
 function CurrencyToggle(props) {
+  let currencies = [...props.supportedCurrencies];
+  if (props.activeCurrency.length) {
+    const regex = new RegExp(`^${props.activeCurrency}`, "i");
+    currencies = [
+      ...props.supportedCurrencies.filter((v) => regex.test(v)),
+      ...props.supportedCurrencies.filter((v) => !regex.test(v)).sort(),
+    ];
+  }
   return (
     <>
       <DropDownContainer>
@@ -22,8 +31,11 @@ function CurrencyToggle(props) {
               {props.currencySymbol ?? "$"}
             </StyledCurrencyIcon>
           </Circle>
-          {props.activeCurrency.toUpperCase() ??
-            props.supportedCurrencies[0].toUpperCase()}
+          <Input
+            type="text"
+            value={props.activeCurrency.toUpperCase() ?? "USD"}
+            onChange={props.handleTextChange}
+          ></Input>
           <DownArrowContainer>
             {props.isOpen && <UpArrow />}
             {!props.isOpen && <DownArrow />}
@@ -32,7 +44,7 @@ function CurrencyToggle(props) {
         {props.isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              {props.supportedCurrencies.map((currency) => (
+              {currencies.map((currency) => (
                 <ListItem
                   onClick={props.handleCurrency}
                   key={Math.random()}
