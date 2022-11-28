@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
+import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import {
   DropDownContainer,
   DropDownHeader,
@@ -24,7 +25,8 @@ function CurrencyToggle(props) {
           {props.activeCurrency.toUpperCase() ??
             props.supportedCurrencies[0].toUpperCase()}
           <DownArrowContainer>
-            <DownArrow />
+            {props.isOpen && <UpArrow />}
+            {!props.isOpen && <DownArrow />}
           </DownArrowContainer>
         </DropDownHeader>
         {props.isOpen && (
