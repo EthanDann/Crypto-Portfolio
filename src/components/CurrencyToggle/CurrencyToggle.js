@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
-import { currencies } from "./currencies";
 import {
   DropDownContainer,
   DropDownHeader,
@@ -18,9 +17,12 @@ function CurrencyToggle(props) {
       <DropDownContainer>
         <DropDownHeader onClick={props.handleOpen}>
           <Circle>
-            <StyledCurrencyIcon value="USD">$</StyledCurrencyIcon>
+            <StyledCurrencyIcon value="USD">
+              {props.currencySymbol ?? "$"}
+            </StyledCurrencyIcon>
           </Circle>
-          {props.activeCurrency ?? currencies.data[0].name}
+          {props.activeCurrency.toUpperCase() ??
+            props.supportedCurrencies[0].toUpperCase()}
           <DownArrowContainer>
             <DownArrow />
           </DownArrowContainer>
@@ -28,13 +30,13 @@ function CurrencyToggle(props) {
         {props.isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              {currencies.data.map((currency) => (
+              {props.supportedCurrencies.map((currency) => (
                 <ListItem
                   onClick={props.handleCurrency}
                   key={Math.random()}
-                  value={currency.name}
+                  value={currency}
                 >
-                  {currency.name}
+                  {currency.toUpperCase()}
                 </ListItem>
               ))}
             </DropDownList>

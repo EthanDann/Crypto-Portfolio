@@ -61,7 +61,8 @@ const VolumeChart = (props) => {
       <StyledLegend>
         <StyledH5>Bitcoin Volume</StyledH5>
         <LegendH4>
-          ${nFormatter(props.volumes[props.volumes.length - 1], 2)}
+          {props.currencySymbol ?? "$"}
+          {nFormatter(props.volumes[props.volumes.length - 1], 2)}
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>

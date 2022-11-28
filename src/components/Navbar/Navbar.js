@@ -32,6 +32,8 @@ const Navbar = (props) => {
           <StyledInput type="text" placeholder="Search..." />
         </SearchContainer>
         <CurrencyToggle
+          supportedCurrencies={props.supportedCurrencies}
+          currencySymbol={props.currencySymbol}
           isOpen={props.isOpen}
           handleOpen={props.handleOpen}
           activeCurrency={props.activeCurrency}

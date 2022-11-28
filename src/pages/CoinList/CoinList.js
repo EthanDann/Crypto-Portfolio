@@ -80,13 +80,18 @@ class CoinList extends React.Component {
     const HasCoin = !this.state.isLoading && this.state.coinList;
     const HasPriceData = !this.state.isLoading && this.state.priceData;
     const HasVolumeData = !this.state.isLoading && this.state.volumeData;
-
     return (
       <Body>
         {HasPriceData && HasVolumeData && !hasError && (
           <ChartsContainer>
-            <PriceChart prices={priceData} />
-            <VolumeChart volumes={volumeData} />
+            <PriceChart
+              prices={priceData}
+              currencySymbol={this.props.currencySymbol}
+            />
+            <VolumeChart
+              volumes={volumeData}
+              currencySymbol={this.props.currencySymbol}
+            />
           </ChartsContainer>
         )}
         <TableContainer>
@@ -121,7 +126,10 @@ class CoinList extends React.Component {
                           </TableDiv>
                         </Td>
                         <Td>
-                          <TableDiv>${coin.current_price}</TableDiv>
+                          <TableDiv>
+                            {this.props.currencySymbol ?? "$"}
+                            {coin.current_price}
+                          </TableDiv>
                         </Td>
                         <PercentDiv
                           list={coinList}

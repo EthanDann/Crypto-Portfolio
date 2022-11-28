@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import getSymbolFromCurrency from "currency-symbol-map";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
@@ -23,9 +25,20 @@ const lightTheme = {
 };
 class App extends React.Component {
   state = {
-    activeCurrency: "USD",
+    supportedCurrencies: [],
+    currencySymbol: localStorage.getItem("symbol") ?? "$",
+    activeCurrency: localStorage.getItem("currency") ?? "USD",
     isOpen: false,
     theme: true,
+  };
+  getSupportedCurrencies = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+`
+      );
+      this.setState({ supportedCurrencies: data.sort() });
+    } catch (err) {}
   };
   handleTheme = () => {
     this.state.theme
@@ -36,8 +49,17 @@ class App extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   };
   handleCurrency = (e) => {
-    this.setState({ activeCurrency: e.target.innerHTML });
-    this.setState({ isOpen: false });
+    this.setState({
+      activeCurrency: e.target.innerHTML,
+      isOpen: false,
+      currencySymbol: getSymbolFromCurrency(e.target.innerHTML),
+    });
+    localStorage.setItem("currency", e.target.innerHTML);
+    localStorage.setItem("symbol", getSymbolFromCurrency(e.target.innerHTML));
+    window.location.reload();
+  };
+  componentDidMount = () => {
+    this.getSupportedCurrencies();
   };
   render() {
     return (
@@ -45,6 +67,8 @@ class App extends React.Component {
         <Container>
           <BrowserRouter>
             <Navbar
+              supportedCurrencies={this.state.supportedCurrencies}
+              currencySymbol={this.state.currencySymbol}
               isOpen={this.state.isOpen}
               handleOpen={this.handleOpen}
               activeCurrency={this.state.activeCurrency}
@@ -57,7 +81,10 @@ class App extends React.Component {
                 exact
                 path="/"
                 element={
-                  <CoinList activeCurrency={this.state.activeCurrency} />
+                  <CoinList
+                    activeCurrency={this.state.activeCurrency}
+                    currencySymbol={this.state.currencySymbol}
+                  />
                 }
               />
               <Route exact path="/Portfolio" element={<Portfolio />} />
