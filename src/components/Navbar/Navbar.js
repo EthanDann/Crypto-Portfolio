@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactComponent as DarkSearchIcon } from "./Icons/DarkSearchIcon.svg";
 import { ReactComponent as LightSearchIcon } from "./Icons/LightSearchIcon.svg";
 import { CurrencyToggle } from "components";
 import {
   Nav,
-  NavLink,
+  StyledLink,
   Container,
   SearchContainer,
   StyledSearchIcon,
@@ -16,44 +16,30 @@ import {
 } from "./navbar.styled";
 
 const Navbar = (props) => {
-  const [links] = useState([
-    {
-      id: 1,
-      name: "Coins",
-      path: "/",
-      order: 1,
-    },
-    {
-      id: 2,
-      name: "Portfolio",
-      path: "/Portfolio",
-      order: 2,
-    },
-  ]);
-  const [activeItem, setActiveItem] = useState(1);
   return (
     <Nav>
       <Container>
-        {links.map((element) => {
-          return (
-            <NavLink
-              className={activeItem === element.id ? "active" : "inactive"}
-              to={element.path}
-              key={element.id}
-              onClick={() => setActiveItem(element.id)}
-              order={element.order}
-            >
-              {element.name}
-            </NavLink>
-          );
-        })}
+        <StyledLink to="/" order={1}>
+          Coins
+        </StyledLink>
+        <StyledLink to="/Portfolio" order={2}>
+          Portfolio
+        </StyledLink>
         <SearchContainer>
           <StyledSearchIcon>
             {props.theme ? <DarkSearchIcon /> : <LightSearchIcon />}
           </StyledSearchIcon>
           <StyledInput type="text" placeholder="Search..." />
         </SearchContainer>
-        <CurrencyToggle />
+        <CurrencyToggle
+          supportedCurrencies={props.supportedCurrencies}
+          currencySymbol={props.currencySymbol}
+          isOpen={props.isOpen}
+          handleOpen={props.handleOpen}
+          activeCurrency={props.activeCurrency}
+          handleCurrency={props.handleCurrency}
+          handleTextChange={props.handleTextChange}
+        />
         <ThemeContainer>
           <Button onClick={props.handleTheme}>
             {props.theme ? <StyledDarkIcon /> : <StyledLightIcon />}

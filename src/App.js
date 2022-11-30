@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import getSymbolFromCurrency from "currency-symbol-map";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
@@ -24,78 +25,72 @@ const lightTheme = {
 };
 class App extends React.Component {
   state = {
-    coinList: [],
-    priceData: [],
-    volumeData: [],
-    isLoading: false,
-    hasError: false,
+    supportedCurrencies: [],
+    currencySymbol: localStorage.getItem("symbol") ?? "$",
+    activeCurrency: localStorage.getItem("currency") ?? "USD",
+    isOpen: false,
     theme: true,
+  };
+  getSupportedCurrencies = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+`
+      );
+      this.setState({ supportedCurrencies: data.sort() });
+    } catch (err) {}
   };
   handleTheme = () => {
     this.state.theme
       ? this.setState({ theme: false })
       : this.setState({ theme: true });
   };
-  getAllCoins = async () => {
-    try {
-      this.setState({ isLoading: true });
-      const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
-      );
-      this.setState({
-        coinList: data,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
-    }
+  handleOpen = () => {
+    this.setState({ isOpen: !this.state.isOpen });
   };
-  getChartInfo = async () => {
-    try {
-      this.setState({ isLoading: true });
-      const { data } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily"
-      );
-      const priceData = data.prices.map((el) => el[1].toFixed(3));
-      const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
-      this.setState({
-        priceData,
-        volumeData,
-        isLoading: false,
-        hasError: false,
-      });
-    } catch (err) {
-      this.setState({
-        isLoading: false,
-        hasError: true,
-      });
+  handleCurrency = (e) => {
+    if (this.state.activeCurrency === e.target.innerHTML) {
+      document.querySelectorAll("li").focus();
     }
+    this.setState({
+      activeCurrency: e.target.innerHTML,
+      isOpen: false,
+      currencySymbol: getSymbolFromCurrency(e.target.innerHTML),
+    });
+    localStorage.setItem("currency", e.target.innerHTML);
+    localStorage.setItem("symbol", getSymbolFromCurrency(e.target.innerHTML));
+    window.location.reload();
+  };
+  handleTextChange = (e) => {
+    this.setState({ activeCurrency: e.target.value });
   };
   componentDidMount = () => {
-    this.getAllCoins();
-    this.getChartInfo();
+    this.getSupportedCurrencies();
   };
   render() {
     return (
       <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
-            <Navbar theme={this.state.theme} handleTheme={this.handleTheme} />
+            <Navbar
+              supportedCurrencies={this.state.supportedCurrencies}
+              currencySymbol={this.state.currencySymbol}
+              isOpen={this.state.isOpen}
+              handleOpen={this.handleOpen}
+              activeCurrency={this.state.activeCurrency}
+              handleCurrency={this.handleCurrency}
+              handleTextChange={this.handleTextChange}
+              theme={this.state.theme}
+              handleTheme={this.handleTheme}
+            />
             <Routes>
               <Route
                 exact
                 path="/"
                 element={
                   <CoinList
-                    isLoading={this.state.isLoading}
-                    hasError={this.state.hasError}
-                    list={this.state.coinList}
-                    priceList={this.state.priceData}
-                    volumeList={this.state.volumeData}
+                    activeCurrency={this.state.activeCurrency}
+                    currencySymbol={this.state.currencySymbol}
                   />
                 }
               />

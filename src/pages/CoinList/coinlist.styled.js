@@ -87,10 +87,6 @@ export const TableDiv = styled.div`
     padding: ${({ padding }) => (padding ? padding : "0 1rem 0 1rem")};
   }
 `;
-export const PercentDiv = styled(TableDiv)`
-  color: ${({ type }) =>
-    type === "true" ? "rgb(254, 16, 64)" : "rgb(0, 252, 42)"};
-`;
 
 export const ProgressContainer = styled.div`
   display: flex;

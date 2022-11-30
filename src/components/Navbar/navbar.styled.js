@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as DarkIcon } from "./Icons/DarkIcon.svg";
 import { ReactComponent as LightIcon } from "./Icons/LightIcon.svg";
@@ -16,7 +16,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const NavLink = styled(Link)`
+export const StyledLink = styled(NavLink)`
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
   border-radius: 10px;
