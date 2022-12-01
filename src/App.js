@@ -91,6 +91,7 @@ class App extends React.Component {
                   <CoinList
                     activeCurrency={this.state.activeCurrency}
                     currencySymbol={this.state.currencySymbol}
+                    coinsPerPage={this.state.coinsPerPage}
                   />
                 }
               />
