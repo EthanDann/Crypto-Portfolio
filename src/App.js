@@ -2,27 +2,11 @@ import React from "react";
 import axios from "axios";
 import getSymbolFromCurrency from "currency-symbol-map";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
 import { CoinList, Coin, Portfolio } from "pages";
+import { Container, darkTheme, lightTheme } from "App.styled";
 
-const Container = styled.div`
-  color: ${(props) => props.theme.fontColor};
-`;
-const darkTheme = {
-  main: "rgba(24,27,31,255)",
-  secondary: "rgba(30,33,40,255)",
-  fontColor: "rgba(255,255,255,255)",
-  imageBackgroundColor: "rgba(247,247,247,255)",
-  transition: "background-color 500ms linear",
-};
-const lightTheme = {
-  main: "rgba(255,255,255, 255)",
-  secondary: "rgba(247,247,247,255)",
-  fontColor: "rgba(24,27,31,255)",
-  imageBackgroundColor: "rgba(30,33,40,255)",
-  transition: "background-color 500ms linear",
-};
 class App extends React.Component {
   state = {
     supportedCurrencies: [],
