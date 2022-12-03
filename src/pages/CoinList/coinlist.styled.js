@@ -17,6 +17,7 @@ export const TableContainer = styled.div`
   padding: 5rem;
 `;
 export const CoinContainer = styled.div`
+  overflow: auto;
   border-radius: 10px;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
@@ -30,6 +31,38 @@ export const CoinTable = styled.table`
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
 `;
+export const ScrollableDiv = styled.div`
+  width: auto;
+  height: auto;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-corner {
+    background: ${(props) => props.theme.secondary};
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => props.theme.main};
+    border-radius: 4px;
+  }
+  @media (min-height: 1024px) {
+    height: 480px;
+  }
+  @media (min-width: 768px) {
+    height: 600px;
+  }
+`;
+export const ScrollText = styled.h4`
+  text-align: center;
+`;
+export const TableHeader = styled.thead`
+  position: sticky;
+  background-color: ${(props) => props.theme.main};
+  top: 0;
+  z-index: 5;
+`;
+export const HeaderTr = styled.tr``;
 export const Styledth = styled.th`
   text-align: left;
   padding-top: 2rem;
