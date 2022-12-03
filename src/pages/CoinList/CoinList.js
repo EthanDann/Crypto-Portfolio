@@ -23,7 +23,7 @@ import {
   ProgressContainer,
   Image,
   Circle,
-} from "./CoinList.styled";
+} from "./coinlist.styled";
 
 class CoinList extends React.Component {
   state = {
