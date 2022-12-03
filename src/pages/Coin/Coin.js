@@ -1,21 +1,34 @@
 import React from "react";
+import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Container = styled.div``;
-const Nav = styled.nav``;
 const Header = styled.h2``;
 
 class CoinPage extends React.Component {
+  state = {
+    currentCoin: "bitcoin",
+    coin: [],
+  };
+  getCoinData = async () => {
+    try {
+      const data =
+        await axios.get(`https://api.coingecko.com/api/v3/coins/${this.state.currentCoin}?localization=false
+`);
+      this.setState({
+        coinData: data.data,
+      });
+    } catch (err) {}
+  };
+  componentDidMount() {
+    this.getCoinData();
+  }
   render() {
+    const { coin } = this.state;
     return (
       <Container>
-        <Nav>
-          <Link index to="/">
-            Coin
-          </Link>
-        </Nav>
-        <Header>Coin</Header>
+        <Header>Your Summary</Header>
+        {coin.name}
       </Container>
     );
   }

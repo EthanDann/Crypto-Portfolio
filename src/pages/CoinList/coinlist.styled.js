@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Body = styled.body`
   display: flex;
@@ -57,13 +58,14 @@ export const ScrollText = styled.h4`
   text-align: center;
 `;
 export const TableHeader = styled.thead`
-  position: sticky;
   background-color: ${(props) => props.theme.main};
-  top: 0;
   z-index: 5;
 `;
 export const HeaderTr = styled.tr``;
 export const Styledth = styled.th`
+  position: sticky;
+  top: 0;
+  z-index: 5;
   text-align: left;
   padding-top: 2rem;
   padding-bottom: 1rem;
@@ -118,6 +120,16 @@ export const TableDiv = styled.div`
     display: flex;
     align-items: center;
     padding: ${({ padding }) => (padding ? padding : "0 1rem 0 1rem")};
+  }
+`;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => props.theme.fontColor};
+  &:hover,
+  &.active {
+    background-color: ${(props) => props.theme.secondary};
+    text-decoration: underline;
+    cursor: pointer;
   }
 `;
 
