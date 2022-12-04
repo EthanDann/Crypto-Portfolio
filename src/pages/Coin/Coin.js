@@ -2,9 +2,6 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-const Container = styled.div``;
-const Header = styled.h2``;
-
 class CoinPage extends React.Component {
   state = {
     currentCoin: "bitcoin",
@@ -12,11 +9,11 @@ class CoinPage extends React.Component {
   };
   getCoinData = async () => {
     try {
-      const data =
+      const { data } =
         await axios.get(`https://api.coingecko.com/api/v3/coins/${this.state.currentCoin}?localization=false
 `);
       this.setState({
-        coinData: data.data,
+        coin: data,
       });
     } catch (err) {}
   };
@@ -25,11 +22,12 @@ class CoinPage extends React.Component {
   }
   render() {
     const { coin } = this.state;
+    console.log(coin.name);
     return (
-      <Container>
-        <Header>Your Summary</Header>
+      <div>
+        <h2>Your Summary</h2>
         {coin.name}
-      </Container>
+      </div>
     );
   }
 }
