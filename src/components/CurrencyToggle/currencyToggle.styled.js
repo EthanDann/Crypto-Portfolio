@@ -13,6 +13,9 @@ export const DropDownContainer = styled.div`
     padding: 0.65em 0.5em;
     height: 100%;
   }
+  @media (max-width: 768px) {
+    margin-left: 2.4em;
+  }
 `;
 
 export const DropDownHeader = styled.div`
@@ -68,6 +71,9 @@ export const DropDownList = styled.ul`
     background-color: #2c2f36;
     outline: 1px solid #2c2f36;
     border-radius: 4px;
+  }
+  @media (max-width: 768px) {
+    right: 13.5vw;
   }
 `;
 

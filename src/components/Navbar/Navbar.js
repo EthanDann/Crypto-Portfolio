@@ -8,6 +8,8 @@ import {
   Container,
   SearchContainer,
   StyledSearchIcon,
+  StyledLightSearchIcon,
+  StyledDarkSearchIcon,
   StyledInput,
   Button,
   ThemeContainer,
@@ -27,7 +29,7 @@ const Navbar = (props) => {
         </StyledLink>
         <SearchContainer>
           <StyledSearchIcon>
-            {props.theme ? <DarkSearchIcon /> : <LightSearchIcon />}
+            {props.theme ? <StyledDarkSearchIcon /> : <StyledLightSearchIcon />}
           </StyledSearchIcon>
           <StyledInput type="text" placeholder="Search..." />
         </SearchContainer>

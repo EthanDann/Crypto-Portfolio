@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Body = styled.body`
   display: flex;
@@ -9,18 +10,52 @@ export const Body = styled.body`
 
 export const ChartsContainer = styled.div`
   display: flex;
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 export const TableContainer = styled.div`
   width: auto;
   margin: auto;
   padding: 5rem;
+  @media (max-width: 768px) {
+    padding: 5rem 0;
+  }
+  @media (max-width: 425px) {
+    padding: 3rem 0;
+  }
 `;
 export const CoinContainer = styled.div`
   overflow: auto;
   border-radius: 10px;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
+  @media (max-width: 900px) {
+    width: 665px;
+  }
+  @media (max-width: 665px) {
+    width: 625px;
+  }
+  @media (max-width: 425px) {
+    width: 375px;
+    height: 500px;
+  }
+  @media (max-width: 390px) {
+    width: 380px;
+  }
+  @media (max-width: 375px) {
+    width: 350px;
+    height: 450px;
+  }
+  @media (max-width: 320px) {
+    max-width: 300px;
+    height: 425px;
+  }
+  @media (max-width: 280px) {
+    max-width: 260px;
+    height: 400px;
+  }
 `;
 export const CoinTable = styled.table`
   font-size: 0.8rem;
@@ -57,13 +92,14 @@ export const ScrollText = styled.h4`
   text-align: center;
 `;
 export const TableHeader = styled.thead`
-  position: sticky;
   background-color: ${(props) => props.theme.main};
-  top: 0;
   z-index: 5;
 `;
 export const HeaderTr = styled.tr``;
 export const Styledth = styled.th`
+  position: sticky;
+  top: 0;
+  z-index: 5;
   text-align: left;
   padding-top: 2rem;
   padding-bottom: 1rem;
@@ -118,6 +154,16 @@ export const TableDiv = styled.div`
     display: flex;
     align-items: center;
     padding: ${({ padding }) => (padding ? padding : "0 1rem 0 1rem")};
+  }
+`;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => props.theme.fontColor};
+  &:hover,
+  &.active {
+    background-color: ${(props) => props.theme.secondary};
+    text-decoration: underline;
+    cursor: pointer;
   }
 `;
 

@@ -19,6 +19,7 @@ import {
   TableRow,
   Td,
   TableDiv,
+  StyledLink,
   ProgressContainer,
   Image,
   Circle,
@@ -158,10 +159,12 @@ class CoinList extends React.Component {
                               <TableDiv>{id + 1}</TableDiv>
                             </Td>
                             <Td>
-                              <TableDiv padding={"0 1rem 0 0.5rem"}>
-                                <Image src={coin.image} alt={coin.name} />
-                                {coin.name}({coin.symbol.toUpperCase()})
-                              </TableDiv>
+                              <StyledLink to={`/Coin/${coin.id}`}>
+                                <TableDiv padding={"0 1rem 0 0.5rem"}>
+                                  <Image src={coin.image} alt={coin.name} />
+                                  {coin.name}({coin.symbol.toUpperCase()})
+                                </TableDiv>
+                              </StyledLink>
                             </Td>
                             <Td>
                               <TableDiv>
