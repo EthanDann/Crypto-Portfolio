@@ -79,7 +79,10 @@ class App extends React.Component {
                 }
               />
               <Route exact path="/Portfolio" element={<Portfolio />} />
-              <Route path="/Coin/:coin" element={<Coin />} />
+              <Route
+                path="/Coin/:coin"
+                element={<Coin activeCurrency={this.state.activeCurrency} />}
+              />
             </Routes>
           </BrowserRouter>
         </Container>
