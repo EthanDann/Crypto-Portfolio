@@ -42,7 +42,7 @@ export const CoinContainer = styled.div`
     height: 500px;
   }
   @media (max-width: 390px) {
-    width: 380px;
+    width: 365px;
   }
   @media (max-width: 375px) {
     width: 350px;
@@ -68,7 +68,7 @@ export const CoinTable = styled.table`
 `;
 export const ScrollableDiv = styled.div`
   width: auto;
-  height: auto;
+  height: 75%;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
@@ -78,7 +78,7 @@ export const ScrollableDiv = styled.div`
     background: ${(props) => props.theme.secondary};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.main};
+    background-color: ${(props) => props.theme.fontColor};
     border-radius: 4px;
   }
   @media (min-height: 1024px) {
@@ -86,6 +86,18 @@ export const ScrollableDiv = styled.div`
   }
   @media (min-width: 768px) {
     height: 600px;
+  }
+  @media (max-width: 425px) {
+    height: 500px;
+  }
+  @media (max-width: 375px) {
+    height: 450px;
+  }
+  @media (max-width: 320px) {
+    height: 425px;
+  }
+  @media (max-width: 280px) {
+    height: 400px;
   }
 `;
 export const ScrollText = styled.h4`
