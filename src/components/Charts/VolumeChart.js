@@ -9,7 +9,7 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import nFormatter from "utils";
+import { currencyFormatter } from "utils";
 import { options } from "./chartsOptions";
 import { Wrapper, StyledLegend, LegendH4, StyledH5 } from "./charts.styled";
 
@@ -62,7 +62,7 @@ const VolumeChart = (props) => {
         <StyledH5>Bitcoin Volume</StyledH5>
         <LegendH4>
           {props.currencySymbol ?? "$"}
-          {nFormatter(props.volumes[props.volumes.length - 1], 2)}
+          {currencyFormatter(props.volumes[props.volumes.length - 1], 2)}
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>

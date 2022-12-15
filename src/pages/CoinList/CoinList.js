@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
-import nFormatter from "utils";
+import { currencyFormatter } from "utils";
 import { Sparkline, PriceChart, VolumeChart, PercentDiv } from "components";
 import { Progress, Container } from "./progressbar.styled";
 import {
@@ -204,11 +204,11 @@ class CoinList extends React.Component {
                               <ProgressContainer>
                                 <p>
                                   <Circle color={"rgb(138, 146, 178)"} />
-                                  {nFormatter(coin.total_volume, 2)}
+                                  {currencyFormatter(coin.total_volume, 2)}
                                 </p>
                                 <p>
                                   <Circle color={"rgb(71, 76, 119)"} />
-                                  {nFormatter(coin.market_cap, 2)}
+                                  {currencyFormatter(coin.market_cap, 2)}
                                 </p>
                               </ProgressContainer>
                               <Container width={80} padding={0.25}>
@@ -223,12 +223,15 @@ class CoinList extends React.Component {
                               <ProgressContainer>
                                 <p>
                                   <Circle color={"rgb(138, 146, 178)"} />
-                                  {nFormatter(coin.circulating_supply, 2)}
+                                  {currencyFormatter(
+                                    coin.circulating_supply,
+                                    2
+                                  )}
                                 </p>
                                 <p>
                                   <Circle color={"rgb(71, 76, 119)"} />
                                   {coin.total_supply
-                                    ? nFormatter(coin.total_supply, 2)
+                                    ? currencyFormatter(coin.total_supply, 2)
                                     : "∞"}
                                 </p>
                               </ProgressContainer>
