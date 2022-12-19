@@ -7,7 +7,7 @@ import {
   LineElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import nFormatter from "utils";
+import { currencyFormatter } from "utils";
 import { options } from "./chartsOptions";
 import { Wrapper, StyledLegend, LegendH4, StyledH5 } from "./charts.styled";
 
@@ -53,7 +53,7 @@ const PriceChart = (props) => {
         <StyledH5>Bitcoin Price</StyledH5>
         <LegendH4>
           {props.currencySymbol ?? "$"}
-          {nFormatter(props.prices[props.prices.length - 1], 2)}
+          {currencyFormatter(props.prices[props.prices.length - 1], 2)}
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
