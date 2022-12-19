@@ -26,6 +26,7 @@ import {
   StyledDownArrow,
   StyledLinkIcon,
 } from "./Coin.styled";
+import { SummaryLink } from "components";
 
 const CoinPage = (props) => {
   let { id } = useParams();
@@ -180,6 +181,17 @@ const CoinPage = (props) => {
                 dangerouslySetInnerHTML={{ __html: coin.description.en }}
               />
             </DescriptionContainer>
+            <CoinLinksContainer>
+              <Link>
+                <SummaryLink url={coin.links.blockchain_site[0]} icon />
+              </Link>
+              <Link>
+                <SummaryLink url={coin.links.blockchain_site[1]} icon />
+              </Link>
+              <Link>
+                <SummaryLink url={coin.links.blockchain_site[2]} icon />
+              </Link>
+            </CoinLinksContainer>
           </BottomPageContent>
         </Container>
       )}

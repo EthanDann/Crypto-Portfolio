@@ -109,6 +109,7 @@ export const CoinLinksContainer = styled.div`
     }
   }
 `;
+export const Link = styled.div``;
 export const Header = styled.h1`
   text-align: start;
   font-weight: 400;
