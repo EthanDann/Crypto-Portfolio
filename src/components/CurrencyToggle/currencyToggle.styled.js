@@ -16,6 +16,9 @@ export const DropDownContainer = styled.div`
   @media (max-width: 768px) {
     margin-left: 2.4em;
   }
+  @media (max-width: 665px) {
+    display: none;
+  }
 `;
 
 export const DropDownHeader = styled.div`
