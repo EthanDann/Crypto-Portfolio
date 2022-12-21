@@ -44,4 +44,7 @@ export const SiteLink = styled.a`
   @media (min-width: 1024px) {
     font-size: 0.9rem;
   }
+  @media (max-width: 425px) {
+    font-size: 0.9rem;
+  }
 `;

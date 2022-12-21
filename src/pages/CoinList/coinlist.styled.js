@@ -10,7 +10,7 @@ export const Body = styled.body`
 
 export const ChartsContainer = styled.div`
   display: flex;
-  @media (max-width: 425px) {
+  @media (max-width: 665px) {
     flex-direction: column;
   }
 `;
@@ -19,6 +19,15 @@ export const TableContainer = styled.div`
   width: auto;
   margin: auto;
   padding: 5rem;
+  @media (max-width: 2560px) {
+    padding: 5rem 0;
+  }
+  @media (max-width: 1440px) {
+    padding: 5rem 0;
+  }
+  @media (max-width: 1024px) {
+    padding: 3rem 0;
+  }
   @media (max-width: 768px) {
     padding: 5rem 0;
   }
@@ -31,14 +40,23 @@ export const CoinContainer = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
-  @media (max-width: 900px) {
-    width: 665px;
+  @media (max-width: 2560px) {
+    width: 87vw;
+  }
+  @media (max-width: 1440px) {
+    width: 87vw;
+  }
+  @media (max-width: 1250px) {
+    width: 94vw;
+  }
+  @media (max-width: 1024px) {
+    width: 90vw;
   }
   @media (max-width: 665px) {
-    width: 625px;
+    width: 500px;
   }
   @media (max-width: 425px) {
-    width: 375px;
+    width: 400px;
     height: 500px;
   }
   @media (max-width: 390px) {
@@ -58,6 +76,7 @@ export const CoinContainer = styled.div`
   }
 `;
 export const CoinTable = styled.table`
+  width: 100%;
   font-size: 0.8rem;
   margin: auto;
   padding: 1rem;
