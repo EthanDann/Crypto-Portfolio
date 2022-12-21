@@ -11,16 +11,23 @@ import {
   TopPageContent,
   BottomPageContent,
   LeftContent,
+  LinkContainer,
   MiddleContent,
   RightContent,
   ImageContainer,
   Image,
   Anchor,
   Text,
+  CoinText,
+  AllTimeHeader,
+  AllTimeText,
   PercentDiv,
   DescriptionContainer,
   Description,
   Header,
+  LinkText,
+  IconContainer,
+  StackIconContainer,
   StyledPlusIcon,
   StyledUpArrow,
   StyledDownArrow,
@@ -75,22 +82,24 @@ const CoinPage = (props) => {
                   <ImageContainer>
                     <Image src={coin.image.small} alt={coin.name} />
                   </ImageContainer>
-                  <div>
+                  <CoinText>
                     {coin.name}({coin.symbol.toUpperCase()})
-                  </div>
+                  </CoinText>
                 </Text>
               </LeftContent>
               <LeftContent padding={"1em 4em"}>
-                <Text fontSize={14}>
-                  <StyledLinkIcon />
-                  <Anchor href={coin.links.homepage[0]}>
-                    {coin.links.homepage[0]}
-                  </Anchor>
-                </Text>
+                <LinkContainer>
+                  <LinkText fontSize={14}>
+                    <StyledLinkIcon />
+                    <Anchor href={coin.links.homepage[0]}>
+                      {coin.links.homepage[0]}
+                    </Anchor>
+                  </LinkText>
+                </LinkContainer>
               </LeftContent>
             </Column>
             <MiddleContent>
-              <Text fontSize={40} direction={"row"}>
+              <AllTimeHeader fontSize={40}>
                 {currencySymbol +
                   nFormatter(
                     coin.market_data.current_price[activeCurrency],
@@ -103,30 +112,36 @@ const CoinPage = (props) => {
                 >
                   {coin.market_data.ath_change_percentage.btc.toFixed(1) + "%"}
                 </PercentDiv>
-              </Text>
-              <Text>
+              </AllTimeHeader>
+              <StackIconContainer>
                 <StackIcon />
-              </Text>
-              <Text fontSize={15}>
-                <StyledUpArrow />
+              </StackIconContainer>
+              <AllTimeText fontSize={15}>
+                <IconContainer>
+                  <StyledUpArrow />
+                </IconContainer>
                 All-Time High:
                 {" " +
                   currencySymbol +
                   nFormatter(coin.market_data.ath[activeCurrency], "1,000")}
                 <br />
                 {formatDate(coin.market_data.ath_date[activeCurrency])}
-              </Text>
-              <Text fontSize={15}>
-                <StyledDownArrow />
+              </AllTimeText>
+              <AllTimeText fontSize={15}>
+                <IconContainer>
+                  <StyledDownArrow />
+                </IconContainer>
                 All-Time Low:
                 {" " + currencySymbol + coin.market_data.atl[activeCurrency]}
                 <br />
                 {formatDate(coin.market_data.atl_date[activeCurrency])}
-              </Text>
+              </AllTimeText>
             </MiddleContent>
             <RightContent>
               <Text fontSize={13} direction={"row"}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Market Cap: " +
                   currencySymbol +
                   nFormatter(
@@ -135,7 +150,9 @@ const CoinPage = (props) => {
                   )}
               </Text>
               <Text fontSize={13}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Fully Diluted Valuation: " +
                   currencySymbol +
                   nFormatter(
@@ -144,7 +161,9 @@ const CoinPage = (props) => {
                   )}
               </Text>
               <Text fontSize={13}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Volume/Market: " +
                   (
                     coin.market_data.total_volume.usd /
@@ -152,21 +171,27 @@ const CoinPage = (props) => {
                   ).toFixed(5)}
               </Text>
               <Text fontSize={13}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Total Volume: " +
                   nFormatter(coin.market_data.total_volume.usd, "10,000") +
                   " " +
                   coin.symbol.toUpperCase()}
               </Text>
               <Text fontSize={13}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Circulating Supply: " +
                   nFormatter(coin.market_data.circulating_supply, "10,000") +
                   " " +
                   coin.symbol.toUpperCase()}
               </Text>
               <Text fontSize={13}>
-                <StyledPlusIcon />
+                <IconContainer>
+                  <StyledPlusIcon />
+                </IconContainer>
                 {"Max Supply: " +
                   nFormatter(coin.market_data.max_supply, "10,000") +
                   " " +
