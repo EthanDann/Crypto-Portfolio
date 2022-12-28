@@ -85,6 +85,7 @@ class App extends React.Component {
                   <Coin
                     activeCurrency={this.state.activeCurrency}
                     currencySymbol={this.state.currencySymbol}
+                    theme={this.state.theme}
                   />
                 }
               />

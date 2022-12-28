@@ -1,4 +1,5 @@
 export { default as CurrencyToggle } from "components/CurrencyToggle";
+export { CurrencyConverter } from "components/CurrencyConverter";
 export { default as Navbar } from "./Navbar";
 export { default as ScrollWrapper } from "./InfiniteScroll";
 export { SummaryLink } from "./SummaryLink";
