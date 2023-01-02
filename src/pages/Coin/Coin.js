@@ -208,18 +208,20 @@ const CoinPage = (props) => {
             </DescriptionContainer>
             <CoinLinksContainer>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[0]} icon />
+                <SummaryLink url={coin.links.blockchain_site[0]} />
               </Link>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[1]} icon />
+                <SummaryLink url={coin.links.blockchain_site[1]} />
               </Link>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[2]} icon />
+                <SummaryLink url={coin.links.blockchain_site[2]} />
               </Link>
             </CoinLinksContainer>
             <CurrencyConverter
               activeCurrency={props.activeCurrency}
-              coin={coin.symbol.toUpperCase()}
+              currencySymbol={props.currencySymbol}
+              coinSymbol={coin.symbol.toUpperCase()}
+              coinPrice={coin.market_data.current_price[activeCurrency]}
               theme={props.theme}
             />
           </BottomPageContent>

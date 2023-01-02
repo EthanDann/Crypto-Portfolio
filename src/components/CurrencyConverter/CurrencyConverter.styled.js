@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NumericFormat } from "react-number-format";
 import { ReactComponent as DarkSwitchIcon } from "./DarkSwitchIcon.svg";
 import { ReactComponent as LightSwitchIcon } from "./LightSwitchIcon.svg";
 
@@ -24,7 +25,7 @@ export const Label = styled.label`
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
 `;
-export const Input = styled.input`
+export const Input = styled(NumericFormat)`
   font-size: 1rem;
   height: auto;
   width: 70%;

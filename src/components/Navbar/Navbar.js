@@ -1,6 +1,4 @@
 import React from "react";
-import { ReactComponent as DarkSearchIcon } from "./Icons/DarkSearchIcon.svg";
-import { ReactComponent as LightSearchIcon } from "./Icons/LightSearchIcon.svg";
 import { CurrencyToggle } from "components";
 import {
   Nav,
