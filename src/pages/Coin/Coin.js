@@ -33,7 +33,7 @@ import {
   StyledDownArrow,
   StyledLinkIcon,
 } from "./Coin.styled";
-import { SummaryLink, CurrencyConverter } from "components";
+import { SummaryLink, CurrencyConverter, TimeChart } from "components";
 
 const CoinPage = (props) => {
   let { id } = useParams();
@@ -223,6 +223,10 @@ const CoinPage = (props) => {
               coinSymbol={coin.symbol.toUpperCase()}
               coinPrice={coin.market_data.current_price[activeCurrency]}
               theme={props.theme}
+            />
+            <TimeChart
+              coinPrice={coin.market_data.current_price[activeCurrency]}
+              currencySymbol={props.currencySymbol}
             />
           </BottomPageContent>
         </Container>
