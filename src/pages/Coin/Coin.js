@@ -33,7 +33,7 @@ import {
   StyledDownArrow,
   StyledLinkIcon,
 } from "./Coin.styled";
-import { SummaryLink } from "components";
+import { SummaryLink, CurrencyConverter } from "components";
 
 const CoinPage = (props) => {
   let { id } = useParams();
@@ -208,15 +208,22 @@ const CoinPage = (props) => {
             </DescriptionContainer>
             <CoinLinksContainer>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[0]} icon />
+                <SummaryLink url={coin.links.blockchain_site[0]} />
               </Link>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[1]} icon />
+                <SummaryLink url={coin.links.blockchain_site[1]} />
               </Link>
               <Link>
-                <SummaryLink url={coin.links.blockchain_site[2]} icon />
+                <SummaryLink url={coin.links.blockchain_site[2]} />
               </Link>
             </CoinLinksContainer>
+            <CurrencyConverter
+              activeCurrency={props.activeCurrency}
+              currencySymbol={props.currencySymbol}
+              coinSymbol={coin.symbol.toUpperCase()}
+              coinPrice={coin.market_data.current_price[activeCurrency]}
+              theme={props.theme}
+            />
           </BottomPageContent>
         </Container>
       )}
