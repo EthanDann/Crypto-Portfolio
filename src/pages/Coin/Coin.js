@@ -33,7 +33,7 @@ import {
   StyledDownArrow,
   StyledLinkIcon,
 } from "./Coin.styled";
-import { SummaryLink, CurrencyConverter, TimeChart } from "components";
+import { SummaryLink, CurrencyConverter, TimeChartWrapper } from "components";
 
 const CoinPage = (props) => {
   let { id } = useParams();
@@ -42,7 +42,6 @@ const CoinPage = (props) => {
     axios
       .get(
         `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false
-
 `
       )
       .then(({ data }) => {
@@ -224,9 +223,9 @@ const CoinPage = (props) => {
               coinPrice={coin.market_data.current_price[activeCurrency]}
               theme={props.theme}
             />
-            <TimeChart
-              coinPrice={coin.market_data.current_price[activeCurrency]}
-              currencySymbol={props.currencySymbol}
+            <TimeChartWrapper
+              coinId={id}
+              activeCurrency={props.activeCurrency}
             />
           </BottomPageContent>
         </Container>

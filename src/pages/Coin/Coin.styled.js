@@ -7,18 +7,18 @@ import { ReactComponent as LinkIcon } from "./LinkIcon.svg";
 export const Container = styled.div`
   background-color: ${(props) => props.theme.secondary};
   @media (min-width: 768px) {
-    padding: 1em 2em;
+    padding: 1em 0 0 0;
   }
   @media (min-width: 1024px) {
     margin: auto;
-    margin-bottom: 5em;
-    padding: 1em 5em;
+    margin-bottom: auto;
+    padding: 1em 0 0 0;
     max-width: 1630px;
   }
   @media (max-width: 425px) {
     margin: 0;
-    margin-bottom: 5em;
-    padding: 1em;
+    margin-bottom: auto;
+    padding: 1em 0 0 0;
     max-width: 1630px;
     max-width: 100%;
   }
@@ -37,7 +37,7 @@ export const TopPageContent = styled.div`
   display: flex;
   justify-content: space-between;
   max-width: 50%;
-  margin: 0;
+  margin: 1em;
   @media (min-width: 1024px) {
     margin-top: 2em;
     max-width: 100%;
@@ -49,7 +49,7 @@ export const TopPageContent = styled.div`
 `;
 export const BottomPageContent = styled.div`
   max-width: 80%;
-  margin: 0 0.3rem;
+  margin: 0;
   @media (min-width: 1024px) {
     margin: 0 auto;
     display: flex;
@@ -143,6 +143,7 @@ export const Description = styled.p`
 `;
 export const DescriptionContainer = styled.div`
   font-size: 0.8rem;
+  margin: 0 1em;
   padding: 3em 2em;
   background: ${(props) => props.theme.main};
   border-radius: 12px;
@@ -165,6 +166,7 @@ export const DescriptionContainer = styled.div`
   }
 `;
 export const CoinLinksContainer = styled.div`
+  margin: 0 1em;
   @media (min-width: 1024px) {
     display: flex;
     justify-content: space-between;
@@ -203,9 +205,9 @@ export const Header = styled.h1`
   font-weight: 400;
   margin-bottom: 1.8em;
   font-size: 1rem;
-  margin-top: 1em;
+  margin: 1em;
   @media (max-width: 425px) {
-    margin-top: 1em;
+    margin: 1em;
     font-size: 1.5rem;
   }
 `;

@@ -8,3 +8,5 @@ export { default as Sparkline } from "./coin-list-page/Sparkline";
 export { default as PriceChart } from "components/coin-list-page/Charts/PriceChart";
 export { default as VolumeChart } from "components/coin-list-page/Charts/VolumeChart";
 export { TimeChart } from "./coin-page/TimeChart";
+export { DurationSelector } from "./coin-page/DurationSelector";
+export { TimeChartWrapper } from "./coin-page/TimeChartWrapper";
