@@ -6,29 +6,38 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
+import { useWindowSize } from "hooks";
 import { Line } from "react-chartjs-2";
-import { currencyFormatter } from "utils";
 import { options } from "./TimeChartOptions";
-import { Wrapper, StyledLegend, LegendH4, StyledH5 } from "./TimeChart.styled";
+import { Wrapper } from "./TimeChart.styled";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
 const TimeChart = (props) => {
+  const { width: screenWidth } = useWindowSize();
+  const getLabels = (arr) => {
+    let labels = arr.map((arr) =>
+      new Date(arr[0]).toLocaleString(undefined, {
+        month: "short",
+        day: "numeric",
+      })
+    );
+    return labels;
+  };
   const chartData = () => {
     return {
-      labels: "",
+      labels: getLabels(props.coinPrice),
       datasets: [
         {
-          label: "Price",
           data: props.coinPrice,
-          tension: 0.6,
-          borderColor: "rgb(1,226,37)",
+          tension: 0.4,
+          borderColor: "rgba(44, 47, 54, 1)",
           fill: true,
           backgroundColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, "rgba(1, 226, 37, .4)");
-            gradient.addColorStop(1, "rgba(23, 82, 34, .4)");
+            gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+            gradient.addColorStop(0, "rgba(44, 47, 54, 0.5)");
             return gradient;
           },
         },
@@ -37,7 +46,7 @@ const TimeChart = (props) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper width={screenWidth - window.scrollX * 2}>
       <Line data={chartData()} options={options} />
     </Wrapper>
   );
