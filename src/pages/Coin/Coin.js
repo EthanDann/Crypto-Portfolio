@@ -10,6 +10,7 @@ import {
   Link,
   TopPageContent,
   BottomPageContent,
+  CoinInfoContainer,
   LeftContent,
   LinkContainer,
   MiddleContent,
@@ -76,19 +77,21 @@ const CoinPage = (props) => {
           <Header>Your Summary</Header>
           <TopPageContent>
             <Column>
-              <LeftContent padding={"4em"}>
-                <Text direction={"column"} fontSize={20}>
-                  <ImageContainer>
-                    <Image src={coin.image.small} alt={coin.name} />
-                  </ImageContainer>
-                  <CoinText>
-                    {coin.name}({coin.symbol.toUpperCase()})
-                  </CoinText>
-                </Text>
+              <LeftContent>
+                <CoinInfoContainer>
+                  <Text direction={"column"} fontSize={20}>
+                    <ImageContainer>
+                      <Image src={coin.image.small} alt={coin.name} />
+                    </ImageContainer>
+                    <CoinText>
+                      {coin.name}({coin.symbol.toUpperCase()})
+                    </CoinText>
+                  </Text>
+                </CoinInfoContainer>
               </LeftContent>
-              <LeftContent padding={"1em 4em"}>
+              <LeftContent>
                 <LinkContainer>
-                  <LinkText fontSize={14}>
+                  <LinkText>
                     <StyledLinkIcon />
                     <Anchor href={coin.links.homepage[0]}>
                       {coin.links.homepage[0]}
