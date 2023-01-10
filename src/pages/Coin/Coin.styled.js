@@ -145,9 +145,6 @@ export const Header = styled.h1`
   margin-bottom: 1.8em;
   font-size: 1.5rem;
   margin: 1em;
-  @media (max-width: 425px) {
-    margin-top: 0;
-  }
 `;
 export const ImageContainer = styled.div`
   padding: 1.5em;
