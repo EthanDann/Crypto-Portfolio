@@ -29,7 +29,7 @@ export const Column = styled.div`
 export const TopPageContent = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 1em;
   flex-direction: column;
   @media (min-width: 768px) {
@@ -39,7 +39,7 @@ export const TopPageContent = styled.div`
   }
 `;
 export const BottomPageContent = styled.div`
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 1em;
   @media (min-width: 768px) {
     margin: 0 1em;
@@ -53,6 +53,8 @@ export const CoinInfoContainer = styled.div`
   width: 100%;
 `;
 export const LeftContent = styled(StyledDiv)`
+  margin-bottom: 1em;
+  padding-top: 2em;
   @media (min-width: 768px) {
     width: 20%;
     justify-content: space-between;
@@ -63,28 +65,33 @@ export const LeftContent = styled(StyledDiv)`
     }
     &:nth-child(2) {
       width: 80%;
+      margin-bottom: 0;
     }
+  }
+`;
+export const LinkContent = styled(StyledDiv)`
+  margin-bottom: 1em;
+  width: 100%;
+  @media (min-width: 768px) {
+    justify-content: space-between;
+    width: 80%;
   }
 `;
 export const LinkContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: center;
   border-radius: 12px;
-  height: 100%;
-  padding: 1em;
+  padding: 1em 0;
   width: 100%;
-  margin-bottom: 1em;
-  & div {
-    padding: 0;
-  }
   @media (min-width: 768px) {
+    justify-content: flex-start;
     margin: 0;
   }
 `;
 export const MiddleContent = styled(StyledDiv)`
+  margin-bottom: 1em;
   padding: 1em;
-  margin: 0 2.25em 0 0;
   @media (min-width: 768px) {
     width: 30%;
     margin: 0 2.25em 0 0;
@@ -93,15 +100,8 @@ export const MiddleContent = styled(StyledDiv)`
 export const RightContent = styled(StyledDiv)`
   @media (min-width: 768px) {
     width: 40%;
+    padding: 0;
   }
-  // @media (max-width: 425px) {
-  //   width: 160%;
-  //   margin-left: -6.3em;
-  // }
-  // @media (max-width: 375px) {
-  //   width: 160%;
-  //   margin-left: -7em;
-  // }
 `;
 export const Description = styled.p`
   & a {
@@ -143,11 +143,10 @@ export const Header = styled.h1`
   text-align: start;
   font-weight: 400;
   margin-bottom: 1.8em;
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 1em;
   @media (max-width: 425px) {
-    margin: 1em;
-    font-size: 1.5rem;
+    margin-top: 0;
   }
 `;
 export const ImageContainer = styled.div`
@@ -155,14 +154,6 @@ export const ImageContainer = styled.div`
   border-radius: 12px;
   margin-bottom: 0;
   background-color: ${(props) => props.theme.secondary};
-  // @media (max-width: 425px) {
-  //   background-color: ${(props) => props.theme.main};
-  //   padding: 3em;
-  //   width: 125%;
-  // }
-  // @media (max-width: 375px) {
-  //   margin-left: -2em;
-  // }
 `;
 export const Image = styled.img`
   object-fit: cover;
@@ -172,8 +163,9 @@ export const Anchor = styled.a`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.7rem;
-  width: 70%;
+  font-size: 1rem;
+  width: 100%;
+  margin-right: 1.3rem;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -187,6 +179,7 @@ export const Anchor = styled.a`
     color: ${(props) => props.theme.fontColor};
   }
   @media (min-width: 768px) {
+    margin-right: 0;
     font-size: 0.9rem;
   }
 `;
@@ -197,7 +190,20 @@ export const Text = styled.div`
   justify-content: center;
   align-items: center;
   @media (max-width: 425px) {
-    font-size: 12px;
+    font-size: 0.7em;
+  }
+`;
+export const List = styled.ul`
+  list-style: none;
+`;
+export const ListItem = styled.li`
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  @media (min-width: 768px) {
+    margin: 1em;
   }
 `;
 export const CoinText = styled.div`
@@ -214,38 +220,23 @@ export const CoinText = styled.div`
 `;
 export const LinkText = styled.div`
   display: flex;
-  font-size: 12px;
-  flex-direction: ${(props) => props.direction};
-  justify-content: center;
   align-items: center;
-  @media (max-width: 425px) {
-    font-size: 25px;
-  }
+  padding: 0;
 `;
 export const AllTimeText = styled.div`
   display: flex;
-  font-size: ${(props) => props.fontSize}px;
+  font-size: 1rem;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  @media (max-width: 768px) {
-    width: 110%;
-    font-size: 13px;
-  }
-  @media (max-width: 425px) {
-    width: 100%;
-    font-size: 15px;
-  }
+  margin: 1em 0;
 `;
 export const AllTimeHeader = styled.div`
   display: flex;
-  font-size: ${(props) => props.fontSize}px;
+  font-size: 2rem;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  @media (max-width: 768px) {
-    font-size: 25px;
-  }
 `;
 export const PercentDiv = styled.div`
   margin: 5px;
@@ -265,12 +256,7 @@ export const StackIconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 768px) {
-    width: 25px;
-  }
-  @media (max-width: 425px) {
-    margin-left: 90px;
-  }
+  margin: 1em 0;
 `;
 export const StyledPlusIcon = styled(PlusIcon)`
   margin-right: 10px;
@@ -282,5 +268,5 @@ export const StyledDownArrow = styled(DownArrow)`
   margin-right: 10px;
 `;
 export const StyledLinkIcon = styled(LinkIcon)`
-  margin-right: 10px;
+  margin: 0 1em;
 `;

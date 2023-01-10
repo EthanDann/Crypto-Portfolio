@@ -12,6 +12,7 @@ import {
   BottomPageContent,
   CoinInfoContainer,
   LeftContent,
+  LinkContent,
   LinkContainer,
   MiddleContent,
   RightContent,
@@ -25,6 +26,8 @@ import {
   PercentDiv,
   DescriptionContainer,
   Description,
+  List,
+  ListItem,
   Header,
   LinkText,
   IconContainer,
@@ -89,19 +92,19 @@ const CoinPage = (props) => {
                   </Text>
                 </CoinInfoContainer>
               </LeftContent>
-              <LeftContent>
+              <LinkContent>
                 <LinkContainer>
                   <LinkText>
                     <StyledLinkIcon />
-                    <Anchor href={coin.links.homepage[0]}>
-                      {coin.links.homepage[0]}
-                    </Anchor>
                   </LinkText>
+                  <Anchor href={coin.links.homepage[0]}>
+                    {coin.links.homepage[0]}
+                  </Anchor>
                 </LinkContainer>
-              </LeftContent>
+              </LinkContent>
             </Column>
             <MiddleContent>
-              <AllTimeHeader fontSize={40}>
+              <AllTimeHeader>
                 {currencySymbol +
                   nFormatter(
                     coin.market_data.current_price[activeCurrency],
@@ -118,7 +121,7 @@ const CoinPage = (props) => {
               <StackIconContainer>
                 <StackIcon />
               </StackIconContainer>
-              <AllTimeText fontSize={15}>
+              <AllTimeText>
                 <IconContainer>
                   <StyledUpArrow />
                 </IconContainer>
@@ -129,7 +132,7 @@ const CoinPage = (props) => {
                 <br />
                 {formatDate(coin.market_data.ath_date[activeCurrency])}
               </AllTimeText>
-              <AllTimeText fontSize={15}>
+              <AllTimeText>
                 <IconContainer>
                   <StyledDownArrow />
                 </IconContainer>
@@ -140,65 +143,67 @@ const CoinPage = (props) => {
               </AllTimeText>
             </MiddleContent>
             <RightContent>
-              <Text fontSize={13} direction={"row"}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Market Cap: " +
-                  currencySymbol +
-                  nFormatter(
-                    coin.market_data.market_cap[activeCurrency],
-                    "10,000"
-                  )}
-              </Text>
-              <Text fontSize={13}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Fully Diluted Valuation: " +
-                  currencySymbol +
-                  nFormatter(
-                    coin.market_data.fully_diluted_valuation[activeCurrency],
-                    "10,000"
-                  )}
-              </Text>
-              <Text fontSize={13}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Volume/Market: " +
-                  (
-                    coin.market_data.total_volume.usd /
-                    coin.market_data.market_cap.usd
-                  ).toFixed(5)}
-              </Text>
-              <Text fontSize={13}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Total Volume: " +
-                  nFormatter(coin.market_data.total_volume.usd, "10,000") +
-                  " " +
-                  coin.symbol.toUpperCase()}
-              </Text>
-              <Text fontSize={13}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Circulating Supply: " +
-                  nFormatter(coin.market_data.circulating_supply, "10,000") +
-                  " " +
-                  coin.symbol.toUpperCase()}
-              </Text>
-              <Text fontSize={13}>
-                <IconContainer>
-                  <StyledPlusIcon />
-                </IconContainer>
-                {"Max Supply: " +
-                  nFormatter(coin.market_data.max_supply, "10,000") +
-                  " " +
-                  coin.symbol.toUpperCase()}
-              </Text>
+              <List>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Market Cap: " +
+                    currencySymbol +
+                    nFormatter(
+                      coin.market_data.market_cap[activeCurrency],
+                      "10,000"
+                    )}
+                </ListItem>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Fully Diluted Valuation: " +
+                    currencySymbol +
+                    nFormatter(
+                      coin.market_data.fully_diluted_valuation[activeCurrency],
+                      "10,000"
+                    )}
+                </ListItem>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Volume/Market: " +
+                    (
+                      coin.market_data.total_volume.usd /
+                      coin.market_data.market_cap.usd
+                    ).toFixed(5)}
+                </ListItem>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Total Volume: " +
+                    nFormatter(coin.market_data.total_volume.usd, "10,000") +
+                    " " +
+                    coin.symbol.toUpperCase()}
+                </ListItem>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Circulating Supply: " +
+                    nFormatter(coin.market_data.circulating_supply, "10,000") +
+                    " " +
+                    coin.symbol.toUpperCase()}
+                </ListItem>
+                <ListItem>
+                  <IconContainer>
+                    <StyledPlusIcon />
+                  </IconContainer>
+                  {"Max Supply: " +
+                    nFormatter(coin.market_data.max_supply, "10,000") +
+                    " " +
+                    coin.symbol.toUpperCase()}
+                </ListItem>
+              </List>
             </RightContent>
           </TopPageContent>
           <BottomPageContent>
