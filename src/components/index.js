@@ -1,7 +1,10 @@
 export { default as CurrencyToggle } from "components/Navbar/CurrencyToggle";
+export { default as SearchInput } from "components/Navbar/SearchInput";
 export { CurrencyConverter } from "components/coin-page/CurrencyConverter";
 export { default as Navbar } from "./Navbar";
 export { default as ScrollWrapper } from "./coin-list-page/InfiniteScroll";
+export { TopPageContent } from "./coin-page/TopPageContent";
+export { BottomPageContent } from "./coin-page/BottomPageContent";
 export { SummaryLink } from "./coin-page/SummaryLink";
 export { default as PercentDiv } from "./coin-list-page/PercentDiv";
 export { default as Sparkline } from "./coin-list-page/Sparkline";

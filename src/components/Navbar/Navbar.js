@@ -1,21 +1,15 @@
-import React from "react";
-import { CurrencyToggle } from "components";
+import { CurrencyToggle, SearchInput } from "components";
 import {
   Nav,
   StyledLink,
   Container,
-  SearchContainer,
-  StyledSearchIcon,
-  StyledLightSearchIcon,
-  StyledDarkSearchIcon,
-  StyledInput,
   Button,
   ThemeContainer,
   StyledDarkIcon,
   StyledLightIcon,
 } from "./navbar.styled";
 
-const Navbar = (props) => {
+function Navbar(props) {
   return (
     <Nav>
       <Container>
@@ -25,12 +19,7 @@ const Navbar = (props) => {
         <StyledLink to="/Portfolio" order={2}>
           Portfolio
         </StyledLink>
-        <SearchContainer>
-          <StyledSearchIcon>
-            {props.theme ? <StyledDarkSearchIcon /> : <StyledLightSearchIcon />}
-          </StyledSearchIcon>
-          <StyledInput type="text" placeholder="Search..." />
-        </SearchContainer>
+        <SearchInput />
         <CurrencyToggle
           supportedCurrencies={props.supportedCurrencies}
           currencySymbol={props.currencySymbol}
@@ -48,6 +37,6 @@ const Navbar = (props) => {
       </Container>
     </Nav>
   );
-};
+}
 
 export default Navbar;
