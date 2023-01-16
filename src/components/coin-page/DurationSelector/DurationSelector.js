@@ -12,6 +12,7 @@ export const DurationSelector = (props) => {
         <ButtonSpan>
           <RadioButton
             type="radio"
+            key={duration.duration}
             isSelected={duration.active}
             onClick={() => props.handleDurationClick(duration)}
           />
