@@ -34,7 +34,21 @@ export const TopPageContent = (props) => {
     if (num < 0) return true;
     return false;
   };
-  const { coin } = props.coin;
+  const { image, name, id, symbol, links, market_data } = props.coin;
+
+  const {
+    current_price,
+    ath_change_percentage,
+    ath,
+    atl,
+    ath_date,
+    atl_date,
+    market_cap,
+    fully_diluted_valuation,
+    total_volume,
+    circulating_supply,
+    max_supply,
+  } = market_data;
   const activeCurrency = props.activeCurrency.toLowerCase();
   const currencySymbol = props.currencySymbol;
   return (
@@ -46,10 +60,10 @@ export const TopPageContent = (props) => {
             <OuterContainer>
               <InnerContainer>
                 <ImageContainer>
-                  <Image src={coin.image.small} alt={coin.name} />
+                  <Image src={image.large} alt={name} />
                 </ImageContainer>
                 <CoinName>
-                  {coin.name}({coin.symbol.toUpperCase()})
+                  {name}({symbol.toUpperCase()})
                 </CoinName>
               </InnerContainer>
             </OuterContainer>
@@ -59,25 +73,20 @@ export const TopPageContent = (props) => {
               <LinkIconContainer>
                 <StyledLinkIcon />
               </LinkIconContainer>
-              <Anchor href={coin.links.homepage[0]}>
-                {coin.links.homepage[0]}
-              </Anchor>
+              <Anchor href={links.homepage[0]}>{links.homepage[0]}</Anchor>
             </LinkContent>
           </LinkContainer>
         </Column>
         <AllTimeContent>
           <AllTimeHeader>
             {currencySymbol +
-              nFormatter(
-                coin.market_data.current_price[activeCurrency],
-                "1,000"
-              )}
+              nFormatter(current_price[activeCurrency], "1,000")}
             <PercentDiv
               type={getPercentColor(
-                coin.market_data.ath_change_percentage.btc.toFixed(1)
+                ath_change_percentage[activeCurrency].toFixed(1)
               )}
             >
-              {coin.market_data.ath_change_percentage.btc.toFixed(1) + "%"}
+              {ath_change_percentage[activeCurrency].toFixed(1) + "%"}
             </PercentDiv>
           </AllTimeHeader>
           <StackIconContainer>
@@ -88,20 +97,18 @@ export const TopPageContent = (props) => {
               <StyledUpArrow />
             </IconContainer>
             All-Time High:
-            {" " +
-              currencySymbol +
-              nFormatter(coin.market_data.ath[activeCurrency], "1,000")}
+            {" " + currencySymbol + nFormatter(ath[activeCurrency], "1,000")}
             <br />
-            {dateFormatter(coin.market_data.ath_date[activeCurrency])}
+            {dateFormatter(ath_date[activeCurrency])}
           </AllTimeText>
           <AllTimeText>
             <IconContainer>
               <StyledDownArrow />
             </IconContainer>
             All-Time Low:
-            {" " + currencySymbol + coin.market_data.atl[activeCurrency]}
+            {" " + currencySymbol + atl[activeCurrency]}
             <br />
-            {dateFormatter(coin.market_data.atl_date[activeCurrency])}
+            {dateFormatter(atl_date[activeCurrency])}
           </AllTimeText>
         </AllTimeContent>
         <MarketDataContent>
@@ -112,10 +119,7 @@ export const TopPageContent = (props) => {
               </IconContainer>
               {"Market Cap: " +
                 currencySymbol +
-                nFormatter(
-                  coin.market_data.market_cap[activeCurrency],
-                  "10,000"
-                )}
+                nFormatter(market_cap[activeCurrency], "10,000")}
             </ListItem>
             <ListItem>
               <IconContainer>
@@ -123,10 +127,7 @@ export const TopPageContent = (props) => {
               </IconContainer>
               {"Fully Diluted Valuation: " +
                 currencySymbol +
-                nFormatter(
-                  coin.market_data.fully_diluted_valuation[activeCurrency],
-                  "10,000"
-                )}
+                nFormatter(fully_diluted_valuation[activeCurrency], "10,000")}
             </ListItem>
             <ListItem>
               <IconContainer>
@@ -134,8 +135,7 @@ export const TopPageContent = (props) => {
               </IconContainer>
               {"Volume/Market: " +
                 (
-                  coin.market_data.total_volume.usd /
-                  coin.market_data.market_cap.usd
+                  total_volume[activeCurrency] / market_cap[activeCurrency]
                 ).toFixed(5)}
             </ListItem>
             <ListItem>
@@ -143,27 +143,27 @@ export const TopPageContent = (props) => {
                 <StyledPlusIcon />
               </IconContainer>
               {"Total Volume: " +
-                nFormatter(coin.market_data.total_volume.usd, "10,000") +
+                nFormatter(total_volume[activeCurrency], "10,000") +
                 " " +
-                coin.symbol.toUpperCase()}
+                symbol.toUpperCase()}
             </ListItem>
             <ListItem>
               <IconContainer>
                 <StyledPlusIcon />
               </IconContainer>
               {"Circulating Supply: " +
-                nFormatter(coin.market_data.circulating_supply, "10,000") +
+                nFormatter(circulating_supply, "10,000") +
                 " " +
-                coin.symbol.toUpperCase()}
+                symbol.toUpperCase()}
             </ListItem>
             <ListItem>
               <IconContainer>
                 <StyledPlusIcon />
               </IconContainer>
               {"Max Supply: " +
-                nFormatter(coin.market_data.max_supply, "10,000") +
+                nFormatter(max_supply, "10,000") +
                 " " +
-                coin.symbol.toUpperCase()}
+                symbol.toUpperCase()}
             </ListItem>
           </List>
         </MarketDataContent>

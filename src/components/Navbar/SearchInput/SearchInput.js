@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import {
-  Wrapper,
+  ResultsList,
+  ListItem,
   StyledLink,
   SearchContainer,
   StyledSearchIcon,
@@ -12,69 +13,105 @@ import {
 
 const Coin = (props) => {
   return (
-    <Wrapper results={props.results} showResults={props.showResults}>
-      {props.results.map((coin) => (
-        <div>
+    <ResultsList
+      onBlur={() => props.handleBlur()}
+      results={props.results}
+      showResults={props.showResults}
+    >
+      {props.results.map((result) => (
+        <ListItem>
           <StyledLink
-            to={`/Coin/${coin.id}`}
-            onClick={() => props.handleLinkClick}
+            to={`/Coin/${result.name.toLowerCase()}`}
+            onClick={() => props.handleLinkClick()}
           >
-            {coin.name}
+            {result.name}
           </StyledLink>
-        </div>
+        </ListItem>
       ))}
-    </Wrapper>
+    </ResultsList>
   );
 };
 
 const SearchInput = (props) => {
-  const { coin, setCoin } = useState({});
+  const [coins, setCoins] = useState([
+    {
+      name: "Bitcoin",
+    },
+    {
+      name: "Bitlyte",
+    },
+    {
+      name: "Ethereum",
+    },
+    {
+      name: "Dogecoin",
+    },
+    {
+      name: "Litecoin",
+    },
+  ]);
+  const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const getCoin = async (name) => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.get(
-        `https://crypto-app-server.herokuapp.com/coins/${name}`
-      );
-      setCoin(data);
-      setIsLoading(false);
-    } catch (err) {
-      setError(err);
-    }
-  };
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://api.coingecko.com/api/v3/coins/list`)
+  //     .then(({ data }) => {
+  //       setCoins(data);
+  //     });
+  //   //eslint-disable-next-line
+  // }, [coins]);
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
-    setShowResults(true);
+    if (e.target.value.length > 0) {
+      // getResults(e.target.value);
+      const filteredResults = coins.filter((coin) =>
+        coin.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setResults(filteredResults);
+    } else {
+      setShowResults(false);
+    }
   };
   const handleLinkClick = () => {
     setSearchTerm("");
     setShowResults(false);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    getCoin(searchTerm);
-    setSearchTerm("");
-  };
+  const dropdownRef = useRef();
   useEffect(() => {
-    if (!searchTerm) {
+    const handleBlur = (event) => {
+      const node = dropdownRef.current;
+      if (node && node.contains(event.target)) {
+        return;
+      }
+      setShowResults(false);
+    };
+    showResults
+      ? document.addEventListener("click", handleBlur)
+      : document.removeEventListener("click", handleBlur);
+    return () => {
+      document.removeEventListener("click", handleBlur);
+    };
+  }, [showResults]);
+  useEffect(() => {
+    if (searchTerm.length === 0) {
       setSearchTerm("");
       setShowResults(false);
     }
     //eslint-disable-next-line
   }, [searchTerm]);
   useEffect(() => {
-    if (coin && coin.length > 0) {
+    if (results && results.length > 0) {
       setShowResults(true);
     }
     //eslint-disable-next-line
-  }, [coin]);
+  }, [results]);
   return (
-    <SearchContainer onSubmit={handleSubmit}>
+    <SearchContainer onSubmit={(e) => e.preventDefault()}>
       <StyledSearchIcon>
-        {props.theme ? <StyledDarkSearchIcon /> : <StyledLightSearchIcon />}
+        {props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />}
       </StyledSearchIcon>
       <StyledInput
         type="text"
@@ -82,16 +119,15 @@ const SearchInput = (props) => {
         onChange={handleChange}
         value={searchTerm}
       />
-      {/* {showResults && (
+      {showResults && (
         <div>
-          coin &&
           <Coin
-            results={coin}
+            results={results}
             handleLinkClick={handleLinkClick}
             showResults={showResults}
           />
         </div>
-      )} */}
+      )}
     </SearchContainer>
   );
 };

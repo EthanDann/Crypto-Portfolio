@@ -18,7 +18,8 @@ export const Header = styled.h1`
   font-weight: 400;
   margin-bottom: 1.8em;
   font-size: 1.5rem;
-  margin: 1em;
+  margin: 0 1em 2em 1em;
+  padding-top: 1em;
 `;
 export const Container = styled.div`
   display: flex;
@@ -73,8 +74,8 @@ export const ImageContainer = styled.div`
   background-color: ${(props) => props.theme.secondary};
 `;
 export const Image = styled.img`
-  object-fit: cover;
-  width: 100%;
+  height: 35px;
+  width: 35px;
 `;
 export const CoinName = styled.div`
   padding-bottom: 1em;

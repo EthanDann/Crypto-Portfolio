@@ -55,7 +55,7 @@ export const DropDownList = styled.ul`
 
   list-style: none;
   position: absolute;
-  right: 14.7vw;
+  right: 16vw;
   background: ${(props) => props.theme.main};
   width: 100%;
   max-height: 220px;

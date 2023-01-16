@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ReactComponent as DarkSearchIcon } from "./DarkSearchIcon.svg";
 import { ReactComponent as LightSearchIcon } from "./LightSearchIcon.svg";
 
@@ -9,7 +9,6 @@ export const SearchContainer = styled.form`
   height: 50px;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
-  gap: 16px;
   align-items: center;
   position: relative;
   :hover {
@@ -75,22 +74,63 @@ export const StyledInput = styled.input`
 export const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: ${(props) => props.theme.fontColor};
-  &:hover,
-  &.active {
+  &:hover {
     background-color: ${(props) => props.theme.secondary};
     text-decoration: underline;
     cursor: pointer;
   }
 `;
-export const Wrapper = styled.div`
-  width: 408px;
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`;
+export const ResultsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
   display: ${(props) =>
     props.showResults && props.results.length > 0 ? "flex" : " none"};
-  position: absolute;
-  top: 66px;
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  list-style: none;
+  position: absolute;
+  right: 0vw;
+  max-height: 210px;
+  border-radius: 6px;
+  border: none;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 0;
+  margin-top: 2.7em;
+  animation: ${fadeIn} 0.1s ease-in-out;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2c2f36;
+    outline: 1px solid #2c2f36;
+    border-radius: 4px;
+  }
+  &:input:not(:focus) {
+    display: none;
+  }
+`;
+export const ListItem = styled.li`
+  display: flex;
+  justify-content: flex-start;
+  color: ${(props) => props.theme.fontColor};
+  padding: 0.5em 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  overflow: auto;
+  &:hover {
+    background: ${(props) => props.theme.secondary};
+  }
 `;
