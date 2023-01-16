@@ -34,7 +34,7 @@ export const TopPageContent = (props) => {
     if (num < 0) return true;
     return false;
   };
-  const { image, name, id, symbol, links, market_data } = props.coin;
+  const { image, name, symbol, links, market_data } = props.coin;
 
   const {
     current_price,
