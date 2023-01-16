@@ -30,6 +30,7 @@ const CoinList = (props) => {
   const [priceData, setPriceData] = useState([]);
   const [volumeData, setVolumeData] = useState([]);
   const [coinsPerPage, setCoinsPerPage] = useState(10);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [error, setError] = useState("");
@@ -54,12 +55,12 @@ const CoinList = (props) => {
     getAllCoins();
     //eslint-disable-next-line
   }, [props.activeCurrency, coinsPerPage]);
-  const getMoreCoins = async () => {
+  const getMoreCoins = () => {
     try {
-      setCoinsPerPage(coinsPerPage + 10);
-      await axios
+      setPage(page + 1);
+      axios
         .get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${props.activeCurrency}&order=market_cap_desc&per_page=${coinsPerPage}&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${props.activeCurrency}&order=market_cap_desc&per_page=${coinsPerPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
         )
         .then((res) => {
           setHasError(false);
@@ -129,7 +130,7 @@ const CoinList = (props) => {
             <CoinTable>
               <ScrollableDiv id="scrollableDiv">
                 <InfiniteScroll
-                  dataLength={coinList.length}
+                  dataLength={filteredCoinList.length}
                   next={() => getMoreCoins()}
                   hasMore={true}
                   loader={<ScrollText>Loading...</ScrollText>}
