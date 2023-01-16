@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import getSymbolFromCurrency from "currency-symbol-map";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -7,94 +7,90 @@ import { Navbar } from "components";
 import { CoinList, Coin, Portfolio } from "pages";
 import { Container, darkTheme, lightTheme } from "App.styled";
 
-class App extends React.Component {
-  state = {
-    supportedCurrencies: [],
-    currencySymbol: localStorage.getItem("symbol") ?? "$",
-    activeCurrency: localStorage.getItem("currency") ?? "USD",
-    isOpen: false,
-    theme: true,
-  };
-  getSupportedCurrencies = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+const App = () => {
+  const [supportedCurrencies, setSupportedCurrencies] = useState([]);
+  const [activeCurrency, setActiveCurrency] = useState("usd");
+  const [currencySymbol, setCurrencySymbol] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [theme, setTheme] = useState(true);
+  useEffect(() => {
+    const getSupportedCurrencies = async () => {
+      await axios
+        .get(
+          `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
 `
-      );
-      this.setState({ supportedCurrencies: data.sort() });
-    } catch (err) {}
+        )
+        .then(({ data }) => {
+          setSupportedCurrencies(data);
+        });
+    };
+    getSupportedCurrencies();
+  }, [supportedCurrencies]);
+  const handleTheme = () => {
+    theme ? setTheme(false) : setTheme(true);
   };
-  handleTheme = () => {
-    this.state.theme
-      ? this.setState({ theme: false })
-      : this.setState({ theme: true });
+  const handleSetStorage = (name, item) => {
+    localStorage.setItem(name, item);
   };
-  handleOpen = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
-  handleCurrency = (e) => {
-    if (this.state.activeCurrency === e.target.innerHTML) {
+  const handleCurrency = (e) => {
+    if (activeCurrency === e.target.innerHTML) {
       document.querySelectorAll("li").focus();
     }
-    this.setState({
-      activeCurrency: e.target.innerHTML,
-      isOpen: false,
-      currencySymbol: getSymbolFromCurrency(e.target.innerHTML),
-    });
-    localStorage.setItem("currency", e.target.innerHTML);
-    localStorage.setItem("symbol", getSymbolFromCurrency(e.target.innerHTML));
+    setActiveCurrency(e.target.innerHTML);
+    setIsOpen(false);
+    setCurrencySymbol(getSymbolFromCurrency(e.target.innerHTML));
+    handleSetStorage("currency", e.target.innerHTML);
+    handleSetStorage("symbol", getSymbolFromCurrency(e.target.innerHTML));
     window.location.reload();
   };
-  handleTextChange = (e) => {
-    this.setState({ activeCurrency: e.target.value });
+  const handleTextChange = (e) => {
+    setActiveCurrency(e.target.value);
   };
-  componentDidMount = () => {
-    this.getSupportedCurrencies();
+  const handleOpen = () => {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
   };
-  render() {
-    return (
-      <ThemeProvider theme={this.state.theme ? darkTheme : lightTheme}>
-        <Container>
-          <BrowserRouter>
-            <Navbar
-              supportedCurrencies={this.state.supportedCurrencies}
-              currencySymbol={this.state.currencySymbol}
-              isOpen={this.state.isOpen}
-              handleOpen={this.handleOpen}
-              activeCurrency={this.state.activeCurrency}
-              handleCurrency={this.handleCurrency}
-              handleTextChange={this.handleTextChange}
-              theme={this.state.theme}
-              handleTheme={this.handleTheme}
+  return (
+    <ThemeProvider theme={theme ? darkTheme : lightTheme}>
+      <Container>
+        <BrowserRouter>
+          <Navbar
+            supportedCurrencies={supportedCurrencies}
+            currencySymbol={currencySymbol}
+            isOpen={isOpen}
+            handleOpen={() => handleOpen()}
+            activeCurrency={activeCurrency}
+            handleCurrency={() => handleCurrency()}
+            handleTextChange={() => handleTextChange()}
+            theme={theme}
+            handleTheme={() => handleTheme()}
+          />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <CoinList
+                  activeCurrency={activeCurrency}
+                  currencySymbol={currencySymbol}
+                />
+              }
             />
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <CoinList
-                    activeCurrency={this.state.activeCurrency}
-                    currencySymbol={this.state.currencySymbol}
-                  />
-                }
-              />
-              <Route exact path="/Portfolio" element={<Portfolio />} />
-              <Route
-                path="/Coin/:id"
-                element={
-                  <Coin
-                    activeCurrency={this.state.activeCurrency}
-                    currencySymbol={this.state.currencySymbol}
-                    theme={this.state.theme}
-                  />
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </Container>
-      </ThemeProvider>
-    );
-  }
-}
+            <Route exact path="/Portfolio" element={<Portfolio />} />
+            <Route
+              path="/Coin/:id"
+              element={
+                <Coin
+                  activeCurrency={activeCurrency}
+                  currencySymbol={currencySymbol}
+                  theme={theme}
+                />
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </Container>
+    </ThemeProvider>
+  );
+};
 
 export default App;
