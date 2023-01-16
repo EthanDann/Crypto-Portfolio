@@ -63,7 +63,7 @@ const CoinList = (props) => {
         )
         .then((res) => {
           setHasError(false);
-          setCoinList(res.data);
+          setCoinList([...coinList, ...res.data]);
         });
     } catch (err) {
       setHasError(true);
