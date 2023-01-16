@@ -63,7 +63,7 @@ const CoinList = (props) => {
         )
         .then((res) => {
           setHasError(false);
-          setCoinList(...coinList, ...res.data);
+          setCoinList([...coinList, ...res.data]);
         });
     } catch (err) {
       setHasError(true);
@@ -129,7 +129,7 @@ const CoinList = (props) => {
             <CoinTable>
               <ScrollableDiv id="scrollableDiv">
                 <InfiniteScroll
-                  dataLength={coinList.length}
+                  dataLength={filteredCoinList.length}
                   next={() => getMoreCoins()}
                   hasMore={true}
                   loader={<ScrollText>Loading...</ScrollText>}

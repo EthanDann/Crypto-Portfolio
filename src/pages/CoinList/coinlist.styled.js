@@ -87,7 +87,6 @@ export const CoinTable = styled.table`
 `;
 export const ScrollableDiv = styled.div`
   width: auto;
-  height: 75%;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
