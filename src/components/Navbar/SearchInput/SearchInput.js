@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import {
   ResultsList,
   ListItem,
@@ -33,6 +32,7 @@ const Coin = (props) => {
 };
 
 const SearchInput = (props) => {
+  // eslint-disable-next-line
   const [coins, setCoins] = useState([
     {
       name: "Bitcoin",
