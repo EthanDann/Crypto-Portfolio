@@ -9,8 +9,12 @@ import { Container, darkTheme, lightTheme } from "App.styled";
 
 const App = () => {
   const [supportedCurrencies, setSupportedCurrencies] = useState([]);
-  const [activeCurrency, setActiveCurrency] = useState("usd");
-  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [activeCurrency, setActiveCurrency] = useState(
+    localStorage.getItem("currency") ?? "usd"
+  );
+  const [currencySymbol, setCurrencySymbol] = useState(
+    localStorage.getItem("symbol") ?? "$"
+  );
   const [theme, setTheme] = useState(true);
   useEffect(() => {
     const getSupportedCurrencies = async () => {
