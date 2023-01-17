@@ -104,7 +104,7 @@ export const ScrollableDiv = styled.div`
     height: 480px;
   }
   @media (min-width: 768px) {
-    height: 600px;
+    height: 925px;
   }
   @media (max-width: 425px) {
     height: 500px;
