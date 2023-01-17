@@ -130,7 +130,7 @@ const CoinList = (props) => {
             <CoinTable>
               <ScrollableDiv id="scrollableDiv">
                 <InfiniteScroll
-                  dataLength={filteredCoinList.length}
+                  dataLength={coinList.length}
                   next={() => getMoreCoins()}
                   hasMore={true}
                   loader={<ScrollText>Loading...</ScrollText>}
@@ -174,7 +174,7 @@ const CoinList = (props) => {
                             </TableDiv>
                           </Td>
                           <PercentDiv
-                            list={filteredCoinList}
+                            list={coinList}
                             hourType={getPercentColor(
                               coin.price_change_percentage_1h_in_currency
                             )}
