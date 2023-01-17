@@ -9,12 +9,8 @@ import { Container, darkTheme, lightTheme } from "App.styled";
 
 const App = () => {
   const [supportedCurrencies, setSupportedCurrencies] = useState([]);
-  const [activeCurrency, setActiveCurrency] = useState(
-    localStorage.getItem("currency") ?? "usd"
-  );
-  const [currencySymbol, setCurrencySymbol] = useState(
-    localStorage.getItem("symbol") ?? "$"
-  );
+  const [activeCurrency, setActiveCurrency] = useState("usd");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
   const [theme, setTheme] = useState(true);
   useEffect(() => {
     const getSupportedCurrencies = async () => {
@@ -39,7 +35,6 @@ const App = () => {
     localStorage.setItem(name, item);
   };
   const handleCurrency = (e) => {
-    console.log("he");
     if (activeCurrency === e.target.innerHTML) {
       document.querySelectorAll("li").focus();
     }

@@ -49,7 +49,7 @@ function CurrencyToggle(props) {
           <Input
             type="text"
             value={props.activeCurrency.toUpperCase() ?? "USD"}
-            onChange={() => props.handleTextChange()}
+            onChange={props.handleTextChange}
           ></Input>
           <DownArrowContainer>
             {isOpen && <UpArrow />}
@@ -61,7 +61,7 @@ function CurrencyToggle(props) {
             <DropDownList>
               {currencies.map((currency) => (
                 <ListItem
-                  onClick={() => props.handleCurrency()}
+                  onClick={props.handleCurrency}
                   key={Math.random()}
                   value={currency}
                 >

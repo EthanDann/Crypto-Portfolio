@@ -24,8 +24,8 @@ function Navbar(props) {
           supportedCurrencies={props.supportedCurrencies}
           currencySymbol={props.currencySymbol}
           activeCurrency={props.activeCurrency}
-          handleCurrency={props.handleCurrency}
-          handleTextChange={props.handleTextChange}
+          handleCurrency={() => props.handleCurrency()}
+          handleTextChange={() => props.handleTextChange()}
         />
         <ThemeContainer>
           <Button onClick={props.handleTheme}>
