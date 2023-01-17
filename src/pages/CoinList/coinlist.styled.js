@@ -1,96 +1,80 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const Body = styled.body`
+export const Wrapper = styled.div`
+  background: ${(props) => props.theme.secondary};
+  padding: 0 0.5em;
+  max-width: 1920px;
+  margin: auto;
+  transition-property: font-size;
+  transition-duration: 4s;
+  transition-delay: 2s;
+  @media (min-width: 430px) {
+    padding: 1em 2em;
+  }
+  @media (min-width: 1440px) {
+    padding: 1em 5em;
+  }
+`;
+export const ChartWrapper = styled.div`
+  width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: column;
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
+  @media (min-width: 650px) {
+    display: flex;
+    flex-direction: row;
+    #price-chart,
+    #volume-chart {
+      width: 48%;
+      display: flex;
+    }
+  }
 `;
 
-export const ChartsContainer = styled.div`
-  display: flex;
-  @media (max-width: 665px) {
-    flex-direction: column;
+export const ChartContainer = styled.div`
+  margin-top: 2em;
+  width: 100%;
+  border-radius: 8px;
+  padding: 0.5em;
+  height: 150px;
+  max-width: 840px;
+  max-height: 450px;
+  background: ${(props) => props.theme.main};
+  @media (min-width: 430px) {
+    height: 35vh;
+    @media (min-width: 650px) {
+      height: 25vw;
+    }
   }
 `;
 
 export const TableContainer = styled.div`
-  width: auto;
-  margin: auto;
-  padding: 5rem;
-  @media (max-width: 2560px) {
-    padding: 5rem 0;
-  }
-  @media (max-width: 1440px) {
-    padding: 5rem 0;
-  }
-  @media (max-width: 1024px) {
-    padding: 3rem 0;
-  }
-  @media (max-width: 768px) {
-    padding: 5rem 0;
-  }
-  @media (max-width: 425px) {
-    padding: 3rem 0;
-  }
-`;
-export const CoinContainer = styled.div`
-  overflow: auto;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
-  @media (max-width: 2560px) {
-    width: 87vw;
-  }
-  @media (max-width: 1440px) {
-    width: 87vw;
-  }
-  @media (max-width: 1250px) {
-    width: 94vw;
-  }
-  @media (max-width: 1024px) {
-    width: 90vw;
-  }
-  @media (max-width: 665px) {
-    width: 500px;
-  }
-  @media (max-width: 425px) {
-    width: 400px;
-    height: 500px;
-  }
-  @media (max-width: 390px) {
-    width: 365px;
-  }
-  @media (max-width: 375px) {
-    width: 350px;
-    height: 450px;
-  }
-  @media (max-width: 320px) {
-    max-width: 300px;
-    height: 425px;
-  }
-  @media (max-width: 280px) {
-    max-width: 260px;
-    height: 400px;
+  margin-top: 1.5em;
+  padding: 1.5em 1em;
+  margin-bottom: 1em;
+  border-radius: 6px;
+  background: ${(props) => props.theme.main};
+  @media (min-width: 430px) {
+    margin-bottom: 4em;
   }
 `;
 export const CoinTable = styled.table`
   width: 100%;
-  font-size: 0.8rem;
-  margin: auto;
-  padding: 1rem;
-  border-radius: 10px;
+  border-radius: 6px;
+  font-weight: 400;
   border-collapse: collapse;
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
 `;
 export const ScrollableDiv = styled.div`
-  width: auto;
+  width: 100%;
+  height: 320px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 5px;
   }
   &::-webkit-scrollbar-corner {
     background: ${(props) => props.theme.secondary};
@@ -102,89 +86,60 @@ export const ScrollableDiv = styled.div`
   @media (min-height: 1024px) {
     height: 480px;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     height: 600px;
-  }
-  @media (max-width: 425px) {
-    height: 500px;
-  }
-  @media (max-width: 375px) {
-    height: 450px;
-  }
-  @media (max-width: 320px) {
-    height: 425px;
-  }
-  @media (max-width: 280px) {
-    height: 400px;
   }
 `;
 export const ScrollText = styled.h4`
   text-align: center;
 `;
 export const TableHeader = styled.thead`
-  background-color: ${(props) => props.theme.main};
-  z-index: 5;
+  background: ${(props) => props.theme.main};
+  color: ${(props) => props.theme.fontColor};
+  position: sticky;
+  top: -15px;
+  height: 40px;
+  @media (min-width: 430px) {
+    top: 0px;
+  }
 `;
 export const HeaderTr = styled.tr``;
 export const Styledth = styled.th`
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  text-align: left;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  font-weight: 300;
+  text-align: start;
   font-size: 0.7rem;
-  &:nth-child(1),
-  &:nth-child(2),
-  &:nth-child(3),
-  &:nth-child(4),
-  &:nth-child(5),
-  &:nth-child(6) {
-    padding-left: 1rem;
+  padding-left: 0.7em;
+  @media (min-width: 430px) {
+    font-size: 0.8rem;
   }
-  &: nth-child(2) {
-    width: 10%;
+  @media (min-width: 1440px) {
+    font-size: 1rem;
   }
 `;
 export const TableBody = styled.tbody``;
 export const TableRow = styled.tr`
-  border-top: 1px solid gray;
+  border-bottom: 2px solid ${(props) => props.theme.secondary};
+  &:last-child {
+    border-bottom: none;
+  }
+  & > td {
+    &:last-child {
+      width: 0;
+    }
+  }
 `;
 export const Td = styled.td`
-  &:nth-child(7) > div,
-  &:nth-child(8) > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 75%;
-    position: relative;
-  }
-  &:nth-child(7) p,
-  &:nth-child(8) p {
-    font-size: 0.7rem;
-    margin: 0 0 0.2rem 0;
-  }
-  &:nth-child(7) p {
-    color: rgb(138, 146, 178);
-  }
-  &:nth-child(8) p {
-    color: rgb(138, 146, 178);
-  }
-  &:nth-child(7),
-  &:nth-child(8) {
-  }
-  &:nth-child(9) {
-    display: flex;
-    justify-content: center;
-    padding-top: 0.9rem;
-    width: 75%;
+  font-size: 0.8rem;
+  text-align: start;
+  padding-right: 1em;
+  @media (min-width: 1440px) {
+    font-size: 0.9rem;
+    padding: 1.25em 1em;
   }
 `;
 export const TableDiv = styled.div`
-    display: flex;
-    align-items: center;
-    padding: ${({ padding }) => (padding ? padding : "0 1rem 0 1rem")};
-  }
+  display: flex;
+  align-items: center;
 `;
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -196,14 +151,35 @@ export const StyledLink = styled(Link)`
     cursor: pointer;
   }
 `;
-
+export const NameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: ${(props) => props.theme.fontColor};
+  padding-right: 4em;
+`;
+export const CoinName = styled.div`
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 1440px) {
+    font-size: 1rem;
+    flex-direction: row;
+  }
+`;
+export const CurrencySymbol = styled.span`
+  padding-right: 2px;
+`;
 export const ProgressContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
 export const Image = styled.img`
-  margin: 0.5rem;
-  width: 25%;
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
+  margin-right: 1em;
+  border-radius: 100%;
 `;
 export const Circle = styled.div`
   background-color: ${({ color }) => (color ? color : "white")};
@@ -216,6 +192,33 @@ export const Circle = styled.div`
   border-radius: 50%;
   height: 0.3rem;
   width: 0.3rem;
-  margin: auto 0.5rem 0.1rem 0;
+  margin: auto 0.5rem 0.1rem 0.5rem;
   display: inline-block;
+`;
+export const Container = styled.div`
+  width: ${({ width }) => width}%;
+  padding: ${({ padding }) => padding}rem;
+  background: rgb(71, 76, 119);
+  position: relative;
+  border-radius: 10px;
+  margin: auto 0;
+  overflow: hidden;
+  border: none;
+  margin-right: auto;
+`;
+
+const BaseBox = styled.div`
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 5px;
+  border: none;
+`;
+
+export const Progress = styled(BaseBox)`
+  background: rgb(138, 146, 178);
+  width: ${({ percent }) => percent}%;
+  min-width: ${({ percent }) => (percent < 2 ? "2" : percent)}%;
 `;

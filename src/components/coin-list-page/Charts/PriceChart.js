@@ -48,7 +48,7 @@ const PriceChart = (props) => {
 
   const today = new Date().toString().split(" ").splice(1, 3).join(" ");
   return (
-    <Wrapper order={1}>
+    <Wrapper>
       <StyledLegend>
         <StyledH5>Bitcoin Price</StyledH5>
         <LegendH4>
@@ -57,7 +57,7 @@ const PriceChart = (props) => {
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData()} options={options} width={405} height={200} />
+      <Line data={chartData()} options={options} />
     </Wrapper>
   );
 };

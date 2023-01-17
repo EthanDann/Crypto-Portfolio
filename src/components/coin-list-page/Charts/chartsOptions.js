@@ -1,25 +1,34 @@
 export const options = {
-  responsive: true,
+  layout: {
+    padding: {
+      top: 100,
+    },
+  },
+
   plugins: {
     legend: {
       display: false,
     },
   },
+  animation: {
+    duration: 2000,
+  },
+  maintainAspectRatio: false,
+  responsive: true,
   scales: {
     y: {
-      grid: {
-        display: false,
-        drawTicks: false,
-        borderWidth: 0,
-      },
-      ticks: {
-        display: false,
-      },
+      display: false,
     },
     x: {
       grid: {
-        display: false,
-        borderWidth: 0,
+        color: "transparent",
+      },
+      ticks: {
+        font: {
+          size: 12,
+        },
+        maxRotation: 0,
+        minRotation: 0,
       },
     },
   },
