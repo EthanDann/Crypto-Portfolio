@@ -49,6 +49,10 @@ const App = () => {
   const handleOpen = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
+  useEffect(() => {
+    setActiveCurrency(localStorage.getItem("currency"));
+    setCurrencySymbol(localStorage.getItem("symbol"));
+  }, [activeCurrency, currencySymbol]);
   return (
     <ThemeProvider theme={theme ? darkTheme : lightTheme}>
       <Container>

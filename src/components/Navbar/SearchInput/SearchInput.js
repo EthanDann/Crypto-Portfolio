@@ -12,11 +12,7 @@ import {
 
 const Coin = (props) => {
   return (
-    <ResultsList
-      onBlur={() => props.handleBlur()}
-      results={props.results}
-      showResults={props.showResults}
-    >
+    <ResultsList results={props.results} showResults={props.showResults}>
       {props.results.map((result) => (
         <ListItem>
           <StyledLink
