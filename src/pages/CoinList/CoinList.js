@@ -1,33 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { currencyFormatter } from "utils";
-import { Sparkline, PriceChart, VolumeChart, PercentDiv } from "components";
-import {
-  Wrapper,
-  ChartWrapper,
-  ChartContainer,
-  TableContainer,
-  CoinTable,
-  ScrollableDiv,
-  ScrollText,
-  TableHeader,
-  HeaderTr,
-  Styledth,
-  TableBody,
-  TableRow,
-  Td,
-  TableDiv,
-  StyledLink,
-  NameContainer,
-  CoinName,
-  CurrencySymbol,
-  ProgressContainer,
-  Image,
-  Circle,
-  Progress,
-  Container,
-} from "./coinlist.styled";
+import { CoinListTable, PriceChart, VolumeChart } from "components";
+import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
 
 const CoinList = (props) => {
   const [coinList, setCoinList] = useState([]);
@@ -97,10 +71,6 @@ const CoinList = (props) => {
     getChartInfo();
     //eslint-disable-next-line
   }, [props.activeCurrency]);
-  const getPercentColor = (num) => {
-    if (num < 0) return "true";
-    return "false";
-  };
   const HasCoin = !isLoading && coinList;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
@@ -131,138 +101,17 @@ const CoinList = (props) => {
           </ChartContainer>
         </ChartWrapper>
       )}
-      <TableContainer>
-        {isLoading && <span>Fetching all coins...</span>}
-        {HasCoin && !hasError && (
-          <ScrollableDiv id="scrollableDiv">
-            <InfiniteScroll
-              dataLength={coinList.length}
-              next={() => getMoreCoins()}
-              hasMore={true}
-              loader={<ScrollText>Loading...</ScrollText>}
-              scrollableTarget={"scrollableDiv"}
-              endMessage={<ScrollText>Yay! You have seen it all</ScrollText>}
-            >
-              <CoinTable>
-                <TableHeader>
-                  <HeaderTr>
-                    <Styledth>#</Styledth>
-                    <Styledth>Name</Styledth>
-                    <Styledth>Price</Styledth>
-                    <Styledth>1h</Styledth>
-                    <Styledth>24h</Styledth>
-                    <Styledth>7d</Styledth>
-                    <Styledth>24h Vol / Market Cap</Styledth>
-                    <Styledth>Circulating / Total Sup</Styledth>
-                    <Styledth>Last 7d</Styledth>
-                  </HeaderTr>
-                </TableHeader>
-                <TableBody>
-                  {filteredCoinList.map((coin, id) => {
-                    return (
-                      <TableRow key={id}>
-                        <Td>
-                          <TableDiv>{id + 1}</TableDiv>
-                        </Td>
-                        <Td>
-                          <StyledLink to={`/Coin/${coin.id}`}>
-                            <NameContainer>
-                              <Image src={coin.image} alt={coin.name} />
-                              <CoinName>
-                                {coin.name}({coin.symbol.toUpperCase()})
-                              </CoinName>
-                            </NameContainer>
-                          </StyledLink>
-                        </Td>
-                        <Td>
-                          <TableDiv>
-                            <CurrencySymbol>
-                              {props.currencySymbol ?? "$"}
-                            </CurrencySymbol>
-                            <span>{coin.current_price}</span>
-                          </TableDiv>
-                        </Td>
-                        <PercentDiv
-                          list={coinList}
-                          hourType={getPercentColor(
-                            coin.price_change_percentage_1h_in_currency
-                          )}
-                          hourText={
-                            coin.price_change_percentage_1h_in_currency.toFixed(
-                              2
-                            ) + "%"
-                          }
-                          dayType={getPercentColor(
-                            coin.price_change_percentage_24h_in_currency
-                          )}
-                          dayText={
-                            coin.price_change_percentage_24h_in_currency.toFixed(
-                              2
-                            ) + "%"
-                          }
-                          weekType={getPercentColor(
-                            coin.price_change_percentage_7d_in_currency
-                          )}
-                          weekText={
-                            coin.price_change_percentage_7d_in_currency.toFixed(
-                              2
-                            ) + "%"
-                          }
-                        />
-                        <Td>
-                          <ProgressContainer>
-                            <p>
-                              <Circle color={"rgb(138, 146, 178)"} />
-                              {currencyFormatter(coin.total_volume, 2)}
-                            </p>
-                            <p>
-                              <Circle color={"rgb(71, 76, 119)"} />
-                              {currencyFormatter(coin.market_cap, 2)}
-                            </p>
-                          </ProgressContainer>
-                          <Container width={80} padding={0.25}>
-                            <Progress
-                              percent={
-                                (coin.total_volume / coin.market_cap) * 100
-                              }
-                            />
-                          </Container>
-                        </Td>
-                        <Td>
-                          <ProgressContainer>
-                            <p>
-                              <Circle color={"rgb(138, 146, 178)"} />
-                              {currencyFormatter(coin.circulating_supply, 2)}
-                            </p>
-                            <p>
-                              <Circle color={"rgb(71, 76, 119)"} />
-                              {coin.total_supply
-                                ? currencyFormatter(coin.total_supply, 2)
-                                : "∞"}
-                            </p>
-                          </ProgressContainer>
-                          <Container width={80} padding={0.25}>
-                            <Progress
-                              percent={
-                                (coin.circulating_supply / coin.total_supply) *
-                                100
-                              }
-                            />
-                          </Container>
-                        </Td>
-                        <Td>
-                          <Sparkline prices={coin.sparkline_in_7d.price} />
-                        </Td>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </CoinTable>
-            </InfiniteScroll>
-          </ScrollableDiv>
-        )}
-        {hasError && <span>${error}</span>}
-      </TableContainer>
+      {HasCoin && (
+        <CoinListTable
+          coinList={coinList}
+          filteredCoinList={filteredCoinList}
+          currencySymbol={props.currencySymbol}
+          hasError={hasError}
+          error={error}
+          isLoading={isLoading}
+          next={() => getMoreCoins()}
+        />
+      )}
     </Wrapper>
   );
 };
