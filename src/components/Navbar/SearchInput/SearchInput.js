@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import {
   ResultsList,
   ListItem,
@@ -29,6 +28,7 @@ const Coin = (props) => {
 };
 
 const SearchInput = (props) => {
+  // eslint-disable-next-line
   const [coins, setCoins] = useState([
     {
       name: "Bitcoin",
@@ -49,20 +49,9 @@ const SearchInput = (props) => {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://api.coingecko.com/api/v3/coins/list`)
-  //     .then(({ data }) => {
-  //       setCoins(data);
-  //     });
-  //   //eslint-disable-next-line
-  // }, [coins]);
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
     if (e.target.value.length > 0) {
-      // getResults(e.target.value);
       const filteredResults = coins.filter((coin) =>
         coin.name.toLowerCase().includes(e.target.value.toLowerCase())
       );
