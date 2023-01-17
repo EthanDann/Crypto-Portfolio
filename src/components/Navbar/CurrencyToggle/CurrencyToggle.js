@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect, useRef } from "react";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import {
@@ -14,6 +14,21 @@ import {
 } from "./currencyToggle.styled";
 
 function CurrencyToggle(props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
+  };
+  const dropdownRef = useRef();
+  useEffect(() => {
+    const handleClick = (event) => {
+      const node = dropdownRef.current;
+      if (node && !node.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   let currencies = [...props.supportedCurrencies];
   if (props.activeCurrency.length) {
     const regex = new RegExp(`^${props.activeCurrency}`, "i");
@@ -25,7 +40,7 @@ function CurrencyToggle(props) {
   return (
     <>
       <DropDownContainer>
-        <DropDownHeader onClick={props.handleOpen}>
+        <DropDownHeader ref={dropdownRef} onClick={() => handleOpen()}>
           <Circle>
             <StyledCurrencyIcon value="USD">
               {props.currencySymbol ?? "$"}
@@ -34,19 +49,19 @@ function CurrencyToggle(props) {
           <Input
             type="text"
             value={props.activeCurrency.toUpperCase() ?? "USD"}
-            onChange={props.handleTextChange}
+            onChange={() => props.handleTextChange()}
           ></Input>
           <DownArrowContainer>
-            {props.isOpen && <UpArrow />}
-            {!props.isOpen && <DownArrow />}
+            {isOpen && <UpArrow />}
+            {!isOpen && <DownArrow />}
           </DownArrowContainer>
         </DropDownHeader>
-        {props.isOpen && (
+        {isOpen && (
           <DropDownListContainer>
             <DropDownList>
               {currencies.map((currency) => (
                 <ListItem
-                  onClick={props.handleCurrency}
+                  onClick={() => props.handleCurrency()}
                   key={Math.random()}
                   value={currency}
                 >

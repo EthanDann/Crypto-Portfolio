@@ -23,8 +23,6 @@ function Navbar(props) {
         <CurrencyToggle
           supportedCurrencies={props.supportedCurrencies}
           currencySymbol={props.currencySymbol}
-          isOpen={props.isOpen}
-          handleOpen={props.handleOpen}
           activeCurrency={props.activeCurrency}
           handleCurrency={props.handleCurrency}
           handleTextChange={props.handleTextChange}

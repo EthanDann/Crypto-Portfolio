@@ -10,20 +10,22 @@ import { Container, darkTheme, lightTheme } from "App.styled";
 const App = () => {
   const [supportedCurrencies, setSupportedCurrencies] = useState([]);
   const [activeCurrency, setActiveCurrency] = useState("usd");
-  const [currencySymbol, setCurrencySymbol] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [currencySymbol, setCurrencySymbol] = useState("$");
   const [theme, setTheme] = useState(true);
   useEffect(() => {
     const getSupportedCurrencies = async () => {
-      await axios
-        .get(
-          `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+      try {
+        await axios
+          .get(
+            `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
 `
-        )
-        .then(({ data }) => {
-          setSupportedCurrencies(data);
-        });
+          )
+          .then(({ data }) => {
+            setSupportedCurrencies(data);
+          });
+      } catch (err) {}
     };
+
     getSupportedCurrencies();
   }, [supportedCurrencies]);
   const handleTheme = () => {
@@ -33,26 +35,21 @@ const App = () => {
     localStorage.setItem(name, item);
   };
   const handleCurrency = (e) => {
+    console.log("he");
     if (activeCurrency === e.target.innerHTML) {
       document.querySelectorAll("li").focus();
     }
     setActiveCurrency(e.target.innerHTML);
-    setIsOpen(false);
     setCurrencySymbol(getSymbolFromCurrency(e.target.innerHTML));
     handleSetStorage("currency", e.target.innerHTML);
     handleSetStorage("symbol", getSymbolFromCurrency(e.target.innerHTML));
     window.location.reload();
   };
   const handleTextChange = (e) => {
+    console.log(e.target.value);
     setActiveCurrency(e.target.value);
   };
-  const handleOpen = () => {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
-  };
-  useEffect(() => {
-    setActiveCurrency(localStorage.getItem("currency"));
-    setCurrencySymbol(localStorage.getItem("symbol"));
-  }, [activeCurrency, currencySymbol]);
+
   return (
     <ThemeProvider theme={theme ? darkTheme : lightTheme}>
       <Container>
@@ -60,11 +57,9 @@ const App = () => {
           <Navbar
             supportedCurrencies={supportedCurrencies}
             currencySymbol={currencySymbol}
-            isOpen={isOpen}
-            handleOpen={() => handleOpen()}
             activeCurrency={activeCurrency}
-            handleCurrency={() => handleCurrency()}
-            handleTextChange={() => handleTextChange()}
+            handleCurrency={handleCurrency}
+            handleTextChange={handleTextChange}
             theme={theme}
             handleTheme={() => handleTheme()}
           />
