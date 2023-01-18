@@ -1,8 +1,12 @@
+import getSymbolFromCurrency from "currency-symbol-map";
+
 const initialState = {
   data: [],
-  activeCurrency: "usd",
+  activeCurrency: "USD",
+  currencySymbol: "$",
 };
 export const GET_CURRENCIES_SUCCESS = "GET_CURRENCIES_SUCCESS";
+export const TOGGLE_CURRENCY = "TOGGLE_CURRENCY";
 
 const currenciesReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +14,12 @@ const currenciesReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+    case TOGGLE_CURRENCY:
+      return {
+        ...state,
+        activeCurrency: action.payload,
+        currencySymbol: getSymbolFromCurrency(action.payload.toUpperCase()),
       };
     default:
       return state;

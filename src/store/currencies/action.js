@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_CURRENCIES_SUCCESS } from "./index";
+import { GET_CURRENCIES_SUCCESS, TOGGLE_CURRENCY } from "./index";
 
 export const getSupportedCurrencies = () => async (dispatch, getState) => {
   try {
@@ -9,8 +9,14 @@ export const getSupportedCurrencies = () => async (dispatch, getState) => {
 `
       )
       .then(({ data }) => {
-        console.log(data);
-        dispatch({ type: GET_CURRENCIES_SUCCESS, payload: data });
+        dispatch({
+          type: GET_CURRENCIES_SUCCESS,
+          payload: data,
+        });
       });
   } catch (err) {}
+};
+
+export const toggleCurrency = (toggled) => (dispatch, getState) => {
+  dispatch({ type: TOGGLE_CURRENCY, payload: toggled });
 };

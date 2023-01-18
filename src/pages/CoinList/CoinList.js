@@ -27,7 +27,7 @@ const CoinList = (props) => {
         )
         .then((res) => {
           setHasError(false);
-          setCoinList([...coinList, ...res.data]);
+          setCoinList([...props.coins, ...res.data]);
         });
     } catch (err) {
       setHasError(true);
@@ -56,7 +56,7 @@ const CoinList = (props) => {
     getChartInfo();
     //eslint-disable-next-line
   }, [props.activeCurrency]);
-  const HasCoin = !isLoading && coinList;
+  const HasCoin = !isLoading && props.coins;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
   const uniqueList = [];
