@@ -11,14 +11,7 @@ import {
 } from "./CoinListTable.styled";
 
 const CoinListTable = (props) => {
-  const {
-    currencySymbol,
-    isLoading,
-    hasError,
-    error,
-    coinList,
-    filteredCoinList,
-  } = props;
+  const { currencySymbol, isLoading, hasError, error, coinList } = props;
   return (
     <TableContainer>
       {isLoading && <span>Fetching all coins...</span>}
@@ -48,7 +41,6 @@ const CoinListTable = (props) => {
               </TableHeader>
               <CoinListRow
                 coinList={coinList}
-                filteredCoinList={filteredCoinList}
                 currencySymbol={currencySymbol}
               />
             </CoinTable>

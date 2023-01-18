@@ -37,15 +37,6 @@ const CoinList = (props) => {
   const HasCoin = !isLoading && props.coins;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
-  const uniqueList = [];
-  const filteredCoinList = props.coins.filter((element) => {
-    const isDuplicate = uniqueList.includes(element.id);
-    if (!isDuplicate) {
-      uniqueList.push(element.id);
-      return true;
-    }
-    return false;
-  });
   return (
     <Wrapper>
       {HasPriceData && HasVolumeData && !hasError && (
@@ -67,7 +58,6 @@ const CoinList = (props) => {
       {HasCoin && (
         <CoinListTable
           coinList={props.coins}
-          filteredCoinList={filteredCoinList}
           currencySymbol={props.currencySymbol}
           hasError={hasError}
           error={props.error}
@@ -78,7 +68,6 @@ const CoinList = (props) => {
     </Wrapper>
   );
 };
-
 const mapStateToProps = (state) => ({
   coins: state.coins.data,
   pageNum: state.coins.pageNum,
