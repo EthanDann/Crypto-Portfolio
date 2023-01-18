@@ -10,6 +10,15 @@ import {
 } from "./navbar.styled";
 
 function Navbar(props) {
+  const {
+    supportedCurrencies,
+    currencySymbol,
+    activeCurrency,
+    handleCurrency,
+    handleTextChange,
+    handleTheme,
+    theme,
+  } = props;
   return (
     <Nav>
       <Container>
@@ -21,15 +30,15 @@ function Navbar(props) {
         </StyledLink>
         <SearchInput />
         <CurrencyToggle
-          supportedCurrencies={props.supportedCurrencies}
-          currencySymbol={props.currencySymbol}
-          activeCurrency={props.activeCurrency}
-          handleCurrency={() => props.handleCurrency()}
-          handleTextChange={() => props.handleTextChange()}
+          supportedCurrencies={supportedCurrencies}
+          currencySymbol={currencySymbol}
+          activeCurrency={activeCurrency}
+          handleCurrency={handleCurrency}
+          handleTextChange={handleTextChange}
         />
         <ThemeContainer>
-          <Button onClick={props.handleTheme}>
-            {props.theme ? <StyledDarkIcon /> : <StyledLightIcon />}
+          <Button onClick={handleTheme}>
+            {theme ? <StyledDarkIcon /> : <StyledLightIcon />}
           </Button>
         </ThemeContainer>
       </Container>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
+import { getAllCoins } from "store/coinList/action";
 import { CoinListTable, PriceChart, VolumeChart } from "components";
 import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
 
@@ -13,26 +15,9 @@ const CoinList = (props) => {
   const [hasError, setHasError] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
-    const getAllCoins = async () => {
-      try {
-        setIsLoading(true);
-        await axios
-          .get(
-            `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${props.activeCurrency}&order=market_cap_desc&per_page=${coinsPerPage}&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
-          )
-          .then(({ data }) => {
-            setCoinList(data);
-            setIsLoading(false);
-            setHasError(false);
-          });
-      } catch (err) {
-        setHasError(true);
-        setError(err);
-      }
-    };
-    getAllCoins();
+    props.getAllCoins();
     //eslint-disable-next-line
-  }, [props.activeCurrency, coinsPerPage]);
+  }, []);
   const getMoreCoins = async () => {
     try {
       setPage(page + 1);
@@ -75,7 +60,7 @@ const CoinList = (props) => {
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
   const uniqueList = [];
-  const filteredCoinList = coinList.filter((element) => {
+  const filteredCoinList = props.coins.filter((element) => {
     const isDuplicate = uniqueList.includes(element.id);
     if (!isDuplicate) {
       uniqueList.push(element.id);
@@ -103,7 +88,7 @@ const CoinList = (props) => {
       )}
       {HasCoin && (
         <CoinListTable
-          coinList={coinList}
+          coinList={props.coins}
           filteredCoinList={filteredCoinList}
           currencySymbol={props.currencySymbol}
           hasError={hasError}
@@ -116,4 +101,13 @@ const CoinList = (props) => {
   );
 };
 
-export default CoinList;
+const mapStateToProps = (state) => ({
+  coins: state.coins.data,
+  isLoading: state.coins.isLoading,
+  hasError: state.coins.hasError,
+});
+const mapDispatchToProps = {
+  getAllCoins,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoinList);

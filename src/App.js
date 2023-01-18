@@ -12,22 +12,22 @@ const App = () => {
   const [activeCurrency, setActiveCurrency] = useState("usd");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [theme, setTheme] = useState(true);
-  useEffect(() => {
-    const getSupportedCurrencies = async () => {
-      try {
-        await axios
-          .get(
-            `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
-`
-          )
-          .then(({ data }) => {
-            setSupportedCurrencies(data);
-          });
-      } catch (err) {}
-    };
+  //   useEffect(() => {
+  //     const getSupportedCurrencies = async () => {
+  //       try {
+  //         await axios
+  //           .get(
+  //             `https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+  // `
+  //           )
+  //           .then(({ data }) => {
+  //             setSupportedCurrencies(data);
+  //           });
+  //       } catch (err) {}
+  //     };
 
-    getSupportedCurrencies();
-  }, [supportedCurrencies]);
+  //     getSupportedCurrencies();
+  //   }, [supportedCurrencies]);
   const handleTheme = () => {
     theme ? setTheme(false) : setTheme(true);
   };
@@ -45,7 +45,6 @@ const App = () => {
     window.location.reload();
   };
   const handleTextChange = (e) => {
-    console.log(e.target.value);
     setActiveCurrency(e.target.value);
   };
 
@@ -57,8 +56,8 @@ const App = () => {
             supportedCurrencies={supportedCurrencies}
             currencySymbol={currencySymbol}
             activeCurrency={activeCurrency}
-            handleCurrency={handleCurrency}
-            handleTextChange={handleTextChange}
+            handleCurrency={() => handleCurrency()}
+            handleTextChange={() => handleTextChange()}
             theme={theme}
             handleTheme={() => handleTheme()}
           />

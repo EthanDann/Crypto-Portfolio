@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { connect } from "react-redux";
+import { getSupportedCurrencies } from "store/currencies/action";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import {
@@ -18,6 +20,11 @@ function CurrencyToggle(props) {
   const handleOpen = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
+  useEffect(() => {
+    console.log(props);
+    props.getSupportedCurrencies();
+    //eslint-disable-next-line
+  }, []);
   const dropdownRef = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -29,27 +36,34 @@ function CurrencyToggle(props) {
     document.addEventListener("mousedown", handleClick);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  let currencies = [...props.supportedCurrencies];
-  if (props.activeCurrency.length) {
-    const regex = new RegExp(`^${props.activeCurrency}`, "i");
-    currencies = [
-      ...props.supportedCurrencies.filter((v) => regex.test(v)),
-      ...props.supportedCurrencies.filter((v) => !regex.test(v)).sort(),
-    ];
-  }
+  const {
+    activeCurrency,
+    currencySymbol,
+    // supportedCurrencies,
+    handleTextChange,
+    handleCurrency,
+  } = props;
+  // let currencies = [supportedCurrencies];
+  // if (activeCurrency.length) {
+  //   const regex = new RegExp(`^${activeCurrency}`, "i");
+  //   currencies = [
+  //     supportedCurrencies.filter((v) => regex.test(v)),
+  //     supportedCurrencies.filter((v) => !regex.test(v)).sort(),
+  //   ];
+  // }
   return (
     <>
       <DropDownContainer>
         <DropDownHeader ref={dropdownRef} onClick={() => handleOpen()}>
           <Circle>
             <StyledCurrencyIcon value="USD">
-              {props.currencySymbol ?? "$"}
+              {currencySymbol ?? "$"}
             </StyledCurrencyIcon>
           </Circle>
           <Input
             type="text"
-            value={props.activeCurrency.toUpperCase() ?? "USD"}
-            onChange={props.handleTextChange}
+            value={activeCurrency.toUpperCase() ?? "USD"}
+            onChange={handleTextChange}
           ></Input>
           <DownArrowContainer>
             {isOpen && <UpArrow />}
@@ -59,10 +73,11 @@ function CurrencyToggle(props) {
         {isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              {currencies.map((currency) => (
+              {props.supportedCurrencies.map((currency, index) => (
                 <ListItem
-                  onClick={props.handleCurrency}
+                  onClick={handleCurrency}
                   key={Math.random()}
+                  name={currency}
                   value={currency}
                 >
                   {currency.toUpperCase()}
@@ -76,4 +91,10 @@ function CurrencyToggle(props) {
   );
 }
 
-export default CurrencyToggle;
+const mapStateToProps = (state) => ({
+  supportedCurrencies: state.supportedCurrencies.data,
+});
+const mapDispatchToProps = {
+  getSupportedCurrencies,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencyToggle);
