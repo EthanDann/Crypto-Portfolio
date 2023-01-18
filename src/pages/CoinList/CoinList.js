@@ -1,39 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllCoins, getMoreCoins } from "store/coinList/action";
+import { getChartInfo } from "store/charts/action";
 import { CoinListTable, PriceChart, VolumeChart } from "components";
 import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
 
 const CoinList = (props) => {
-  const [priceData, setPriceData] = useState([]);
-  const [volumeData, setVolumeData] = useState([]);
   useEffect(() => {
     props.getAllCoins();
+    props.getChartInfo();
     //eslint-disable-next-line
   }, []);
-  // useEffect(() => {
-  //   const getChartInfo = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const { data } = await axios.get(
-  //         `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${props.activeCurrency}&days=30&interval=daily`
-  //       );
-  //       const priceData = data.prices.map((el) => el[1].toFixed(3));
-  //       const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));
-  //       setPriceData(priceData);
-  //       setVolumeData(volumeData);
-  //       setIsLoading(false);
-  //       setHasError(false);
-  //     } catch (err) {
-  //       setIsLoading(false);
-  //       setHasError(true);
-  //       setError(err);
-  //     }
-  //   };
-  //   getChartInfo();
-  //   //eslint-disable-next-line
-  // }, [props.activeCurrency]);
-  const { isLoading, hasError } = props;
+  const {
+    getMoreCoins,
+    priceData,
+    volumeData,
+    currencySymbol,
+    coins,
+    error,
+    isLoading,
+    hasError,
+  } = props;
   const HasCoin = !isLoading && props.coins;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
@@ -42,27 +29,21 @@ const CoinList = (props) => {
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>
           <ChartContainer id="price-chart">
-            <PriceChart
-              prices={priceData}
-              currencySymbol={props.currencySymbol}
-            />
+            <PriceChart prices={priceData} currencySymbol={currencySymbol} />
           </ChartContainer>
           <ChartContainer id="volume-chart">
-            <VolumeChart
-              volumes={volumeData}
-              currencySymbol={props.currencySymbol}
-            />
+            <VolumeChart volumes={volumeData} currencySymbol={currencySymbol} />
           </ChartContainer>
         </ChartWrapper>
       )}
       {HasCoin && (
         <CoinListTable
-          coinList={props.coins}
-          currencySymbol={props.currencySymbol}
+          coinList={coins}
+          currencySymbol={currencySymbol}
           hasError={hasError}
-          error={props.error}
+          error={error}
           isLoading={isLoading}
-          next={() => props.getMoreCoins()}
+          next={() => getMoreCoins()}
         />
       )}
     </Wrapper>
@@ -70,6 +51,8 @@ const CoinList = (props) => {
 };
 const mapStateToProps = (state) => ({
   coins: state.coins.data,
+  priceData: state.charts.priceData,
+  volumeData: state.charts.volumeData,
   pageNum: state.coins.pageNum,
   isLoading: state.coins.isLoading,
   hasError: state.coins.hasError,
@@ -77,6 +60,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   getAllCoins,
+  getChartInfo,
   getMoreCoins,
 };
 
