@@ -4,10 +4,13 @@ const initialState = {
   pageNum: 1,
   isLoading: false,
   hasError: false,
+  error: "",
 };
 export const GET_COINS_SUCCESS = "GET_COINS_SUCCESS";
 export const GET_COINS_LOADING = "GET_COINS_LOADING";
 export const GET_COINS_ERROR = "GET_COINS_ERROR";
+export const GET_MORE_COINS_SUCCESS = "GET_MORE_COINS_SUCCESS";
+export const INCREMENT_PAGE_NUM = "INCREMENT_PAGE_NUM";
 const coinListReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COINS_LOADING:
@@ -24,6 +27,7 @@ const coinListReducer = (state = initialState, action) => {
         hasError: false,
         error: null,
         data: action.payload,
+        pageNum: state.pageNum,
       };
     case GET_COINS_ERROR:
       return {
@@ -32,6 +36,15 @@ const coinListReducer = (state = initialState, action) => {
         hasError: true,
         error: action.payload,
       };
+    case GET_MORE_COINS_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        hasError: false,
+        error: null,
+        data: action.payload,
+      };
+    }
     default:
       return state;
   }

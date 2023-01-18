@@ -45,6 +45,10 @@ function CurrencyToggle(props) {
     props.toggleCurrency(currency);
     setIsOpen(false);
   };
+  const handleTextToggle = (currency) => {
+    props.toggleCurrency(currency);
+    currency.length === 3 ? setIsOpen(false) : setIsOpen(true);
+  };
   const { activeCurrency, currencySymbol, supportedCurrencies } = props;
   let currencies = [...supportedCurrencies];
   if (activeCurrency.length) {
@@ -66,7 +70,7 @@ function CurrencyToggle(props) {
           <Input
             type="text"
             value={activeCurrency.toUpperCase() ?? "USD"}
-            onChange={(e) => e.preventDefault()}
+            onChange={(e) => handleTextToggle(e.target.value)}
           ></Input>
           <DownArrowContainer>
             {isOpen && <UpArrow />}
