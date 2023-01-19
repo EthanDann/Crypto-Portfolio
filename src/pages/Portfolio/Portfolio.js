@@ -19,6 +19,7 @@ import {
   OuterContainer,
   InnerContainer,
   Text,
+  AssetInfo,
   LinkContent,
   LinkContainer,
   AllTimeContent,
@@ -71,6 +72,7 @@ const Portfolio = (props) => {
       };
     }, [ref]);
   }
+  const { assets, activeCurrency, currencySymbol } = props;
   return (
     <>
       <Container isOpen={isOpen}>
@@ -80,49 +82,63 @@ const Portfolio = (props) => {
           </AddAssetButton>
         </ButtonContainer>
         <Header>Your Statistics</Header>
-        <Row>
-          <CoinInfoContainer>
-            <OuterContainer>
-              <InnerContainer>
-                <ImageContainer>
-                  <Image src={"coin.image.large"} alt={"coin.name"} />
-                </ImageContainer>
-                <CoinName>
-                  {"coin.name"}({"coin.symbol".toUpperCase()})
-                </CoinName>
-              </InnerContainer>
-            </OuterContainer>
-          </CoinInfoContainer>
-          <Column>
-            <AllTimeContent>
-              <ContentRow>
-                <Text>Current Price: </Text>
-                {/* {currencySymbol + nFormatter(coin.current_price[activeCurrency], "1,000")} */}
-                <Text>Price Change 24h: </Text>
-                {/*{coin.price_change_24h} */}
-                <Text>Market Cap vs Volume: </Text>
-                {/* {coin.market_cap[activeCurrency] / coin.total_volume + "%"} */}
-                <Text>Circ Supply vs Max Supply: </Text>
-                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                {/* {nFormatter(coin.max_supply, "10,000") - nFormatter(coin.circulating_supply, "10,000")} */}
-              </ContentRow>
-            </AllTimeContent>
-            <AllTimeContent>
-              <ContentRow>
-                <Text>Coin Amount: </Text>
-                {/* {coin.amount} */}
-                <Text>Amount Value: </Text>
-                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                {/* {coin.purchase_price} */}
-                <Text>Amount Price Change Since Purchase: </Text>
-                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                {/* {coin.current_price / coin.purchase_price} */}
-                <Text>Purchase Date: </Text>
-                {/* {coin.purchaseDate} */}
-              </ContentRow>
-            </AllTimeContent>
-          </Column>
-        </Row>
+        {assets &&
+          assets.map((coin) => {
+            return (
+              <Row key={coin.name}>
+                <CoinInfoContainer>
+                  <OuterContainer>
+                    <InnerContainer>
+                      <ImageContainer>
+                        <Image src={"coin.image.large"} alt={coin.name} />
+                      </ImageContainer>
+                      <CoinName>
+                        {coin.name}({"btc".toUpperCase()})
+                      </CoinName>
+                    </InnerContainer>
+                  </OuterContainer>
+                </CoinInfoContainer>
+                <Column>
+                  <AllTimeContent>
+                    <ContentRow>
+                      <Text>Current Price: </Text>
+                      <AssetInfo>
+                        {/* {currencySymbol + nFormatter(coin.current_price[activeCurrency], "1,000")} */}
+                      </AssetInfo>
+                      <Text>Price Change 24h: </Text>
+                      <AssetInfo>{/*{coin.price_change_24h} */}</AssetInfo>
+                      <Text>Market Cap vs Volume: </Text>
+                      <AssetInfo>
+                        {/* {coin.market_cap[activeCurrency] / coin.total_volume + "%"} */}
+                      </AssetInfo>
+                      <Text>Circ Supply vs Max Supply: </Text>
+                      <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
+                      <AssetInfo>
+                        {/* {nFormatter(coin.max_supply, "10,000") - nFormatter(coin.circulating_supply, "10,000")} */}
+                      </AssetInfo>
+                    </ContentRow>
+                  </AllTimeContent>
+                  <AllTimeContent>
+                    <ContentRow>
+                      <Text>Coin Amount: </Text>
+                      <AssetInfo>
+                        {coin.purchase_price / coin.price_on_purchase_date}
+                      </AssetInfo>
+                      <Text>Amount Value: </Text>
+                      {/* <IconContainer><StyledPlusIcon /></IconContainer> */}
+                      <AssetInfo>{coin.purchase_price}</AssetInfo>
+                      <Text>Amount Price Change Since Purchase: </Text>
+                      <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
+                      {/* {coin.current_price / coin.purchase_price} */}
+                      <AssetInfo>10%</AssetInfo>
+                      <Text>Purchase Date: </Text>
+                      <AssetInfo>{coin.purchase_date}</AssetInfo>
+                    </ContentRow>
+                  </AllTimeContent>
+                </Column>
+              </Row>
+            );
+          })}
       </Container>
       {isOpen && (
         <ModalContainer ref={modalRef}>
@@ -131,14 +147,18 @@ const Portfolio = (props) => {
             <Row>
               <CoinInfoContainer>
                 <ImageContainer>
-                  <Image src={"coin.image.large"} alt={"coin.name"} />
+                  <Image
+                    src={"selectedCoin.image.large"}
+                    alt={"selectedCoin.name"}
+                  />
                 </ImageContainer>
                 <CoinName>
-                  {"coin.name"}({"coin.symbol".toUpperCase()})
+                  {"selectedCoin.name"}({"selectedCoin.symbol".toUpperCase()})
                 </CoinName>
               </CoinInfoContainer>
               <Column>
                 <StyledSearchInput main placeholder={"Search for Coin..."} />
+                {/* addAsset={() => props.addAsset()} */}
                 <InputContainer>
                   <StyledInput placeholder="Purchased Amount" />
                 </InputContainer>
@@ -154,4 +174,10 @@ const Portfolio = (props) => {
   );
 };
 
-export default connect()(Portfolio);
+const mapStateToProps = (state) => ({
+  assets: state.portfolio.assets,
+  activeCurrency: state.supportedCurrencies.activeCurrency,
+  currencySymbol: state.supportedCurrencies.currencySymbol,
+});
+
+export default connect(mapStateToProps)(Portfolio);

@@ -7,9 +7,9 @@ import {
   StyledLightSearchIcon,
   StyledDarkSearchIcon,
   StyledInput,
-} from "./SearchInput.styled";
+} from "./AddAssetInput.styled";
 
-const SearchInput = (props) => {
+const AddAssetInput = (props) => {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
@@ -24,9 +24,10 @@ const SearchInput = (props) => {
       setShowResults(false);
     }
   };
-  const handleLinkClick = () => {
+  const handleCoinClick = () => {
     setSearchTerm("");
     setShowResults(false);
+    // props.addAsset();
   };
   const dropdownRef = useRef();
   useEffect(() => {
@@ -74,7 +75,7 @@ const SearchInput = (props) => {
         <div>
           <Result
             results={results}
-            handleLinkClick={handleLinkClick}
+            handleLinkClick={handleCoinClick}
             showResults={showResults}
           />
         </div>
@@ -86,4 +87,4 @@ const SearchInput = (props) => {
 const mapStateToProps = (state) => ({
   coins: state.coins.data,
 });
-export default connect(mapStateToProps)(SearchInput);
+export default connect(mapStateToProps)(AddAssetInput);

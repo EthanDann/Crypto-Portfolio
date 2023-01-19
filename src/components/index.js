@@ -1,5 +1,6 @@
 export { default as CurrencyToggle } from "components/Navbar/CurrencyToggle";
 export { default as SearchInput } from "components/Navbar/SearchInput";
+export { default as AddAssetInput } from "components/portfolio-page/AddAssetInput";
 export { CurrencyConverter } from "components/coin-page/CurrencyConverter";
 export { default as Navbar } from "./Navbar";
 export { TopPageContent } from "./coin-page/TopPageContent";

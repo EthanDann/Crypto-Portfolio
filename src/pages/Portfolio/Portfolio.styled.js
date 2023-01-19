@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SearchInput } from "components";
+import { AddAssetInput } from "components";
 
 export const Container = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ export const InputContainer = styled.div`
     margin: 0 0 0 3rem;
   }
 `;
-export const StyledSearchInput = styled(SearchInput)`
+export const StyledSearchInput = styled(AddAssetInput)`
   background-color: ${(props) => props.theme.main};
 `;
 export const StyledInput = styled.input`
@@ -95,8 +95,7 @@ export const StyledInput = styled.input`
 `;
 export const Header = styled.h1`
   display: flex;
-  justify-content: center;
-  text-align: start;
+  justify-content: flex-start;
   font-weight: 400;
   margin-bottom: 1.8em;
   font-size: 1.5rem;
@@ -120,15 +119,11 @@ export const CoinInfoContainer = styled(StyledDiv)`
   margin-bottom: 1em;
   padding-top: 2em;
   @media (min-width: 768px) {
-    width: 20%;
+    width: 100%;
     &:nth-child(1) {
       width: 7%;
       margin: 0 1em 2em 0;
       padding: 3em;
-    }
-    &:nth-child(2) {
-      width: 80%;
-      margin-bottom: 0;
     }
   }
 `;
@@ -215,13 +210,18 @@ export const Anchor = styled.a`
   }
 `;
 export const Text = styled.p`
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
-  margin-right: 2.5rem;
+`;
+export const AssetInfo = styled.p`
+  font-size: 1rem;
+  margin-right: 1rem;
+  margin-left: 0.4rem;
 `;
 export const AllTimeContent = styled(StyledDiv)`
   margin-bottom: 1em;
   padding: 1em;
+  width: 925px;
   @media (min-width: 768px) {
     height: 3em;
     margin: 0 0 2em 0;
