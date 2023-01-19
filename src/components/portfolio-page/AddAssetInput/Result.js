@@ -5,7 +5,7 @@ export const Result = (props) => {
     <ResultsList results={props.results} showResults={props.showResults}>
       {props.results.map((result) => (
         <ListItem>
-          <StyledText onClick={() => props.handleLinkClick()}>
+          <StyledText onClick={(result) => props.handleCoinClick(result)}>
             {result.name}
           </StyledText>
         </ListItem>

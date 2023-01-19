@@ -24,10 +24,10 @@ const AddAssetInput = (props) => {
       setShowResults(false);
     }
   };
-  const handleCoinClick = () => {
-    setSearchTerm("");
+  const handleCoinClick = (e) => {
+    setSearchTerm(e.target.innerHTML);
+    props.handleCoinClick(e.target.innerHTML);
     setShowResults(false);
-    // props.addAsset();
   };
   const dropdownRef = useRef();
   useEffect(() => {
@@ -60,10 +60,11 @@ const AddAssetInput = (props) => {
   }, [results]);
   return (
     <SearchContainer onSubmit={(e) => e.preventDefault()}>
-      <StyledSearchIcon>
-        {props.icon &&
-          (props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />)}
-      </StyledSearchIcon>
+      {props.icon && (
+        <StyledSearchIcon>
+          (props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />)
+        </StyledSearchIcon>
+      )}
       <StyledInput
         type="text"
         placeholder={props.placeholder ? props.placeholder : "Search..."}
@@ -75,7 +76,7 @@ const AddAssetInput = (props) => {
         <div>
           <Result
             results={results}
-            handleLinkClick={handleCoinClick}
+            handleCoinClick={handleCoinClick}
             showResults={showResults}
           />
         </div>

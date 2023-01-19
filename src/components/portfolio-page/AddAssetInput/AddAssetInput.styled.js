@@ -4,7 +4,6 @@ import { ReactComponent as LightSearchIcon } from "./LightSearchIcon.svg";
 
 export const SearchContainer = styled.form`
   display: flex;
-  width: 408px;
   height: 50px;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
@@ -50,8 +49,7 @@ export const StyledInput = styled.input`
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  margin: auto;
-  width: 35vw;
+  width: 80.5%;
   padding: 0.8rem 0;
   padding-left: 2rem;
   font-size: 1.1rem;
@@ -93,7 +91,7 @@ const fadeIn = keyframes`
 export const ResultsList = styled.ul`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 88%;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
   display: ${(props) =>
@@ -103,7 +101,7 @@ export const ResultsList = styled.ul`
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   list-style: none;
   position: absolute;
-  right: 0vw;
+  left: 0;
   max-height: 210px;
   border-radius: 6px;
   border: none;

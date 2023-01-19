@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { AddAssetInput } from "components";
 
 export const Container = styled.div`
@@ -7,7 +9,19 @@ export const Container = styled.div`
   background: ${(props) => props.theme.secondary};
   flex-direction: column;
   max-width: 100%;
+  height: 560px;
+  max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
+`;
+export const FillerDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 430px;
+  background: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.fontColor};
+  font-size: 3rem;
 `;
 const StyledDiv = styled.div`
   display: flex;
@@ -17,7 +31,7 @@ const StyledDiv = styled.div`
   align-items: center;
   border-radius: 12px;
 `;
-export const AddAssetButton = styled.button`
+export const Button = styled.button`
   background: rgb(6, 213, 84);
   color: #fff;
   cursor: pointer;
@@ -29,6 +43,21 @@ export const AddAssetButton = styled.button`
     background: rgb(6, 175, 84);
   }
 `;
+export const ModalButton = styled.button`
+  width: 40%;
+  background: ${(props) =>
+    props.background ? props.background : "rgb(6, 213, 84)"};
+  color: ${(props) => (props.background ? "rgb(6, 213, 84)" : "#fff")};
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 1rem 0;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: 10px;
+  &:hover {
+    background: ${(props) => (props.hover ? props.hover : "rgb(6, 175, 84)")};
+  }
+`;
 export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -36,6 +65,12 @@ export const ButtonContainer = styled.div`
   @media (min-width: 768px) {
     margin-top: 5rem;
   }
+`;
+export const ModalButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin: 2rem;
 `;
 export const ModalContainer = styled.div`
   display: flex;
@@ -47,14 +82,21 @@ export const ModalContainer = styled.div`
   align-items: center;
 `;
 export const AddAssetModal = styled.div`
+  width: 750px;
+  height: 400px;
   background: ${(props) => props.theme.secondary};
 `;
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+export const ModalInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 export const InputContainer = styled.div`
-  margin: 1rem 0 1rem 3rem;
+  margin: 0 0 1rem 3rem;
   width: 408px;
   height: 50px;
   &:nth-child(3) {
@@ -65,6 +107,35 @@ export const StyledSearchInput = styled(AddAssetInput)`
   background-color: ${(props) => props.theme.main};
 `;
 export const StyledInput = styled.input`
+  background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: auto;
+  width: 77.5%;
+  padding: 0.8rem;
+  padding-left: 2rem;
+  font-size: 1.1rem;
+  &::placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
+  &:focus {
+    outline: none;
+  }
+  @media (max-width: 768px) {
+    width: 20vw;
+  }
+  @media (max-width: 425px) {
+    border-radius: 10px;
+    font-size: 0.8rem;
+    padding-left: 0.8rem;
+    width: 25vw;
+    height: 1vh;
+  }
+`;
+export const StyledDatePicker = styled(DatePicker)`
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
@@ -107,6 +178,15 @@ export const Row = styled.div`
   flex-direction: row;
   align-items: center;
   @media (min-width: 768px) {
+    margin: 1rem 0 4rem 0;
+  }
+`;
+export const ModalContentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 768px) {
     margin: 1rem;
   }
 `;
@@ -127,6 +207,15 @@ export const CoinInfoContainer = styled(StyledDiv)`
     }
   }
 `;
+export const ModalInfoContainer = styled(StyledDiv)`
+  @media (min-width: 768px) {
+    width: 100%;
+    &:nth-child(1) {
+      width: 7%;
+      padding: 2em 3em;
+    }
+  }
+`;
 export const OuterContainer = styled.div`
   width: 100%;
 `;
@@ -142,6 +231,12 @@ export const InnerContainer = styled.div`
 `;
 export const ImageContainer = styled.div`
   padding: 1.5em;
+  border-radius: 12px;
+  margin-bottom: 0;
+  background-color: ${(props) => props.theme.secondary};
+`;
+export const ModalImageContainer = styled.div`
+  padding: 1em;
   border-radius: 12px;
   margin-bottom: 0;
   background-color: ${(props) => props.theme.secondary};
@@ -281,5 +376,91 @@ export const ListItem = styled.li`
   padding: 0;
   @media (min-width: 768px) {
     margin: 1em;
+  }
+`;
+
+export const ArrowContainer = styled.div`
+   {
+    height: 120px;
+    width: 120px;
+    margin: 3rem auto 0;
+    position: relative;
+  }
+`;
+const ArrowAnimation = keyframes`
+  {
+  0%   {bottom:0;}
+  75% {bottom:90px;}
+  100% {bottom:0;}
+  }
+  `;
+const CircleAnimation = keyframes`
+  {
+  0%   {height:120px;}
+  10% {height: 120px;}
+  50% {height: 130px;}
+  75% {height: 150px;}
+  90% {height: 130px;}
+  100% {height: 120px;}
+  }
+  `;
+const PulseAnimation = keyframes` {       
+  0% {transform: scale(0); opacity: 0;}
+  8% {transform: scale(0); opacity: 0;}
+  15% {transform: scale(0.1); opacity: 1;}
+  30% {transform: scale(0.5); opacity: 1;}
+  100% {opacity: 0; transform: scale(1.5);}
+}`;
+export const Circle = styled.span`
+   {
+    background-color: transparent;
+    height: 120px;
+    width: 120px;
+    display: block;
+    border: 5px solid rgb(6, 213, 84);
+    border-radius: 100px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    animation-name: ${CircleAnimation};
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-play-state: running;
+  }
+`;
+export const Arrow = styled.i`
+   {
+    font-size: 42px;
+    color: rgb(6, 213, 84);
+    bottom: 27px;
+    position: absolute;
+    left: 50%;
+    margin-left: -18px;
+    animation-name: ${ArrowAnimation};
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-play-state: running;
+  }
+`;
+export const Pulse = styled.span`
+   {
+    margin: 0 auto;
+    border-radius: 100px;
+    position: absolute;
+    left: 2px;
+    bottom: 0px;
+    z-index: 0;
+    opacity: 0;
+    width: 110px;
+    height: 110px;
+    border: 10px solid rgb(6, 213, 84);
+    border-radius: 100px;
+    animation: ${PulseAnimation} 1s linear infinite 0.3s;
   }
 `;
