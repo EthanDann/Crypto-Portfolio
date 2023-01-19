@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import {
+  getCoinHistory,
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,
@@ -21,7 +22,7 @@ import {
   InputContainer,
   StyledSearchInput,
   StyledInput,
-  StyledDatePicker,
+  PriceInput,
   Row,
   ContentRow,
   Column,
@@ -31,6 +32,7 @@ import {
   InnerContainer,
   Text,
   AssetInfo,
+  ErrorMessage,
   LinkContent,
   LinkContainer,
   AllTimeContent,
@@ -56,6 +58,11 @@ import {
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasError, setHasError] = useState(false);
+  useEffect(() => {
+    props.getCoinHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(props.assets);
   const handleOpen = () => setIsOpen(!isOpen);
   const handlePurchasedAmount = (e) => {
     props.handlePurchasedAmount(e.target.value);
@@ -77,16 +84,20 @@ const Portfolio = (props) => {
       mm = "0" + mm;
     }
 
-    today = yyyy + "-" + mm + "-" + dd;
-    year > yyyy ? setHasError(true) : setHasError(false);
-    month > mm ? setHasError(true) : setHasError(false);
-    day > dd && month >= mm && year >= yyyy
-      ? setHasError(true)
-      : setHasError(false);
+    today = mm + "-" + dd + "-" + yyyy;
+    date = day + "-" + month + "-" + year;
+    if (
+      year > yyyy ||
+      month > mm ||
+      (day > dd && month >= mm && year >= yyyy)
+    ) {
+      setHasError(true);
+    } else setHasError(false);
     !hasError ? props.handlePurchaseDate(date) : (date = null);
   };
   const handleAddAsset = () => {
     props.handleSave();
+    console.log(hasError);
     setIsOpen(false);
   };
   const modalRef = useRef(null);
@@ -105,7 +116,6 @@ const Portfolio = (props) => {
     }, [ref]);
   }
   const { assets, selectedCoin, activeCurrency, currencySymbol } = props;
-  console.log(props);
   return (
     <>
       <Container isOpen={isOpen}>
@@ -165,9 +175,7 @@ const Portfolio = (props) => {
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Coin Amount: </Text>
-                      <AssetInfo>
-                        {purchase_price / price_on_purchase_date}
-                      </AssetInfo>
+                      <AssetInfo>{purchase_price}</AssetInfo>
                       <Text>Amount Value: </Text>
                       {/* <IconContainer><StyledPlusIcon /></IconContainer> */}
                       <AssetInfo>{purchase_price}</AssetInfo>
@@ -219,9 +227,11 @@ const Portfolio = (props) => {
                   />
                 </InputContainer>
                 <InputContainer>
-                  <StyledInput
+                  <PriceInput
                     onChange={handlePurchasedAmount}
                     placeholder="Purchase Amount"
+                    prefix={currencySymbol}
+                    thousandSeparator={true}
                   />
                 </InputContainer>
                 <InputContainer>
@@ -229,7 +239,9 @@ const Portfolio = (props) => {
                     onChange={handlePurchaseDate}
                     placeholder="Purchase Date"
                   />
-                  {hasError && <span>Date cannot be in the future.</span>}
+                  {hasError && (
+                    <ErrorMessage>Date cannot be in the future.</ErrorMessage>
+                  )}
                 </InputContainer>
               </ModalInputContainer>
             </ModalContentContainer>
@@ -242,7 +254,11 @@ const Portfolio = (props) => {
               >
                 Close
               </ModalButton>
-              <ModalButton onClick={handleAddAsset} padding={"1rem 3rem"}>
+              <ModalButton
+                onClick={handleAddAsset}
+                disabled={hasError}
+                padding={"1rem 3rem"}
+              >
                 Save and Continue
               </ModalButton>
             </ModalButtonContainer>
@@ -262,6 +278,7 @@ const mapStateToProps = (state) => ({
   currencySymbol: state.supportedCurrencies.currencySymbol,
 });
 const mapDispatchToProps = {
+  getCoinHistory,
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,

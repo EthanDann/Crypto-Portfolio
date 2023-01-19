@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { NumericFormat } from "react-number-format";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AddAssetInput } from "components";
@@ -57,6 +58,11 @@ export const ModalButton = styled.button`
   &:hover {
     background: ${(props) => (props.hover ? props.hover : "rgb(6, 175, 84)")};
   }
+  &:disabled {
+    cursor: not-allowed;
+    background: ${(props) =>
+      props.background ? props.background : "rgb(6, 213, 84)"};
+  }
 `;
 export const ButtonContainer = styled.div`
   display: flex;
@@ -86,6 +92,12 @@ export const AddAssetModal = styled.div`
   height: 400px;
   background: ${(props) => props.theme.secondary};
 `;
+export const ErrorMessage = styled.span`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: red;
+`;
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,7 +110,14 @@ export const ModalInputContainer = styled.div`
 export const InputContainer = styled.div`
   margin: 0 0 1rem 3rem;
   width: 408px;
-  height: 50px;
+  height: auto;
+  &:nth=child(1),
+  &:nth-child(2),
+  &:nth-child(3) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   &:nth-child(3) {
     margin: 0 0 0 3rem;
   }
@@ -123,7 +142,6 @@ export const StyledInput = styled.input`
   }
   &:focus {
     outline: none;
-  }
   @media (max-width: 768px) {
     width: 20vw;
   }
@@ -135,6 +153,33 @@ export const StyledInput = styled.input`
     height: 1vh;
   }
 `;
+export const PriceInput = styled(NumericFormat)`
+ background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: auto;
+  width: 77.5%;
+  padding: 0.8rem;
+  padding-left: 2rem;
+  font-size: 1.1rem;
+  &::placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
+  &:focus {
+    outline: none;
+  @media (max-width: 768px) {
+    width: 20vw;
+  }
+  @media (max-width: 425px) {
+    border-radius: 10px;
+    font-size: 0.8rem;
+    padding-left: 0.8rem;
+    width: 25vw;
+    height: 1vh;
+  }`;
 export const StyledDatePicker = styled(DatePicker)`
   background-color: ${(props) => props.theme.main};
   transition: ${(props) => props.theme.transition};
