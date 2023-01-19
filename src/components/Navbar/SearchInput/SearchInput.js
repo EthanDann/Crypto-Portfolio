@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { connect } from "react-redux";
+import { getAllCoins } from "store/portfolio/action";
 import {
   ResultsList,
   ListItem,
@@ -29,30 +31,31 @@ const Coin = (props) => {
 
 const SearchInput = (props) => {
   // eslint-disable-next-line
-  const [coins, setCoins] = useState([
-    {
-      name: "Bitcoin",
-    },
-    {
-      name: "Bitlyte",
-    },
-    {
-      name: "Ethereum",
-    },
-    {
-      name: "Dogecoin",
-    },
-    {
-      name: "Litecoin",
-    },
-  ]);
+  const [coins, setCoins] = useState([]);
+  // const [coins, setCoins] = useState([
+  //   {
+  //     name: "Bitcoin",
+  //   },
+  //   {
+  //     name: "Bitlyte",
+  //   },
+  //   {
+  //     name: "Ethereum",
+  //   },
+  //   {
+  //     name: "Dogecoin",
+  //   },
+  //   {
+  //     name: "Litecoin",
+  //   },
+  // ]);
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
     if (e.target.value.length > 0) {
-      const filteredResults = coins.filter((coin) =>
+      const filteredResults = props.coins.filter((coin) =>
         coin.name.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setResults(filteredResults);
@@ -80,6 +83,11 @@ const SearchInput = (props) => {
       document.removeEventListener("click", handleBlur);
     };
   }, [showResults]);
+  useEffect(() => {
+    props.getAllCoins();
+    console.log(props.portfolio);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.portfolio]);
   useEffect(() => {
     if (searchTerm.length === 0) {
       setSearchTerm("");
@@ -119,4 +127,10 @@ const SearchInput = (props) => {
   );
 };
 
-export default SearchInput;
+const mapStateToProps = (state) => ({
+  portfolio: state.portfolio.data,
+});
+const mapDispatchToProps = {
+  getAllCoins,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SearchInput);
