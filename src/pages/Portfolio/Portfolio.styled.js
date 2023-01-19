@@ -111,6 +111,11 @@ export const Row = styled.div`
     margin: 1rem;
   }
 `;
+export const ContentRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 export const CoinInfoContainer = styled(StyledDiv)`
   margin-bottom: 1em;
   padding-top: 2em;
@@ -118,7 +123,7 @@ export const CoinInfoContainer = styled(StyledDiv)`
     width: 20%;
     &:nth-child(1) {
       width: 7%;
-      margin-bottom: 2em;
+      margin: 0 1em 2em 0;
       padding: 3em;
     }
     &:nth-child(2) {
@@ -209,12 +214,20 @@ export const Anchor = styled.a`
     font-size: 0.9rem;
   }
 `;
+export const Text = styled.p`
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 2.5rem;
+`;
 export const AllTimeContent = styled(StyledDiv)`
   margin-bottom: 1em;
   padding: 1em;
   @media (min-width: 768px) {
-    width: 30%;
-    margin: 0 2.25em 0 0;
+    height: 3em;
+    margin: 0 0 2em 0;
+    &:nth-child(2) {
+      margin-bottom: 0;
+    }
   }
 `;
 export const AllTimeHeader = styled.div`

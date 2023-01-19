@@ -12,11 +12,13 @@ import {
   StyledSearchInput,
   StyledInput,
   Row,
+  ContentRow,
   Column,
   CoinName,
   CoinInfoContainer,
   OuterContainer,
   InnerContainer,
+  Text,
   LinkContent,
   LinkContainer,
   AllTimeContent,
@@ -78,92 +80,49 @@ const Portfolio = (props) => {
           </AddAssetButton>
         </ButtonContainer>
         <Header>Your Statistics</Header>
-        <Column>
-          <Row>
-            <CoinInfoContainer>
-              <OuterContainer>
-                <InnerContainer>
-                  <ImageContainer>
-                    <Image src={"image.large"} alt={"name"} />
-                  </ImageContainer>
-                  <CoinName>
-                    {"name"}({"symbol".toUpperCase()})
-                  </CoinName>
-                </InnerContainer>
-              </OuterContainer>
-            </CoinInfoContainer>
+        <Row>
+          <CoinInfoContainer>
+            <OuterContainer>
+              <InnerContainer>
+                <ImageContainer>
+                  <Image src={"coin.image.large"} alt={"coin.name"} />
+                </ImageContainer>
+                <CoinName>
+                  {"coin.name"}({"coin.symbol".toUpperCase()})
+                </CoinName>
+              </InnerContainer>
+            </OuterContainer>
+          </CoinInfoContainer>
+          <Column>
             <AllTimeContent>
-              <AllTimeHeader>
-                {/* {currencySymbol + nFormatter(current_price[activeCurrency], "1,000")} */}
-              </AllTimeHeader>
-              <MarketDataContent>
-                <List>
-                  <ListItem>
-                    <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                    {/* {"Market Cap: " +
-              currencySymbol +
-              nFormatter(market_cap[activeCurrency], "10,000")} */}
-                  </ListItem>
-                  <ListItem>
-                    {/* {"Total Volume: " +
-              nFormatter(total_volume[activeCurrency], "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                  <ListItem>
-                    <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                    {/* {"Circulating Supply: " +
-              nFormatter(circulating_supply, "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                  <ListItem>
-                    {/* {"Max Supply: " +
-              nFormatter(max_supply, "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                </List>
-              </MarketDataContent>
+              <ContentRow>
+                <Text>Current Price: </Text>
+                {/* {currencySymbol + nFormatter(coin.current_price[activeCurrency], "1,000")} */}
+                <Text>Price Change 24h: </Text>
+                {/*{coin.price_change_24h} */}
+                <Text>Market Cap vs Volume: </Text>
+                {/* {coin.market_cap[activeCurrency] / coin.total_volume + "%"} */}
+                <Text>Circ Supply vs Max Supply: </Text>
+                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
+                {/* {nFormatter(coin.max_supply, "10,000") - nFormatter(coin.circulating_supply, "10,000")} */}
+              </ContentRow>
             </AllTimeContent>
-          </Row>
-          <Row>
             <AllTimeContent>
-              <AllTimeHeader>
-                {/* {currencySymbol + nFormatter(current_price[activeCurrency], "1,000")} */}
-              </AllTimeHeader>
-              <MarketDataContent>
-                <List>
-                  <ListItem>
-                    <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                    {/* {"Market Cap: " +
-              currencySymbol +
-              nFormatter(market_cap[activeCurrency], "10,000")} */}
-                  </ListItem>
-                  <ListItem>
-                    {/* {"Total Volume: " +
-              nFormatter(total_volume[activeCurrency], "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                  <ListItem>
-                    <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                    {/* {"Circulating Supply: " +
-              nFormatter(circulating_supply, "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                  <ListItem>
-                    {/* {"Max Supply: " +
-              nFormatter(max_supply, "10,000") +
-              " " +
-              symbol.toUpperCase()} */}
-                  </ListItem>
-                </List>
-              </MarketDataContent>
+              <ContentRow>
+                <Text>Coin Amount: </Text>
+                {/* {coin.amount} */}
+                <Text>Amount Value: </Text>
+                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
+                {/* {coin.purchase_price} */}
+                <Text>Amount Price Change Since Purchase: </Text>
+                <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
+                {/* {coin.current_price / coin.purchase_price} */}
+                <Text>Purchase Date: </Text>
+                {/* {coin.purchaseDate} */}
+              </ContentRow>
             </AllTimeContent>
-          </Row>
-        </Column>
+          </Column>
+        </Row>
       </Container>
       {isOpen && (
         <ModalContainer ref={modalRef}>
@@ -172,10 +131,10 @@ const Portfolio = (props) => {
             <Row>
               <CoinInfoContainer>
                 <ImageContainer>
-                  <Image src={"image.large"} alt={"name"} />
+                  <Image src={"coin.image.large"} alt={"coin.name"} />
                 </ImageContainer>
                 <CoinName>
-                  {"name"}({"symbol".toUpperCase()})
+                  {"coin.name"}({"coin.symbol".toUpperCase()})
                 </CoinName>
               </CoinInfoContainer>
               <Column>
