@@ -1,4 +1,4 @@
-import { currencyFormatter } from "utils";
+import { currencyFormatter, nFormatter } from "utils";
 import { Sparkline, PercentDiv } from "components";
 import {
   TableBody,
@@ -22,10 +22,10 @@ const CoinListRow = (props) => {
     if (num < 0) return "true";
     return "false";
   };
-  const { currencySymbol, coinList, filteredCoinList } = props;
+  const { currencySymbol, coinList } = props;
   return (
     <TableBody>
-      {filteredCoinList.map((coin, index) => {
+      {coinList.map((coin, index) => {
         const {
           id,
           image,
@@ -65,7 +65,10 @@ const CoinListRow = (props) => {
             <PercentDiv
               list={coinList}
               hourType={getPercentColor(price_change_percentage_1h_in_currency)}
-              hourText={price_change_percentage_1h_in_currency.toFixed(2) + "%"}
+              hourText={
+                (price_change_percentage_1h_in_currency.toFixed(2) ??
+                  price_change_percentage_1h_in_currency) + "%"
+              }
               dayType={getPercentColor(price_change_percentage_24h_in_currency)}
               dayText={price_change_percentage_24h_in_currency.toFixed(2) + "%"}
               weekType={getPercentColor(price_change_percentage_7d_in_currency)}
