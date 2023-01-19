@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { handleTheme } from "store/theme/action";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

@@ -20,7 +20,7 @@ function Navbar(props) {
         <StyledLink to="/Portfolio" order={2}>
           Portfolio
         </StyledLink>
-        <SearchInput />
+        <SearchInput icon />
         <CurrencyToggle />
         <ThemeContainer>
           <Button onClick={handleTheme}>

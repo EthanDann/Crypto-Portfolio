@@ -96,13 +96,15 @@ const SearchInput = (props) => {
   return (
     <SearchContainer onSubmit={(e) => e.preventDefault()}>
       <StyledSearchIcon>
-        {props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />}
+        {props.icon &&
+          (props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />)}
       </StyledSearchIcon>
       <StyledInput
         type="text"
-        placeholder="Search..."
+        placeholder={props.placeholder ? props.placeholder : "Search..."}
         onChange={handleChange}
         value={searchTerm}
+        main={props.main}
       />
       {showResults && (
         <div>

@@ -44,7 +44,8 @@ export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
   }
 `;
 export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${(props) =>
+    props.main ? props.theme.main : props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
@@ -53,6 +54,7 @@ export const StyledInput = styled.input`
   margin: auto;
   width: 35vw;
   padding: 0.8rem 0;
+  padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
     color: ${(props) => props.theme.fontColor};
