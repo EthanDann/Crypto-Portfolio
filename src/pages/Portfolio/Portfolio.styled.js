@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
 import { NumericFormat } from "react-number-format";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { AddAssetInput } from "components";
+import { ReactComponent as UpArrow } from "./UpArrow.svg";
+import { ReactComponent as DownArrow } from "./DownArrow.svg";
 
 export const Container = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const Container = styled.div`
   background: ${(props) => props.theme.secondary};
   flex-direction: column;
   max-width: 100%;
-  height: 560px;
+  height: auto;
   max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
 `;
@@ -91,6 +91,9 @@ export const AddAssetModal = styled.div`
   width: 750px;
   height: 400px;
   background: ${(props) => props.theme.secondary};
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 `;
 export const ErrorMessage = styled.span`
   display: flex;
@@ -180,35 +183,6 @@ export const PriceInput = styled(NumericFormat)`
     width: 25vw;
     height: 1vh;
   }`;
-export const StyledDatePicker = styled(DatePicker)`
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
-  border: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin: auto;
-  width: 77.5%;
-  padding: 0.8rem;
-  padding-left: 2rem;
-  font-size: 1.1rem;
-  &::placeholder {
-    color: ${(props) => props.theme.fontColor};
-  }
-  &:focus {
-    outline: none;
-  }
-  @media (max-width: 768px) {
-    width: 20vw;
-  }
-  @media (max-width: 425px) {
-    border-radius: 10px;
-    font-size: 0.8rem;
-    padding-left: 0.8rem;
-    width: 25vw;
-    height: 1vh;
-  }
-`;
 export const Header = styled.h1`
   display: flex;
   justify-content: flex-start;
@@ -247,7 +221,7 @@ export const CoinInfoContainer = styled(StyledDiv)`
     width: 100%;
     &:nth-child(1) {
       width: 7%;
-      margin: 0 1em 2em 0;
+      margin: 0 1em 2em 1em;
       padding: 3em;
     }
   }
@@ -350,18 +324,50 @@ export const Anchor = styled.a`
   }
 `;
 export const Text = styled.p`
-  font-size: 1rem;
+  margin: 0;
+  font-size: 0.9rem;
   font-weight: 500;
 `;
 export const AssetInfo = styled.p`
+  color: ${(props) => (props.color ? props.color : props.theme.fontColor)};
   font-size: 1rem;
-  margin-right: 1rem;
-  margin-left: 0.4rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+`;
+export const ProgressRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+export const ProgressContainer = styled.div`
+  width: 80%;
+  padding: 0.25rem 5rem 0.25rem 0;
+  background: #00fc2a;
+  position: relative;
+  border-radius: 10px;
+  margin: auto 5px;
+  overflow: hidden;
+  border: none;
+  margin-right: auto;
+`;
+const BaseBox = styled.div`
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 5px;
+  border: none;
+`;
+
+export const Progress = styled(BaseBox)`
+  background: rgb(255, 255, 255);
+  width: ${({ percent }) => percent}%;
+  min-width: ${({ percent }) => (percent < 2 ? "2" : percent)}%;
 `;
 export const AllTimeContent = styled(StyledDiv)`
   margin-bottom: 1em;
   padding: 1em;
-  width: 925px;
+  width: 930px;
   @media (min-width: 768px) {
     height: 3em;
     margin: 0 0 2em 0;
@@ -423,7 +429,12 @@ export const ListItem = styled.li`
     margin: 1em;
   }
 `;
-
+export const StyledUpArrow = styled(UpArrow)`
+  margin: 0 3px 4px 3px;
+`;
+export const StyledDownArrow = styled(DownArrow)`
+  margin: 0 3px 4px 3px;
+`;
 export const ArrowContainer = styled.div`
    {
     height: 120px;

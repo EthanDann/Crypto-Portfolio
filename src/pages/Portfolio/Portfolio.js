@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {
   getCoinHistory,
+  getCoinData,
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,
   handleSave,
 } from "store/portfolio/action";
+import nFormatter from "utils/nFormatter/";
 import {
   Container,
   ButtonContainer,
@@ -24,6 +26,9 @@ import {
   StyledInput,
   PriceInput,
   Row,
+  ProgressRow,
+  ProgressContainer,
+  Progress,
   ContentRow,
   Column,
   CoinName,
@@ -48,6 +53,8 @@ import {
   Header,
   LinkIconContainer,
   IconContainer,
+  StyledUpArrow,
+  StyledDownArrow,
   FillerDiv,
   ArrowContainer,
   Circle,
@@ -57,22 +64,24 @@ import {
 
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  useEffect(() => {
-    props.getCoinHistory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(props.assets);
+  const [hasDateError, setHasDateError] = useState(false);
+  const { assets, selectedCoin, currencySymbol, getCoinData, getCoinHistory } =
+    props;
+  const handleCoinData = () => {
+    getCoinHistory();
+    getCoinData();
+  };
+
   const handleOpen = () => setIsOpen(!isOpen);
   const handlePurchasedAmount = (e) => {
     props.handlePurchasedAmount(e.target.value);
   };
   const handlePurchaseDate = (e) => {
     let date = e.target.value;
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
     const day = new Date(date).getDate();
@@ -91,31 +100,19 @@ const Portfolio = (props) => {
       month > mm ||
       (day > dd && month >= mm && year >= yyyy)
     ) {
-      setHasError(true);
-    } else setHasError(false);
-    !hasError ? props.handlePurchaseDate(date) : (date = null);
+      setHasDateError(true);
+    } else setHasDateError(false);
+    props.handlePurchaseDate(date);
   };
   const handleAddAsset = () => {
     props.handleSave();
     setIsOpen(false);
-    props.getCoinHistory();
+    handleCoinData();
   };
-  const modalRef = useRef(null);
-  useOutsideAlerter(modalRef);
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsOpen(false);
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
-  const { assets, selectedCoin, activeCurrency, currencySymbol } = props;
+  useEffect(() => {
+    handleCoinData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <Container isOpen={isOpen}>
@@ -123,6 +120,7 @@ const Portfolio = (props) => {
           <Button onClick={() => handleOpen()}>Add Asset</Button>
         </ButtonContainer>
         {assets && <Header>Your Statistics</Header> &&
+          !props.hasError &&
           assets.map((coin) => {
             const {
               image,
@@ -132,9 +130,9 @@ const Portfolio = (props) => {
               purchase_price,
               price_on_purchase_date,
               purchase_date,
-              price_change_percentage_24h_in_currency,
+              price_change_24h,
+              max_supply,
               total_volume,
-              total_supply,
               market_cap,
               circulating_supply,
             } = coin;
@@ -144,10 +142,10 @@ const Portfolio = (props) => {
                   <OuterContainer>
                     <InnerContainer>
                       <ImageContainer>
-                        <Image src={"coin.image.large"} alt={name} />
+                        <Image src={image} alt={name} />
                       </ImageContainer>
                       <CoinName>
-                        {name}({"btc".toUpperCase()})
+                        {name}({symbol})
                       </CoinName>
                     </InnerContainer>
                   </OuterContainer>
@@ -157,18 +155,48 @@ const Portfolio = (props) => {
                     <ContentRow>
                       <Text>Current Price: </Text>
                       <AssetInfo>
-                        {/* {currencySymbol + nFormatter(coin.current_price[activeCurrency], "1,000")} */}
+                        {currencySymbol + nFormatter(current_price, "1,000")}
                       </AssetInfo>
                       <Text>Price Change 24h: </Text>
-                      <AssetInfo>{/*{coin.price_change_24h} */}</AssetInfo>
+                      <AssetInfo
+                        color={price_change_24h >= 0 ? "#00FC2A" : "#fe1040"}
+                      >
+                        {price_change_24h >= 0 ? (
+                          <StyledUpArrow />
+                        ) : (
+                          <StyledDownArrow />
+                        )}
+                        {price_change_24h && price_change_24h.toFixed(2) + "%"}
+                      </AssetInfo>
                       <Text>Market Cap vs Volume: </Text>
-                      <AssetInfo>
-                        {/* {coin.market_cap[activeCurrency] / coin.total_volume + "%"} */}
+                      <AssetInfo
+                        color={
+                          market_cap / total_volume >= 0 ? "#00FC2A" : "#fe1040"
+                        }
+                      >
+                        <ProgressRow>
+                          {market_cap &&
+                            (market_cap / total_volume).toFixed(0) + "%"}
+                          <ProgressContainer>
+                            <Progress percent={market_cap / total_volume} />
+                          </ProgressContainer>
+                        </ProgressRow>
                       </AssetInfo>
                       <Text>Circ Supply vs Max Supply: </Text>
-                      <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                      <AssetInfo>
-                        {/* {nFormatter(coin.max_supply, "10,000") - nFormatter(coin.circulating_supply, "10,000")} */}
+                      <AssetInfo
+                        color={
+                          circulating_supply / max_supply >= 0
+                            ? "#00FC2A"
+                            : "#fe1040"
+                        }
+                      >
+                        {circulating_supply / max_supply >= 0 ? (
+                          <StyledUpArrow />
+                        ) : (
+                          <StyledDownArrow />
+                        )}
+                        {circulating_supply &&
+                          (circulating_supply / max_supply).toFixed(2) + "%"}
                       </AssetInfo>
                     </ContentRow>
                   </AllTimeContent>
@@ -176,15 +204,31 @@ const Portfolio = (props) => {
                     <ContentRow>
                       <Text>Coin Amount: </Text>
                       <AssetInfo>
-                        {(purchase_price / price_on_purchase_date).toFixed(2)}
+                        {(
+                          Number(purchase_price.replace(/[^0-9.-]+/g, "")) /
+                          price_on_purchase_date
+                        ).toFixed(2)}
                       </AssetInfo>
                       <Text>Amount Value: </Text>
-                      {/* <IconContainer><StyledPlusIcon /></IconContainer> */}
                       <AssetInfo>{purchase_price}</AssetInfo>
                       <Text>Amount Price Change Since Purchase: </Text>
-                      <IconContainer>{/* <StyledPlusIcon /> */}</IconContainer>
-                      {/* {coin.current_price / coin.purchase_price} */}
-                      <AssetInfo>10%</AssetInfo>
+                      <AssetInfo
+                        color={
+                          current_price / Number(price_on_purchase_date) >= 0
+                            ? "#00FC2A"
+                            : "#fe1040"
+                        }
+                      >
+                        {current_price / Number(price_on_purchase_date) >= 0 ? (
+                          <StyledUpArrow />
+                        ) : (
+                          <StyledDownArrow />
+                        )}
+
+                        {(
+                          current_price / Number(price_on_purchase_date)
+                        ).toFixed(2) + "%"}
+                      </AssetInfo>
                       <Text>Purchase Date: </Text>
                       <AssetInfo>{purchase_date}</AssetInfo>
                     </ContentRow>
@@ -193,8 +237,9 @@ const Portfolio = (props) => {
               </Row>
             );
           })}
+        {props.hasError && <Row>{props.error}</Row>}
       </Container>
-      {!assets && (
+      {assets.length === 0 && (
         <FillerDiv>
           <ArrowContainer>
             <Circle>
@@ -206,7 +251,7 @@ const Portfolio = (props) => {
         </FillerDiv>
       )}
       {isOpen && (
-        <ModalContainer ref={modalRef}>
+        <ModalContainer>
           <AddAssetModal>
             <Header center>Select Coin</Header>
             <ModalContentContainer>
@@ -241,7 +286,7 @@ const Portfolio = (props) => {
                     onChange={handlePurchaseDate}
                     placeholder="Purchase Date"
                   />
-                  {hasError && (
+                  {hasDateError && (
                     <ErrorMessage>Date cannot be in the future.</ErrorMessage>
                   )}
                 </InputContainer>
@@ -258,7 +303,12 @@ const Portfolio = (props) => {
               </ModalButton>
               <ModalButton
                 onClick={handleAddAsset}
-                disabled={hasError}
+                disabled={
+                  hasDateError ||
+                  selectedCoin.name == null ||
+                  selectedCoin.purchase_price == null ||
+                  selectedCoin.purchase_date == null
+                }
                 padding={"1rem 3rem"}
               >
                 Save and Continue
@@ -278,9 +328,12 @@ const mapStateToProps = (state) => ({
   purchase_date: state.portfolio.purchase_date,
   activeCurrency: state.supportedCurrencies.activeCurrency,
   currencySymbol: state.supportedCurrencies.currencySymbol,
+  hasError: state.portfolio.hasError,
+  error: state.portfolio.error,
 });
 const mapDispatchToProps = {
   getCoinHistory,
+  getCoinData,
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,
