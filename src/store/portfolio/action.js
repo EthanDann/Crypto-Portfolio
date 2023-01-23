@@ -13,23 +13,24 @@ export const handleCoinClick = (coin) => (dispatch, getState) => {
   console.log(data);
   coin = {
     name: coin,
-    image: data[0].image,
-    symbol: data[0].symbol,
+    image: data.image,
+    symbol: data.symbol,
   };
   dispatch({ type: SELECT_COIN, payload: coin });
 };
-export const getCoinHistory = (coin) => (dispatch, getState) => {
+export const getCoinHistory = () => async (dispatch, getState) => {
   try {
     const state = getState();
-    state.portfolio.assets.map(async (coin) => {
+    await state.portfolio.assets.map(async (coin) => {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coin.name.toLowerCase()}/history?date=${
           coin.purchase_date
         }`
       );
+      const price_on_purchase_date = data.market_data.current_price.usd;
       dispatch({
         type: GET_COIN_HISTORY,
-        payload: [...state.portfolio.assets, data],
+        payload: { id: coin.name, price_on_purchase_date },
       });
     });
   } catch (err) {}

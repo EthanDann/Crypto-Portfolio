@@ -97,8 +97,8 @@ const Portfolio = (props) => {
   };
   const handleAddAsset = () => {
     props.handleSave();
-    console.log(hasError);
     setIsOpen(false);
+    props.getCoinHistory();
   };
   const modalRef = useRef(null);
   useOutsideAlerter(modalRef);
@@ -175,7 +175,9 @@ const Portfolio = (props) => {
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Coin Amount: </Text>
-                      <AssetInfo>{purchase_price}</AssetInfo>
+                      <AssetInfo>
+                        {(purchase_price / price_on_purchase_date).toFixed(2)}
+                      </AssetInfo>
                       <Text>Amount Value: </Text>
                       {/* <IconContainer><StyledPlusIcon /></IconContainer> */}
                       <AssetInfo>{purchase_price}</AssetInfo>

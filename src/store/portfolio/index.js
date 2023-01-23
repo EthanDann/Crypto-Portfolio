@@ -5,7 +5,7 @@ const initialState = {
     {
       name: "Bitcoin",
       purchase_price: "39000",
-      price_on_purchase_date: "39000",
+      price_on_purchase_date: "",
       purchase_date: "18-01-2020",
     },
   ],
@@ -30,10 +30,15 @@ const portfolioReducer = (state = initialState, action) => {
       };
     }
     case GET_COIN_HISTORY: {
-      return {
-        ...state,
-        assets: action.payload,
-      };
+      return state.assets.map((coin, index) => {
+        if (coin.name === action.payload.id) {
+          return {
+            ...coin,
+            price_on_purchase_date: action.payload.price_on_purchase_date,
+          };
+        }
+        return coin;
+      });
     }
     case PURCHASE_AMOUNT: {
       return {
