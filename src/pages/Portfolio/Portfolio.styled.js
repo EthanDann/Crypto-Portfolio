@@ -3,6 +3,7 @@ import { NumericFormat } from "react-number-format";
 import { AddAssetInput } from "components";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
+import { ReactComponent as EditIcon } from "./EditIcon.svg";
 
 export const Container = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ export const Container = styled.div`
   flex-direction: column;
   max-width: 100%;
   height: auto;
+  min-height: 525px;
   max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
 `;
@@ -43,6 +45,13 @@ export const Button = styled.button`
   &:hover {
     background: rgb(6, 175, 84);
   }
+  @media (min-width: 2560px) {
+    font-size: 2rem;
+    padding: 2rem 10rem;
+  }
+  @media (max-width: 320px) {
+    padding: 0.9rem 7rem;
+  }
 `;
 export const ModalButton = styled.button`
   width: 40%;
@@ -68,6 +77,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 2rem;
   @media (min-width: 768px) {
     margin-top: 5rem;
   }
@@ -104,6 +114,20 @@ export const ErrorMessage = styled.span`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.8em;
+  @media (min-width: 1024px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  @media (min-width: 1440px) {
+    margin-bottom: 1.5em;
+  }
+  @media (min-width: 2560px) {
+    margin-bottom: 0;
+  }
 `;
 export const ModalInputContainer = styled.div`
   display: flex;
@@ -194,10 +218,13 @@ export const Header = styled.h1`
 `;
 export const Row = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  @media (min-width: 768px) {
-    margin: 1rem 0 4rem 0;
+  @media (min-width: 1024px) {
+    margin: 0 1em;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 `;
 export const ModalContentContainer = styled.div`
@@ -211,18 +238,32 @@ export const ModalContentContainer = styled.div`
 `;
 export const ContentRow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 export const CoinInfoContainer = styled(StyledDiv)`
-  margin-bottom: 1em;
   padding-top: 2em;
+  margin-top: 2em;
+  @media (min-width: 1024px) {
+    margin: 0;
+    margin-right: 2em;
+  }
   @media (min-width: 768px) {
     width: 100%;
+  }
+  &:nth-child(1) {
+    width: 7%;
+    padding: 3em;
+  }
+  @media (min-width: 2560px) {
     &:nth-child(1) {
-      width: 7%;
-      margin: 0 1em 2em 1em;
-      padding: 3em;
+      height: 190px;
+      width: 15%;
+      margin-right: 0;
     }
   }
 `;
@@ -263,15 +304,20 @@ export const ModalImageContainer = styled.div`
 export const Image = styled.img`
   height: 35px;
   width: 35px;
+  @media (min-width: 2560px) {
+    height: 75px;
+    width: 75px;
+  }
 `;
 export const CoinName = styled.div`
   padding-bottom: 1em;
-  @media (max-width: 425px) {
-    font-size: 25px;
-    margin-top: 0.5em;
+  font-size: 1.2rem;
+  margin-top: 0.5em;
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
   }
-  @media (max-width: 375px) {
-    margin-left: -1em;
+  @media (min-width: 2560px) {
+    font-size: 2.5rem;
   }
 `;
 export const LinkContainer = styled(StyledDiv)`
@@ -310,6 +356,7 @@ export const Anchor = styled.a`
   text-align: center;
   justify-content: center;
   text-decoration: none;
+  font-color: ${(props) => props.theme.fontColor};
   &:focus,
   &:hover,
   &:visited,
@@ -324,23 +371,108 @@ export const Anchor = styled.a`
   }
 `;
 export const Text = styled.p`
+  font-color: ${(props) => props.theme.fontColor};
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
+  @media (min-width: 1024px) {
+    font-size: 0.7rem;
+  }
+  @media (min-width: 1440px) {
+    font-size: 1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.5rem;
+  }
 `;
 export const AssetInfo = styled.p`
   color: ${(props) => (props.color ? props.color : props.theme.fontColor)};
   font-size: 1rem;
+  margin: 0.5rem;
+  @media (min-width: 1024px) {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    margin-left: 0.25rem;
+  }
+  @media (min-width: 1440px) {
+    font-size: 1.1rem;
+  }
+  @media (min-width: 2560px) {
+    margin: 0.5rem 1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.5rem;
+  }
+`;
+export const AssetInput = styled(NumericFormat)`
+  font-size: 1rem;
+  margin: 0.5rem;
   margin-right: 0.5rem;
   margin-left: 0.25rem;
+  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
+  background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+  border: none;
+  width: 17%;
+  &::placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
+  &:focus {
+    outline: none;
+  }
+  @media (min-width: 1024px) {
+    width: 8%;
+    font-size: 0.8rem;
+  }
+  @media (min-width: 1440px) {
+    font-size: 1.1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 320px) {
+    width: 19%;
+  }
+`;
+export const DateAsset = styled.input`
+  font-size: 1rem;
+  margin: 0.5rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  width: 28%;
+  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
+  background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+  @media (min-width: 1024px) {
+    font-size: 0.8rem;
+    width: 10%;
+  }
+  @media (min-width: 1440px) {
+    font-size: 1.1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 320px) {
+    width: 31%;
+  }
+`;
+export const SaveButton = styled.button`
+  background: rgb(6, 213, 84);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
 `;
 export const ProgressRow = styled.div`
   display: flex;
   flex-direction: row;
 `;
 export const ProgressContainer = styled.div`
-  width: 80%;
-  padding: 0.25rem 5rem 0.25rem 0;
+  padding: 0.25rem 3rem 0.25rem 0;
   background: #00fc2a;
   position: relative;
   border-radius: 10px;
@@ -365,15 +497,25 @@ export const Progress = styled(BaseBox)`
   min-width: ${({ percent }) => (percent < 2 ? "2" : percent)}%;
 `;
 export const AllTimeContent = styled(StyledDiv)`
-  margin-bottom: 1em;
   padding: 1em;
-  width: 930px;
-  @media (min-width: 768px) {
+  width: 90%;
+  @media (min-width: 1024px) {
+    width: 95%;
+  }
+  @media (min-width: 1440px) {
     height: 3em;
-    margin: 0 0 2em 0;
-    &:nth-child(2) {
-      margin-bottom: 0;
-    }
+    width: 98%;
+  }
+  @media (min-width: 2560px) {
+    align-items: center;
+    height: auto;
+    width: 105%;
+  }
+  @media (max-width: 320px) {
+    width: 80%;
+  }
+  &:nth-child(2) {
+    margin-bottom: 0;
   }
 `;
 export const AllTimeHeader = styled.div`
@@ -434,6 +576,60 @@ export const StyledUpArrow = styled(UpArrow)`
 `;
 export const StyledDownArrow = styled(DownArrow)`
   margin: 0 3px 4px 3px;
+`;
+export const EditIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  background: ${(props) => props.theme.main};
+  @media (max-width: 320px) {
+    margin: 0;
+    margin-left: 0.5rem;
+    height: 25px;
+    width: 25px;
+  }
+`;
+export const RowHeader = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px 0;
+  font-color: ${(props) => props.theme.fontColor};
+  font-size: 0.8rem;
+  font-weight: 550;
+  @media (min-width: 1024px) {
+    font-size: 1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.7rem;
+  }
+`;
+export const Subtitle = styled.span`
+  margin-left: 10px;
+  font-color: ${(props) => props.theme.fontColor};
+  opacity: 0.7;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 450;
+  @media (min-width: 2560px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.5rem;
+  }
+`;
+export const StyledEditIcon = styled(EditIcon)`
+  @media (max-width: 320px) {
+    width: 50%;
+  }
 `;
 export const ArrowContainer = styled.div`
    {

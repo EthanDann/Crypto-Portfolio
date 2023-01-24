@@ -7,6 +7,9 @@ import {
   handlePurchasedAmount,
   handlePurchaseDate,
   handleSave,
+  handleUpdate,
+  handleUpdateAmount,
+  handleUpdateDate,
 } from "store/portfolio/action";
 import nFormatter from "utils/nFormatter/";
 import {
@@ -25,7 +28,9 @@ import {
   StyledSearchInput,
   StyledInput,
   PriceInput,
+  SaveButton,
   Row,
+  RowHeader,
   ProgressRow,
   ProgressContainer,
   Progress,
@@ -37,6 +42,8 @@ import {
   InnerContainer,
   Text,
   AssetInfo,
+  AssetInput,
+  DateAsset,
   ErrorMessage,
   LinkContent,
   LinkContainer,
@@ -55,6 +62,9 @@ import {
   IconContainer,
   StyledUpArrow,
   StyledDownArrow,
+  EditIconContainer,
+  StyledEditIcon,
+  Subtitle,
   FillerDiv,
   ArrowContainer,
   Circle,
@@ -65,13 +75,46 @@ import {
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasDateError, setHasDateError] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
   const { assets, selectedCoin, currencySymbol, getCoinData, getCoinHistory } =
     props;
   const handleCoinData = () => {
     getCoinHistory();
     getCoinData();
   };
-
+  const handleEdit = (e) => {
+    setIsEditable(true);
+  };
+  const handleUpdateAmount = (e) => {
+    props.handleUpdateAmount(e.target.value, e.target.name);
+  };
+  const handleUpdateDate = (e) => {
+    let date = e.target.value;
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth() + 1;
+    const day = new Date(date).getDate();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
+      setHasDateError(true);
+    } else {
+      setHasDateError(false);
+    }
+    props.handleUpdateDate(date, e.target.name);
+  };
+  const handleUpdate = (e) => {
+    setIsEditable(false);
+    props.handleUpdate(e.target.value, e.target.name);
+    handleCoinData();
+  };
   const handleOpen = () => setIsOpen(!isOpen);
   const handlePurchasedAmount = (e) => {
     props.handlePurchasedAmount(e.target.value);
@@ -92,14 +135,7 @@ const Portfolio = (props) => {
     if (mm < 10) {
       mm = "0" + mm;
     }
-
-    today = mm + "-" + dd + "-" + yyyy;
-    date = day + "-" + month + "-" + year;
-    if (
-      year > yyyy ||
-      month > mm ||
-      (day > dd && month >= mm && year >= yyyy)
-    ) {
+    if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
       setHasDateError(true);
     } else setHasDateError(false);
     props.handlePurchaseDate(date);
@@ -151,6 +187,7 @@ const Portfolio = (props) => {
                   </OuterContainer>
                 </CoinInfoContainer>
                 <Column>
+                  <RowHeader>Market Price:</RowHeader>
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Current Price: </Text>
@@ -200,6 +237,28 @@ const Portfolio = (props) => {
                       </AssetInfo>
                     </ContentRow>
                   </AllTimeContent>
+                  <RowHeader>
+                    Your Coin:
+                    {!isEditable && (
+                      <>
+                        <EditIconContainer>
+                          <StyledEditIcon onClick={handleEdit} name={name} />
+                        </EditIconContainer>
+                        <Subtitle>
+                          Only able to edit Amount Value and Purchase Date
+                        </Subtitle>
+                      </>
+                    )}
+                    {isEditable && (
+                      <SaveButton
+                        onClick={handleUpdate}
+                        value={name}
+                        disabled={hasDateError}
+                      >
+                        Save
+                      </SaveButton>
+                    )}
+                  </RowHeader>
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Coin Amount: </Text>
@@ -210,7 +269,14 @@ const Portfolio = (props) => {
                         ).toFixed(2)}
                       </AssetInfo>
                       <Text>Amount Value: </Text>
-                      <AssetInfo>{purchase_price}</AssetInfo>
+                      <AssetInput
+                        disabled={!isEditable}
+                        onChange={handleUpdateAmount}
+                        name={name}
+                        prefix={currencySymbol}
+                        thousandSeparator={true}
+                        value={purchase_price}
+                      />
                       <Text>Amount Price Change Since Purchase: </Text>
                       <AssetInfo
                         color={
@@ -230,7 +296,12 @@ const Portfolio = (props) => {
                         ).toFixed(2) + "%"}
                       </AssetInfo>
                       <Text>Purchase Date: </Text>
-                      <AssetInfo>{purchase_date}</AssetInfo>
+                      <DateAsset
+                        disabled={!isEditable}
+                        onChange={handleUpdateDate}
+                        name={name}
+                        value={purchase_date}
+                      />
                     </ContentRow>
                   </AllTimeContent>
                 </Column>
@@ -338,5 +409,8 @@ const mapDispatchToProps = {
   handlePurchasedAmount,
   handlePurchaseDate,
   handleSave,
+  handleUpdateAmount,
+  handleUpdateDate,
+  handleUpdate,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
