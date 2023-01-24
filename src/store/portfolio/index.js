@@ -16,6 +16,9 @@ export const GET_COIN_ERROR = "GET_COIN_ERROR";
 export const PURCHASE_AMOUNT = "PURCHASE_AMOUNT";
 export const PURCHASE_DATE = "PURCHASE_DATE";
 export const SAVE_ASSET = "SAVE_ASSET";
+export const UPDATE_ASSET = "UPDATE_ASSET";
+export const UPDATE_PURCHASE_AMOUNT = "UPDATE_PURCHASE_AMOUNT";
+export const UPDATE_PURCHASE_DATE = "UPDATE_PURCHASE_DATE";
 const portfolioReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_COIN: {
@@ -102,6 +105,49 @@ const portfolioReducer = (state = initialState, action) => {
           },
         ],
         selectedCoin: [],
+      };
+    }
+    case UPDATE_ASSET: {
+      return {
+        ...state,
+        assets: state.assets.map((coin, index) => {
+          if (coin.name === action.payload.id) {
+            return {
+              ...coin,
+              purchase_price: action.payload.purchase_price,
+              purchase_date: action.payload.purchase_date,
+            };
+          }
+          return coin;
+        }),
+      };
+    }
+    case UPDATE_PURCHASE_AMOUNT: {
+      return {
+        ...state,
+        assets: state.assets.map((coin, index) => {
+          if (coin.name === action.payload.id) {
+            return {
+              ...coin,
+              purchase_price: action.payload.purchase_price,
+            };
+          }
+          return coin;
+        }),
+      };
+    }
+    case UPDATE_PURCHASE_DATE: {
+      return {
+        ...state,
+        assets: state.assets.map((coin, index) => {
+          if (coin.name === action.payload.id) {
+            return {
+              ...coin,
+              purchase_date: action.payload.purchase_date,
+            };
+          }
+          return coin;
+        }),
       };
     }
     default:

@@ -3,6 +3,7 @@ import { NumericFormat } from "react-number-format";
 import { AddAssetInput } from "components";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
+import { ReactComponent as EditIcon } from "./EditIcon.svg";
 
 export const Container = styled.div`
   display: flex;
@@ -310,6 +311,7 @@ export const Anchor = styled.a`
   text-align: center;
   justify-content: center;
   text-decoration: none;
+  font-color: ${(props) => props.theme.fontColor};
   &:focus,
   &:hover,
   &:visited,
@@ -324,6 +326,7 @@ export const Anchor = styled.a`
   }
 `;
 export const Text = styled.p`
+  font-color: ${(props) => props.theme.fontColor};
   margin: 0;
   font-size: 0.9rem;
   font-weight: 500;
@@ -333,6 +336,42 @@ export const AssetInfo = styled.p`
   font-size: 1rem;
   margin-right: 0.5rem;
   margin-left: 0.25rem;
+`;
+export const AssetInput = styled(NumericFormat)`
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
+  background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+  border: none;
+  width: 8%;
+  font-size: 1.1rem;
+  &::placeholder {
+    color: ${(props) => props.theme.fontColor};
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+export const DateAsset = styled.input`
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  width: 10%;
+  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
+  background-color: ${(props) => props.theme.main};
+  transition: ${(props) => props.theme.transition};
+  color: ${(props) => props.theme.fontColor};
+`;
+export const SaveButton = styled.button`
+  background: rgb(6, 213, 84);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
 `;
 export const ProgressRow = styled.div`
   display: flex;
@@ -367,9 +406,11 @@ export const Progress = styled(BaseBox)`
 export const AllTimeContent = styled(StyledDiv)`
   margin-bottom: 1em;
   padding: 1em;
-  width: 930px;
+  width: auto;
   @media (min-width: 768px) {
     height: 3em;
+    min-width: 900px;
+    width: 95%;
     margin: 0 0 2em 0;
     &:nth-child(2) {
       margin-bottom: 0;
@@ -435,6 +476,35 @@ export const StyledUpArrow = styled(UpArrow)`
 export const StyledDownArrow = styled(DownArrow)`
   margin: 0 3px 4px 3px;
 `;
+export const EditIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  background: ${(props) => props.theme.main};
+`;
+export const RowHeader = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px 0;
+  font-color: ${(props) => props.theme.fontColor};
+  font-size: 1rem;
+  font-weight: 550;
+`;
+export const Subtitle = styled.span`
+  margin-left: 10px;
+  font-color: ${(props) => props.theme.fontColor};
+  opacity: 0.7;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 450;
+`;
+export const StyledEditIcon = styled(EditIcon)``;
 export const ArrowContainer = styled.div`
    {
     height: 120px;
