@@ -7,9 +7,9 @@ import {
   StyledLightSearchIcon,
   StyledDarkSearchIcon,
   StyledInput,
-} from "./SearchInput.styled";
+} from "./AddAssetInput.styled";
 
-const SearchInput = (props) => {
+const AddAssetInput = (props) => {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showResults, setShowResults] = useState(false);
@@ -24,8 +24,9 @@ const SearchInput = (props) => {
       setShowResults(false);
     }
   };
-  const handleLinkClick = () => {
-    setSearchTerm("");
+  const handleCoinClick = (e) => {
+    setSearchTerm(e.target.innerHTML);
+    props.handleCoinClick(e.target.innerHTML);
     setShowResults(false);
   };
   const dropdownRef = useRef();
@@ -59,10 +60,11 @@ const SearchInput = (props) => {
   }, [results]);
   return (
     <SearchContainer onSubmit={(e) => e.preventDefault()}>
-      <StyledSearchIcon>
-        {props.icon &&
-          (props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />)}
-      </StyledSearchIcon>
+      {props.icon && (
+        <StyledSearchIcon>
+          (props.theme ? <StyledLightSearchIcon /> : <StyledDarkSearchIcon />)
+        </StyledSearchIcon>
+      )}
       <StyledInput
         type="text"
         placeholder={props.placeholder ? props.placeholder : "Search..."}
@@ -74,7 +76,7 @@ const SearchInput = (props) => {
         <div>
           <Result
             results={results}
-            handleLinkClick={handleLinkClick}
+            handleCoinClick={handleCoinClick}
             showResults={showResults}
           />
         </div>
@@ -86,4 +88,4 @@ const SearchInput = (props) => {
 const mapStateToProps = (state) => ({
   coins: state.coins.data,
 });
-export default connect(mapStateToProps)(SearchInput);
+export default connect(mapStateToProps)(AddAssetInput);
