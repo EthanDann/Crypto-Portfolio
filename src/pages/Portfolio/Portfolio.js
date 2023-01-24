@@ -82,7 +82,7 @@ const Portfolio = (props) => {
     getCoinHistory();
     getCoinData();
   };
-  const handleEdit = () => {
+  const handleEdit = (e) => {
     setIsEditable(true);
   };
   const handleUpdateAmount = (e) => {
@@ -242,7 +242,7 @@ const Portfolio = (props) => {
                     {!isEditable && (
                       <>
                         <EditIconContainer>
-                          <StyledEditIcon onClick={handleEdit} />
+                          <StyledEditIcon onClick={handleEdit} name={name} />
                         </EditIconContainer>
                         <Subtitle>
                           Only able to edit Amount Value and Purchase Date
