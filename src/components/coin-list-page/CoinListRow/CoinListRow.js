@@ -1,4 +1,4 @@
-import { currencyFormatter, nFormatter } from "utils";
+import { currencyFormatter } from "utils";
 import { Sparkline, PercentDiv } from "components";
 import {
   TableBody,
