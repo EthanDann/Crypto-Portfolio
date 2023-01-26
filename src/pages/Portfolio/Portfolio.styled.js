@@ -9,13 +9,16 @@ import { ReactComponent as TrashIcon } from "./TrashIcon.svg";
 export const Container = styled.div`
   display: flex;
   z-index: 1;
-  background: ${(props) => props.theme.secondary};
+  background: ${(props) => props.theme.main};
   flex-direction: column;
   max-width: 100%;
   height: auto;
-  min-height: 525px;
+  min-height: ${(props) => (props.assets.length === 1 ? "600px" : "auto")};
   max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.secondary};
+  }
 `;
 export const FillerDiv = styled.div`
   display: flex;
@@ -23,17 +26,26 @@ export const FillerDiv = styled.div`
   align-items: center;
   flex-direction: column;
   height: 430px;
-  background: ${(props) => props.theme.secondary};
+  background: ${(props) => props.theme.main};
   color: ${(props) => props.theme.fontColor};
   font-size: 3rem;
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.secondary};
+  }
+  @media (max-width: 425px) {
+    min-height: 475px;
+  }
 `;
 const StyledDiv = styled.div`
   display: flex;
-  background-color: ${(props) => props.theme.main};
+  background-color: ${(props) => props.theme.secondary};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-radius: 12px;
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.main};
+  }
 `;
 export const Button = styled.button`
   background: rgb(6, 213, 84);
@@ -55,13 +67,12 @@ export const Button = styled.button`
   }
 `;
 export const ModalButton = styled.button`
-  width: 40%;
+  width: 60%;
   background: ${(props) =>
     props.background ? props.background : "rgb(6, 213, 84)"};
   color: ${(props) => (props.background ? "rgb(6, 213, 84)" : "#fff")};
   cursor: pointer;
-  font-size: 1rem;
-  padding: 1rem 0;
+  font-size: 0.8rem;
   margin: 0 0.5rem;
   border: none;
   border-radius: 10px;
@@ -72,6 +83,13 @@ export const ModalButton = styled.button`
     cursor: not-allowed;
     background: ${(props) =>
       props.background ? props.background : "rgb(6, 213, 84)"};
+  }
+  @media (min-width: 768px) {
+    padding: 1rem 0;
+    font-size: 1rem;
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.7rem;
   }
 `;
 export const DeleteButton = styled.button`
@@ -109,19 +127,48 @@ export const ModalButtonContainer = styled.div`
 export const ModalContainer = styled.div`
   display: flex;
   position: absolute;
-  right: 22%;
+  right: 19%;
   top: 25%;
   z-index: 1000;
   justify-content: center;
   align-items: center;
+  @media (min-width: 1024px) {
+    right: ${(props) => (props.added ? "15%" : "27%")};
+  }
+  @media (min-width: 1200px) {
+    right: ${(props) => (props.added ? "22%" : "32%")};
+  }
+  @media (min-width: 1440px) {
+    right: ${(props) => (props.added ? "25%" : "35%")};
+  }
+  @media (min-width: 2560px) {
+    right: ${(props) => (props.added ? "30%" : "40%")};
+  }
+  @media (max-width: 375px) {
+    right: 15%;
+  }
+  @media (max-width: 320px) {
+    right: 9%;
+  }
 `;
 export const AddAssetModal = styled.div`
-  width: 750px;
-  height: 400px;
-  background: ${(props) => props.theme.secondary};
+  width: 100%;
+  height: auto;
+  background: ${(props) => props.theme.main};
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  @media (min-width: 768px) {
+    width: 100%;
+    height: 50%;
+  }
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.secondary};
+    width: auto;
+  }
+  @media (min-width: 2560px) {
+    width: 1100px;
+  }
 `;
 export const ErrorMessage = styled.span`
   display: flex;
@@ -154,7 +201,7 @@ export const ModalInputContainer = styled.div`
 `;
 export const InputContainer = styled.div`
   margin: 0 0 1rem 3rem;
-  width: 408px;
+  width: 200px;
   height: auto;
   &:nth=child(1),
   &:nth-child(2),
@@ -166,19 +213,28 @@ export const InputContainer = styled.div`
   &:nth-child(3) {
     margin: 0 0 0 3rem;
   }
+  @media (min-width: 768px) {
+    width: 408px;
+  }
+  @media (min-width: 2560px) {
+    width: 800px;
+  }
 `;
 export const StyledSearchInput = styled(AddAssetInput)`
-  background-color: ${(props) => props.theme.main};
+  background-color: ${(props) => props.theme.secondary};
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.main};
+  }
 `;
 export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.main};
+  background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   margin: auto;
-  width: 77.5%;
+  width: 65%;
   padding: 0.8rem;
   padding-left: 2rem;
   font-size: 1.1rem;
@@ -187,26 +243,33 @@ export const StyledInput = styled.input`
   }
   &:focus {
     outline: none;
-  @media (max-width: 768px) {
-    width: 20vw;
+  }
+  @media (min-width: 768px) {
+    width: 77.5%;
+  }
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.main};
+  }
+  @media (min-width: 2560px) {
+    width: 79%;
+    font-size: 1.4rem;
   }
   @media (max-width: 425px) {
     border-radius: 10px;
     font-size: 0.8rem;
     padding-left: 0.8rem;
-    width: 25vw;
     height: 1vh;
   }
 `;
 export const PriceInput = styled(NumericFormat)`
- background-color: ${(props) => props.theme.main};
+  background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   margin: auto;
-  width: 77.5%;
+  width: 65%;
   padding: 0.8rem;
   padding-left: 2rem;
   font-size: 1.1rem;
@@ -215,16 +278,24 @@ export const PriceInput = styled(NumericFormat)`
   }
   &:focus {
     outline: none;
-  @media (max-width: 768px) {
-    width: 20vw;
+  }
+  @media (min-width: 768px) {
+    width: 77.5%;
+  }
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.main};
+  }
+  @media (min-width: 2560px) {
+    width: 79%;
+    font-size: 1.4rem;
   }
   @media (max-width: 425px) {
     border-radius: 10px;
     font-size: 0.8rem;
     padding-left: 0.8rem;
-    width: 25vw;
     height: 1vh;
-  }`;
+  }
+`;
 export const Header = styled.h1`
   display: flex;
   justify-content: flex-start;
@@ -233,6 +304,10 @@ export const Header = styled.h1`
   font-size: 1.5rem;
   margin: 0 1em 2em 1em;
   padding-top: 1em;
+  @media (min-width: 2560px) {
+    font-size: ${(props) => (props.modal ? "3rem" : "1.5rem")};
+    margin: ${(props) => (props.modal ? "0 1em 1em 1em" : "0 1em 2em 1em")};
+  }
 `;
 export const Row = styled.div`
   display: flex;
@@ -243,12 +318,21 @@ export const Row = styled.div`
     flex-direction: row;
     justify-content: space-around;
   }
+  @media (min-width: 2560px) {
+    justify-content: space-evenly;
+  }
+  @media (max-width: 768px) {
+    border-bottom: 3px solid ${(props) => props.theme.secondary};
+  }
 `;
 export const ModalContentContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
   @media (min-width: 768px) {
     margin: 1rem;
   }
@@ -265,6 +349,7 @@ export const ContentRow = styled.div`
 export const CoinInfoContainer = styled(StyledDiv)`
   padding-top: 2em;
   margin-top: 2em;
+  background: ${(props) => props.theme.main};
   @media (min-width: 1024px) {
     margin: 0;
     margin-bottom: 2em;
@@ -286,10 +371,19 @@ export const CoinInfoContainer = styled(StyledDiv)`
   }
 `;
 export const ModalInfoContainer = styled(StyledDiv)`
-  @media (min-width: 768px) {
+  margin-bottom: 1rem;
+  background: ${(props) => props.theme.main};
+  @media (min-width: 425px) {
     width: 100%;
     &:nth-child(1) {
-      width: 7%;
+      width: 15%;
+      padding: 1em 3em;
+    }
+  }
+  @media (min-width: 1024px) {
+    margin-bottom: 0;
+    &:nth-child(1) {
+      width: 9%;
       padding: 2em 3em;
     }
   }
@@ -317,7 +411,7 @@ export const ModalImageContainer = styled.div`
   padding: 1em;
   border-radius: 12px;
   margin-bottom: 0;
-  background-color: ${(props) => props.theme.secondary};
+  background: ${(props) => props.theme.secondary};
 `;
 export const Image = styled.img`
   height: 35px;
@@ -458,10 +552,11 @@ export const DateAsset = styled.input`
   margin-left: 0.25rem;
   width: 28%;
   border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
-  background-color: ${(props) => props.theme.main};
+  background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   @media (min-width: 1024px) {
+    background-color: ${(props) => props.theme.main};
     font-size: 0.8rem;
     width: 10%;
   }
@@ -520,7 +615,7 @@ export const AllTimeContent = styled(StyledDiv)`
   }
   @media (min-width: 1440px) {
     height: 3em;
-    width: 98%;
+    width: 95%;
   }
   @media (min-width: 2560px) {
     align-items: center;
@@ -614,7 +709,10 @@ export const EditIconContainer = styled.div`
   cursor: pointer;
   height: 30px;
   width: 30px;
-  background: ${(props) => props.theme.main};
+  background: ${(props) => props.theme.secondary};
+  @media (min-width: 1024px) {
+    background: ${(props) => props.theme.main};
+  }
   @media (max-width: 320px) {
     margin: 0;
     margin-left: 0.5rem;
@@ -637,7 +735,7 @@ export const RowHeader = styled.div`
     font-size: 2rem;
   }
   @media (max-width: 320px) {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 `;
 export const Subtitle = styled.span`

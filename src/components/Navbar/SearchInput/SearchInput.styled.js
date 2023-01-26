@@ -76,6 +76,7 @@ export const StyledInput = styled.input`
 export const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: ${(props) => props.theme.fontColor};
+  width: 100%;
   &:hover {
     background-color: ${(props) => props.theme.secondary};
     text-decoration: underline;

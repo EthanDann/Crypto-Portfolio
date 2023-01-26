@@ -6,7 +6,7 @@ import {
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,
-  handleSave,
+  handleAddAsset,
   handleEdit,
   handleUpdate,
   handleDelete,
@@ -140,7 +140,7 @@ const Portfolio = (props) => {
     props.handlePurchaseDate(date);
   };
   const handleAddAsset = () => {
-    props.handleSave();
+    props.handleAddAsset();
     setIsOpen(false);
     handleCoinData();
   };
@@ -150,7 +150,7 @@ const Portfolio = (props) => {
   }, []);
   return (
     <>
-      <Container isOpen={isOpen}>
+      <Container isOpen={isOpen} assets={assets}>
         <ButtonContainer>
           <Button onClick={() => handleOpen()}>Add Asset</Button>
         </ButtonContainer>
@@ -189,8 +189,8 @@ const Portfolio = (props) => {
                   </OuterContainer>
                 </CoinInfoContainer>
                 <Column>
-                  <Row>
-                    <RowHeader>Market Price:</RowHeader>
+                  <RowHeader>
+                    Market Price:
                     {!confirm_delete && (
                       <TrashContainer onClick={() => handleDelete(name)}>
                         <StyledTrashIcon />
@@ -203,7 +203,8 @@ const Portfolio = (props) => {
                         Delete
                       </DeleteButton>
                     )}
-                  </Row>
+                  </RowHeader>
+
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Current Price: </Text>
@@ -337,9 +338,11 @@ const Portfolio = (props) => {
         </FillerDiv>
       )}
       {isOpen && (
-        <ModalContainer>
+        <ModalContainer added={selectedCoin.name}>
           <AddAssetModal>
-            <Header center>Select Coin</Header>
+            <Header center modal>
+              Select Coin
+            </Header>
             <ModalContentContainer>
               {selectedCoin.name && (
                 <ModalInfoContainer>
@@ -355,7 +358,6 @@ const Portfolio = (props) => {
                 <InputContainer>
                   <StyledSearchInput
                     handleCoinClick={(coin) => props.handleCoinClick(coin)}
-                    main
                     placeholder={"Search for Coin..."}
                   />
                 </InputContainer>
@@ -423,7 +425,7 @@ const mapDispatchToProps = {
   handleCoinClick,
   handlePurchasedAmount,
   handlePurchaseDate,
-  handleSave,
+  handleAddAsset,
   handleUpdateAmount,
   handleUpdateDate,
   handleEdit,

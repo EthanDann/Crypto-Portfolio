@@ -15,7 +15,7 @@ export const GET_COIN_DATA = "GET_COIN_DATA";
 export const GET_COIN_ERROR = "GET_COIN_ERROR";
 export const PURCHASE_AMOUNT = "PURCHASE_AMOUNT";
 export const PURCHASE_DATE = "PURCHASE_DATE";
-export const SAVE_ASSET = "SAVE_ASSET";
+export const ADD_ASSET = "ADD_ASSET";
 export const EDIT_ASSET = "EDIT_ASSET";
 export const UPDATE_ASSET = "UPDATE_ASSET";
 export const DELETE_ASSET = "DELETE_ASSET";
@@ -97,7 +97,7 @@ const portfolioReducer = (state = initialState, action) => {
         selectedCoin: { ...state.selectedCoin, purchase_date: action.payload },
       };
     }
-    case SAVE_ASSET: {
+    case ADD_ASSET: {
       return {
         ...state,
         assets: [
@@ -131,7 +131,7 @@ const portfolioReducer = (state = initialState, action) => {
       return {
         ...state,
         assets: state.assets.map((coin, index) => {
-          if (coin.name === action.payload.id) {
+          if (coin.name === action.payload.name) {
             return {
               ...coin,
               purchase_price: action.payload.purchase_price,
@@ -141,6 +141,7 @@ const portfolioReducer = (state = initialState, action) => {
           }
           return coin;
         }),
+        selectedCoin: [],
       };
     }
     case UPDATE_PURCHASE_AMOUNT: {

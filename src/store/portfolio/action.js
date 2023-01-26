@@ -7,7 +7,7 @@ import {
   GET_COIN_ERROR,
   PURCHASE_AMOUNT,
   PURCHASE_DATE,
-  SAVE_ASSET,
+  ADD_ASSET,
   EDIT_ASSET,
   UPDATE_ASSET,
   UPDATE_PURCHASE_AMOUNT,
@@ -95,21 +95,43 @@ export const handlePurchasedAmount = (amount) => (dispatch, getState) => {
 export const handlePurchaseDate = (value) => (dispatch, getState) => {
   dispatch({ type: PURCHASE_DATE, payload: value });
 };
-export const handleSave = () => (dispatch, getState) => {
+export const handleAddAsset = () => (dispatch, getState) => {
   const state = getState();
   const coin = state.coins.data.filter((el) =>
     el.name.includes(state.portfolio.selectedCoin.name)
   );
-  dispatch({
-    type: SAVE_ASSET,
-    payload: {
-      name: state.portfolio.selectedCoin.name,
-      id: state.portfolio.selectedCoin.id,
-      purchase_price: state.portfolio.selectedCoin.purchase_price,
-      purchase_date: state.portfolio.selectedCoin.purchase_date,
-      price_on_purchase_date: coin[0].current_price,
-    },
-  });
+  const asset_exists = state.portfolio.assets.filter((el) =>
+    el.name.includes(state.portfolio.selectedCoin.name)
+  );
+  if (asset_exists.length > 0) {
+    return dispatch({
+      type: UPDATE_ASSET,
+      payload: {
+        name: asset_exists[0].name,
+        purchase_price:
+          "$" +
+          (Number(asset_exists[0].purchase_price.replace(/[^0-9.-]+/g, "")) +
+            Number(
+              state.portfolio.selectedCoin.purchase_price.replace(
+                /[^0-9.-]+/g,
+                ""
+              )
+            )),
+        purchase_date: state.portfolio.selectedCoin.purchase_date,
+      },
+    });
+  } else {
+    dispatch({
+      type: ADD_ASSET,
+      payload: {
+        name: state.portfolio.selectedCoin.name,
+        id: state.portfolio.selectedCoin.id,
+        purchase_price: state.portfolio.selectedCoin.purchase_price,
+        purchase_date: state.portfolio.selectedCoin.purchase_date,
+        price_on_purchase_date: coin[0].current_price,
+      },
+    });
+  }
 };
 export const handleUpdateAmount = (value, name) => (dispatch, getState) => {
   dispatch({
@@ -151,7 +173,7 @@ export const handleUpdate = (name) => (dispatch, getState) => {
       return dispatch({
         type: UPDATE_ASSET,
         payload: {
-          id: coin,
+          name,
           purchase_price: coin.purchase_price,
           purchase_date: coin.purchase_date,
         },
