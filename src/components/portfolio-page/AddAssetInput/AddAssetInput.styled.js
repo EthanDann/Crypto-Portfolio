@@ -4,16 +4,15 @@ import { ReactComponent as LightSearchIcon } from "./LightSearchIcon.svg";
 
 export const SearchContainer = styled.form`
   display: flex;
-  height: 50px;
-  background: ${(props) => props.theme.secondary};
+  height: auto;
   border-radius: 10px;
   align-items: center;
   position: relative;
   :hover {
     cursor: text;
   }
-  @media (max-width: 425px) {
-    display: none;
+  @media (min-width: 768px) {
+    height: 50px;
   }
 `;
 
@@ -42,14 +41,13 @@ export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
   }
 `;
 export const StyledInput = styled.input`
-  background-color: ${(props) =>
-    props.main ? props.theme.main : props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  width: 80.5%;
+  width: 71.5%;
   padding: 0.8rem 0;
   padding-left: 2rem;
   font-size: 1.1rem;
@@ -59,14 +57,19 @@ export const StyledInput = styled.input`
   &:focus {
     outline: none;
   }
-  @media (max-width: 768px) {
-    width: 20vw;
+  @media (min-width: 768px) {
+    width: 80.5%;
+  }
+  @media (min-width: 1024px) {
+    background-color: ${(props) => props.theme.main};
+  }
+  @media (min-width: 2560px) {
+    font-size: 1.4rem;
   }
   @media (max-width: 425px) {
     border-radius: 10px;
     font-size: 0.8rem;
     padding-left: 0.8rem;
-    width: 25vw;
     height: 1vh;
   }
 `;
@@ -74,6 +77,7 @@ export const StyledText = styled.p`
   text-decoration: none;
   color: ${(props) => props.theme.fontColor};
   margin-left: 1rem;
+  width: 100%;
   &:hover {
     background-color: ${(props) => props.theme.secondary};
     text-decoration: underline;
@@ -91,7 +95,7 @@ const fadeIn = keyframes`
 export const ResultsList = styled.ul`
   display: flex;
   flex-direction: column;
-  width: 88%;
+  width: 77%;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
   display: ${(props) =>
@@ -120,6 +124,9 @@ export const ResultsList = styled.ul`
   }
   &:input:not(:focus) {
     display: none;
+  }
+  @media (min-width: 768px) {
+    width: 88%;
   }
 `;
 export const ListItem = styled.li`

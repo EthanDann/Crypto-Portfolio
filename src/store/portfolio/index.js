@@ -15,8 +15,11 @@ export const GET_COIN_DATA = "GET_COIN_DATA";
 export const GET_COIN_ERROR = "GET_COIN_ERROR";
 export const PURCHASE_AMOUNT = "PURCHASE_AMOUNT";
 export const PURCHASE_DATE = "PURCHASE_DATE";
-export const SAVE_ASSET = "SAVE_ASSET";
+export const ADD_ASSET = "ADD_ASSET";
+export const EDIT_ASSET = "EDIT_ASSET";
 export const UPDATE_ASSET = "UPDATE_ASSET";
+export const DELETE_ASSET = "DELETE_ASSET";
+export const CONFIRM_DELETE = "CONFIRM_DELETE";
 export const UPDATE_PURCHASE_AMOUNT = "UPDATE_PURCHASE_AMOUNT";
 export const UPDATE_PURCHASE_DATE = "UPDATE_PURCHASE_DATE";
 const portfolioReducer = (state = initialState, action) => {
@@ -58,6 +61,7 @@ const portfolioReducer = (state = initialState, action) => {
           if (coin.name === action.payload.id) {
             return {
               ...coin,
+              uniqueId: action.payload.uniqueId,
               symbol: action.payload.symbol,
               image: action.payload.image,
               current_price: action.payload.current_price,
@@ -66,6 +70,8 @@ const portfolioReducer = (state = initialState, action) => {
               total_volume: action.payload.total_volume,
               circulating_supply: action.payload.circulating_supply,
               max_supply: action.payload.max_supply,
+              confirm_delete: false,
+              editable: false,
             };
           }
           return coin;
@@ -91,7 +97,7 @@ const portfolioReducer = (state = initialState, action) => {
         selectedCoin: { ...state.selectedCoin, purchase_date: action.payload },
       };
     }
-    case SAVE_ASSET: {
+    case ADD_ASSET: {
       return {
         ...state,
         assets: [
@@ -107,19 +113,35 @@ const portfolioReducer = (state = initialState, action) => {
         selectedCoin: [],
       };
     }
-    case UPDATE_ASSET: {
+    case EDIT_ASSET: {
       return {
         ...state,
         assets: state.assets.map((coin, index) => {
-          if (coin.name === action.payload.id) {
+          if (coin.name === action.payload.name) {
             return {
               ...coin,
-              purchase_price: action.payload.purchase_price,
-              purchase_date: action.payload.purchase_date,
+              editable: action.payload.editable,
             };
           }
           return coin;
         }),
+      };
+    }
+    case UPDATE_ASSET: {
+      return {
+        ...state,
+        assets: state.assets.map((coin, index) => {
+          if (coin.name === action.payload.name) {
+            return {
+              ...coin,
+              purchase_price: action.payload.purchase_price,
+              purchase_date: action.payload.purchase_date,
+              editable: false,
+            };
+          }
+          return coin;
+        }),
+        selectedCoin: [],
       };
     }
     case UPDATE_PURCHASE_AMOUNT: {
@@ -148,6 +170,28 @@ const portfolioReducer = (state = initialState, action) => {
           }
           return coin;
         }),
+      };
+    }
+    case DELETE_ASSET: {
+      return {
+        ...state,
+        assets: state.assets.map((coin, index) => {
+          if (coin.name === action.payload.name) {
+            return {
+              ...coin,
+              confirm_delete: action.payload.confirm_delete,
+            };
+          }
+          return coin;
+        }),
+      };
+    }
+    case CONFIRM_DELETE: {
+      return {
+        ...state,
+        assets: state.assets.filter(
+          (asset) => asset.uniqueId !== action.payload.id
+        ),
       };
     }
     default:
