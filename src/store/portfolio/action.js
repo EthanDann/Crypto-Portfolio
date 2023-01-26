@@ -60,6 +60,10 @@ export const getCoinHistory = () => async (dispatch, getState) => {
 export const getCoinData = () => (dispatch, getState) => {
   try {
     const state = getState();
+    const coin = state.portfolio.assets.filter((el) =>
+      el.name.includes(state.portfolio.selectedCoin.name)
+    );
+    const purchase_currency = coin.purchase_currency;
     const currency = state.supportedCurrencies.activeCurrency;
     state.portfolio.assets.map(async (coin) => {
       const { data } = await axios.get(
@@ -129,6 +133,8 @@ export const handleAddAsset = () => (dispatch, getState) => {
         purchase_price: state.portfolio.selectedCoin.purchase_price,
         purchase_date: state.portfolio.selectedCoin.purchase_date,
         price_on_purchase_date: coin[0].current_price,
+        purchase_currency: state.supportedCurrencies.activeCurrency,
+        purchase_currency_symbol: state.supportedCurrencies.currencySymbol,
       },
     });
   }
