@@ -4,6 +4,7 @@ import { AddAssetInput } from "components";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";
 import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import { ReactComponent as EditIcon } from "./EditIcon.svg";
+import { ReactComponent as TrashIcon } from "./TrashIcon.svg";
 
 export const Container = styled.div`
   display: flex;
@@ -71,6 +72,23 @@ export const ModalButton = styled.button`
     cursor: not-allowed;
     background: ${(props) =>
       props.background ? props.background : "rgb(6, 213, 84)"};
+  }
+`;
+export const DeleteButton = styled.button`
+  background: ${(props) => (props.background ? props.background : "#e8113d")};
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0;
+  margin-left: 0.5rem;
+  border: none;
+  border-radius: 10px;
+  &:hover {
+    background: ${(props) => (props.hover ? props.hover : "#d22030")};
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background: ${(props) => (props.background ? props.background : "#e8113d")};
   }
 `;
 export const ButtonContainer = styled.div`
@@ -222,9 +240,8 @@ export const Row = styled.div`
   justify-content: center;
   align-items: center;
   @media (min-width: 1024px) {
-    margin: 0 1em;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
   }
 `;
 export const ModalContentContainer = styled.div`
@@ -250,6 +267,7 @@ export const CoinInfoContainer = styled(StyledDiv)`
   margin-top: 2em;
   @media (min-width: 1024px) {
     margin: 0;
+    margin-bottom: 2em;
     margin-right: 2em;
   }
   @media (min-width: 768px) {
@@ -406,8 +424,7 @@ export const AssetInfo = styled.p`
 `;
 export const AssetInput = styled(NumericFormat)`
   font-size: 1rem;
-  margin: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 0.5rem 0;
   margin-left: 0.25rem;
   border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
   background-color: ${(props) => props.theme.main};
@@ -437,8 +454,7 @@ export const AssetInput = styled(NumericFormat)`
 `;
 export const DateAsset = styled.input`
   font-size: 1rem;
-  margin: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 0.5rem 0;
   margin-left: 0.25rem;
   width: 28%;
   border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
@@ -463,7 +479,7 @@ export const SaveButton = styled.button`
   background: rgb(6, 213, 84);
   color: #fff;
   padding: 0.25rem 0.75rem;
-  margin-left: 10px;
+  margin: 0 0.5rem;
   border-radius: 10px;
   border: none;
 `;
@@ -577,6 +593,18 @@ export const StyledUpArrow = styled(UpArrow)`
 export const StyledDownArrow = styled(DownArrow)`
   margin: 0 3px 4px 3px;
 `;
+export const TrashContainer = styled.div`
+  display: flex;
+  background: #e8113d;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  align-items: center;
+  border-radius: 7px;
+  padding: 2px;
+  height: 23px;
+  width: 23px;
+`;
+export const StyledTrashIcon = styled(TrashIcon)``;
 export const EditIconContainer = styled.div`
   display: flex;
   justify-content: center;

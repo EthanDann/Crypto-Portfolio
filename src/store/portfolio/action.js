@@ -1,4 +1,5 @@
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import {
   SELECT_COIN,
   GET_COIN_HISTORY,
@@ -7,9 +8,12 @@ import {
   PURCHASE_AMOUNT,
   PURCHASE_DATE,
   SAVE_ASSET,
+  EDIT_ASSET,
   UPDATE_ASSET,
   UPDATE_PURCHASE_AMOUNT,
   UPDATE_PURCHASE_DATE,
+  DELETE_ASSET,
+  CONFIRM_DELETE,
 } from "./index";
 
 export const handleCoinClick = (coin) => (dispatch, getState) => {
@@ -61,10 +65,12 @@ export const getCoinData = () => (dispatch, getState) => {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coin.id}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
       );
+      const uniqueId = uuid().slice(0, 8);
       dispatch({
         type: GET_COIN_DATA,
         payload: {
           id: coin.name,
+          uniqueId,
           symbol: data.symbol.toUpperCase(),
           image: data.image.large,
           current_price: data.market_data.current_price[currency],
@@ -123,6 +129,21 @@ export const handleUpdateDate = (value, name) => (dispatch, getState) => {
     },
   });
 };
+export const handleEdit = (name) => (dispatch, getState) => {
+  const state = getState();
+  state.portfolio.assets.map((coin) => {
+    if (name === coin.name) {
+      return dispatch({
+        type: EDIT_ASSET,
+        payload: {
+          name,
+          editable: true,
+        },
+      });
+    }
+    return null;
+  });
+};
 export const handleUpdate = (name) => (dispatch, getState) => {
   const state = getState();
   state.portfolio.assets.map((coin) => {
@@ -137,5 +158,28 @@ export const handleUpdate = (name) => (dispatch, getState) => {
       });
     }
     return null;
+  });
+};
+export const handleDelete = (name) => (dispatch, getState) => {
+  const state = getState();
+  state.portfolio.assets.map((coin) => {
+    if (name === coin.name) {
+      return dispatch({
+        type: DELETE_ASSET,
+        payload: {
+          name,
+          confirm_delete: true,
+        },
+      });
+    }
+    return null;
+  });
+};
+export const handleConfirmDelete = (id) => (dispatch, getState) => {
+  return dispatch({
+    type: CONFIRM_DELETE,
+    payload: {
+      id,
+    },
   });
 };

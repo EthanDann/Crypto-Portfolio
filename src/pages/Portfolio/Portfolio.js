@@ -7,7 +7,10 @@ import {
   handlePurchasedAmount,
   handlePurchaseDate,
   handleSave,
+  handleEdit,
   handleUpdate,
+  handleDelete,
+  handleConfirmDelete,
   handleUpdateAmount,
   handleUpdateDate,
 } from "store/portfolio/action";
@@ -21,6 +24,7 @@ import {
   ModalContentContainer,
   ModalImageContainer,
   ModalButton,
+  DeleteButton,
   ModalContainer,
   ModalInfoContainer,
   AddAssetModal,
@@ -45,21 +49,12 @@ import {
   AssetInput,
   DateAsset,
   ErrorMessage,
-  LinkContent,
-  LinkContainer,
+  TrashContainer,
+  StyledTrashIcon,
   AllTimeContent,
-  MarketDataContent,
   ImageContainer,
   Image,
-  Anchor,
-  AllTimeHeader,
-  AllTimeText,
-  PercentDiv,
-  List,
-  ListItem,
   Header,
-  LinkIconContainer,
-  IconContainer,
   StyledUpArrow,
   StyledDownArrow,
   EditIconContainer,
@@ -75,15 +70,14 @@ import {
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasDateError, setHasDateError] = useState(false);
-  const [isEditable, setIsEditable] = useState(false);
   const { assets, selectedCoin, currencySymbol, getCoinData, getCoinHistory } =
     props;
   const handleCoinData = () => {
     getCoinHistory();
     getCoinData();
   };
-  const handleEdit = (e) => {
-    setIsEditable(true);
+  const handleEdit = (name) => {
+    props.handleEdit(name);
   };
   const handleUpdateAmount = (e) => {
     props.handleUpdateAmount(e.target.value, e.target.name);
@@ -110,10 +104,15 @@ const Portfolio = (props) => {
     }
     props.handleUpdateDate(date, e.target.name);
   };
-  const handleUpdate = (e) => {
-    setIsEditable(false);
-    props.handleUpdate(e.target.value, e.target.name);
+  const handleUpdate = (name) => {
+    props.handleUpdate(name);
     handleCoinData();
+  };
+  const handleConfirmDelete = (id) => {
+    props.handleConfirmDelete(id);
+  };
+  const handleDelete = (name) => {
+    props.handleDelete(name);
   };
   const handleOpen = () => setIsOpen(!isOpen);
   const handlePurchasedAmount = (e) => {
@@ -161,6 +160,7 @@ const Portfolio = (props) => {
             const {
               image,
               name,
+              uniqueId,
               symbol,
               current_price,
               purchase_price,
@@ -171,6 +171,8 @@ const Portfolio = (props) => {
               total_volume,
               market_cap,
               circulating_supply,
+              confirm_delete,
+              editable,
             } = coin;
             return (
               <Row key={name}>
@@ -187,7 +189,21 @@ const Portfolio = (props) => {
                   </OuterContainer>
                 </CoinInfoContainer>
                 <Column>
-                  <RowHeader>Market Price:</RowHeader>
+                  <Row>
+                    <RowHeader>Market Price:</RowHeader>
+                    {!confirm_delete && (
+                      <TrashContainer onClick={() => handleDelete(name)}>
+                        <StyledTrashIcon />
+                      </TrashContainer>
+                    )}
+                    {confirm_delete && (
+                      <DeleteButton
+                        onClick={() => handleConfirmDelete(uniqueId)}
+                      >
+                        Delete
+                      </DeleteButton>
+                    )}
+                  </Row>
                   <AllTimeContent>
                     <ContentRow>
                       <Text>Current Price: </Text>
@@ -239,20 +255,19 @@ const Portfolio = (props) => {
                   </AllTimeContent>
                   <RowHeader>
                     Your Coin:
-                    {!isEditable && (
+                    {!editable && (
                       <>
-                        <EditIconContainer>
-                          <StyledEditIcon onClick={handleEdit} name={name} />
+                        <EditIconContainer onClick={() => handleEdit(name)}>
+                          <StyledEditIcon />
                         </EditIconContainer>
                         <Subtitle>
                           Only able to edit Amount Value and Purchase Date
                         </Subtitle>
                       </>
                     )}
-                    {isEditable && (
+                    {editable && (
                       <SaveButton
-                        onClick={handleUpdate}
-                        value={name}
+                        onClick={() => handleUpdate(name)}
                         disabled={hasDateError}
                       >
                         Save
@@ -270,7 +285,7 @@ const Portfolio = (props) => {
                       </AssetInfo>
                       <Text>Amount Value: </Text>
                       <AssetInput
-                        disabled={!isEditable}
+                        disabled={!editable}
                         onChange={handleUpdateAmount}
                         name={name}
                         prefix={currencySymbol}
@@ -297,7 +312,7 @@ const Portfolio = (props) => {
                       </AssetInfo>
                       <Text>Purchase Date: </Text>
                       <DateAsset
-                        disabled={!isEditable}
+                        disabled={!editable}
                         onChange={handleUpdateDate}
                         name={name}
                         value={purchase_date}
@@ -411,6 +426,9 @@ const mapDispatchToProps = {
   handleSave,
   handleUpdateAmount,
   handleUpdateDate,
+  handleEdit,
   handleUpdate,
+  handleDelete,
+  handleConfirmDelete,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
