@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import { getChartData } from "store/coin/action";
 import { TimeChart, DurationSelector } from "components";
 import { convertDurationToUnix } from "utils";
 import { Wrapper } from "./TimeChartWrapper.styled";
 
-export const TimeChartWrapper = (props) => {
-  const [coinPrices, setCoinPrices] = useState([]);
+const TimeChartWrapper = (props) => {
   const [durations, setDurations] = useState([
     {
       duration: "1d",
@@ -32,20 +32,8 @@ export const TimeChartWrapper = (props) => {
       active: false,
     },
   ]);
+  const { chart_data } = props;
 
-  const getChartData = async (duration) => {
-    const todaysDate = new Date() / 1000;
-    const startDate = todaysDate - duration;
-    try {
-      const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${props.coinId}/market_chart/range?vs_currency=${props.activeCurrency}&from=${startDate}&to=${todaysDate}
-`
-      );
-      setCoinPrices(data.prices);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const handleDurationClick = (duration) => {
     const arr = durations.map((time) => {
       return {
@@ -59,21 +47,39 @@ export const TimeChartWrapper = (props) => {
     durations.map(
       (duration) =>
         duration.active &&
-        getChartData(convertDurationToUnix(duration.duration))
+        props.getChartData(
+          convertDurationToUnix(duration.duration),
+          props.coinId
+        )
     );
     // eslint-disable-next-line
   }, [durations]);
   useEffect(() => {
-    getChartData(convertDurationToUnix("1d"));
+    props.getChartData(convertDurationToUnix("1d"), props.coinId);
     // eslint-disable-next-line
   }, []);
   return (
-    <Wrapper>
-      <DurationSelector
-        handleDurationClick={handleDurationClick}
-        durations={durations}
-      />
-      <TimeChart coinPrice={coinPrices} />
-    </Wrapper>
+    <>
+      {chart_data && (
+        <Wrapper>
+          <DurationSelector
+            handleDurationClick={handleDurationClick}
+            durations={durations}
+          />
+          <TimeChart chart={chart_data} />
+        </Wrapper>
+      )}
+    </>
   );
 };
+
+const mapStateToProps = (state) => ({
+  chart_data: state.coin.chart_data,
+  isLoading: state.coin.isLoading,
+  error: state.coin.error,
+});
+const mapDispatchToProps = {
+  getChartData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimeChartWrapper);

@@ -1,38 +1,33 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { getCoinData } from "store/coin/action";
 import { TopPageContent, BottomPageContent } from "components";
 import { Container } from "./Coin.styled";
 
 const CoinPage = (props) => {
   let { id } = useParams();
-  const [coin, setCoin] = useState({});
   useEffect(() => {
-    axios
-      .get(
-        `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false
-`
-      )
-      .then(({ data }) => {
-        setCoin(data);
-      });
-  }, [id]);
+    getCoinData(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const { getCoinData, coin, activeCurrency, currencySymbol, theme } = props;
   return (
     <>
       {coin.id && (
         <Container>
           <TopPageContent
             coin={coin}
-            activeCurrency={props.activeCurrency}
-            currencySymbol={props.currencySymbol}
-            theme={props.theme}
+            activeCurrency={activeCurrency}
+            currencySymbol={currencySymbol}
+            theme={theme}
           />
           <BottomPageContent
             coin={coin}
             id={id}
-            activeCurrency={props.activeCurrency}
-            currencySymbol={props.currencySymbol}
-            theme={props.theme}
+            activeCurrency={activeCurrency}
+            currencySymbol={currencySymbol}
+            theme={theme}
           />
         </Container>
       )}
@@ -40,4 +35,12 @@ const CoinPage = (props) => {
   );
 };
 
-export default CoinPage;
+const mapStateToProps = (state) => ({
+  coin: state.coin.data,
+  isLoading: state.coin.isLoading,
+  error: state.coin.error,
+});
+const mapDispatchToProps = {
+  getCoinData,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CoinPage);

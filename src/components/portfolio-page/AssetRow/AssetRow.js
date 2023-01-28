@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import getSymbolFromCurrency from "currency-symbol-map";
-import { currencyFormatter } from "utils";
 
 import {
   handleEdit,

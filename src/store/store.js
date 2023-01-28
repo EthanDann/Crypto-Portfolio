@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import coinListReducer from "./coinList";
+import coinReducer from "./coin";
 import chartsReducer from "./charts";
 import currenciesReducer from "./currencies";
 import portfolioReducer from "./portfolio";
@@ -11,6 +12,7 @@ import { persistReducer, persistStore } from "redux-persist";
 const reducers = combineReducers({
   coins: coinListReducer,
   charts: chartsReducer,
+  coin: coinReducer,
   supportedCurrencies: currenciesReducer,
   portfolio: portfolioReducer,
   theme: themeReducer,

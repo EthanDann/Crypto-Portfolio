@@ -106,7 +106,7 @@ const Modal = (props) => {
             background={"#rgb(255,255,255)"}
             hover={"rgb(225,225,225)"}
             padding={"1rem 5rem"}
-            onClick={() => props.setIsOpen(false)}
+            onClick={() => props.handleOpen()}
           >
             Close
           </ModalButton>

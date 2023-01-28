@@ -9,7 +9,8 @@ import {
 } from "./BottomPageContent.styled";
 
 export const BottomPageContent = (props) => {
-  const { description, links, symbol, market_data } = props.coin;
+  const { coin, currencySymbol, theme, id } = props;
+  const { description, links, symbol, market_data } = coin;
   const { blockchain_site } = links;
   const { current_price } = market_data;
   const activeCurrency = props.activeCurrency.toLowerCase();
@@ -31,16 +32,13 @@ export const BottomPageContent = (props) => {
         </Link>
       </CoinLinksContainer>
       <CurrencyConverter
-        activeCurrency={props.activeCurrency}
-        currencySymbol={props.currencySymbol}
+        activeCurrency={activeCurrency}
+        currencySymbol={currencySymbol}
         coinSymbol={symbol.toUpperCase()}
         coinPrice={current_price[activeCurrency]}
-        theme={props.theme}
+        theme={theme}
       />
-      <TimeChartWrapper
-        coinId={props.id}
-        activeCurrency={props.activeCurrency}
-      />
+      <TimeChartWrapper coinId={id} activeCurrency={activeCurrency} />
     </Container>
   );
 };

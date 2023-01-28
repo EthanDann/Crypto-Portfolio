@@ -35,7 +35,6 @@ export const TopPageContent = (props) => {
     return false;
   };
   const { image, name, symbol, links, market_data } = props.coin;
-
   const {
     current_price,
     ath_change_percentage,

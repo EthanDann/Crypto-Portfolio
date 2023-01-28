@@ -30,6 +30,7 @@ export const handleCoinClick = (coin) => (dispatch, getState) => {
   });
 };
 export const getCoinHistory = () => async (dispatch, getState) => {
+  const source = axios.CancelToken.source();
   try {
     const state = getState();
     await state.portfolio.assets.map(async (coin) => {
@@ -39,7 +40,10 @@ export const getCoinHistory = () => async (dispatch, getState) => {
       const day = new Date(date).getDate();
       date = day + "-" + month + "-" + year;
       const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${coin.id}/history?date=${date}`
+        `https://api.coingecko.com/api/v3/coins/${coin.id}/history?date=${date}`,
+        {
+          cancelToken: source.token,
+        }
       );
       const price_on_purchase_date = data.market_data.current_price.usd;
       dispatch({
@@ -55,15 +59,16 @@ export const getCoinHistory = () => async (dispatch, getState) => {
   }
 };
 export const getCoinData = () => (dispatch, getState) => {
+  const source = axios.CancelToken.source();
   try {
     const state = getState();
-    const coin = state.portfolio.assets.filter((el) =>
-      el.name.includes(state.portfolio.selectedCoin.name)
-    );
     const currency = state.supportedCurrencies.activeCurrency;
     state.portfolio.assets.map(async (coin) => {
       const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${coin.id}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
+        `https://api.coingecko.com/api/v3/coins/${coin.id}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`,
+        {
+          cancelToken: source.token,
+        }
       );
       const uniqueId = uuid().slice(0, 8);
       dispatch({
