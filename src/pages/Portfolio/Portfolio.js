@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import BackToUp from "@uiw/react-back-to-top";
 import { getCoinHistory, getCoinData } from "store/portfolio/action";
 import { AssetRow, ArrowAnimation, Modal } from "components";
 import {
@@ -30,6 +31,7 @@ const Portfolio = (props) => {
         </ButtonContainer>
         {assets && <Header>Your Statistics</Header> && <AssetRow />}
         {props.hasError && <Row>{props.error}</Row>}
+        <BackToUp>Top</BackToUp>
       </Container>
       {assets.length === 0 && <ArrowAnimation />}
       {isOpen && (

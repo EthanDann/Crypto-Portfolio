@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import BackToUp from "@uiw/react-back-to-top";
 import { getAllCoins, getMoreCoins } from "store/coinList/action";
 import { getChartInfo } from "store/charts/action";
 import { CoinListTable, PriceChart, VolumeChart } from "components";
@@ -37,15 +38,18 @@ const CoinList = (props) => {
         </ChartWrapper>
       )}
       {HasCoin && (
-        <CoinListTable
-          coinList={coins}
-          currencySymbol={currencySymbol}
-          hasError={hasError}
-          error={error}
-          isLoading={isLoading}
-          next={() => getMoreCoins()}
-        />
+        <>
+          <CoinListTable
+            coinList={coins}
+            currencySymbol={currencySymbol}
+            hasError={hasError}
+            error={error}
+            isLoading={isLoading}
+            next={() => getMoreCoins()}
+          />
+        </>
       )}
+      <BackToUp>Top</BackToUp>
     </Wrapper>
   );
 };
