@@ -1,1 +1,1 @@
-export { TimeChartWrapper } from "./TimeChartWrapper";
+export { default } from "./TimeChartWrapper";

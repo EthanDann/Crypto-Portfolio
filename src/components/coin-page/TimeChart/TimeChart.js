@@ -26,10 +26,10 @@ const TimeChart = (props) => {
   };
   const chartData = () => {
     return {
-      labels: getLabels(props.coinPrice),
+      labels: getLabels(props.chart),
       datasets: [
         {
-          data: props.coinPrice,
+          data: props.chart,
           tension: 0.4,
           borderColor: "rgba(44, 47, 54, 1)",
           fill: true,

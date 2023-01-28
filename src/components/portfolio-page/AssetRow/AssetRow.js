@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
+import getSymbolFromCurrency from "currency-symbol-map";
+
 import {
   handleEdit,
   handleUpdate,
@@ -98,10 +100,12 @@ const AssetRow = (props) => {
       total_volume,
       market_cap,
       circulating_supply,
-      purchase_currency_symbol,
       confirm_delete,
       editable,
     } = coin;
+    const coin_amount = (
+      Number(purchase_price.replace(/[^0-9.-]+/g, "")) / price_on_purchase_date
+    ).toFixed(2);
     return (
       <Row key={name}>
         <CoinInfoContainer>
@@ -197,10 +201,7 @@ const AssetRow = (props) => {
             <ContentRow>
               <Text>Coin Amount: </Text>
               <AssetInfo>
-                {(
-                  Number(purchase_price.replace(/[^0-9.-]+/g, "")) /
-                  price_on_purchase_date
-                ).toFixed(2)}
+                {getSymbolFromCurrency(coin.symbol) + coin_amount}
               </AssetInfo>
               <Text>Amount Value: </Text>
               <AssetInput
@@ -209,7 +210,7 @@ const AssetRow = (props) => {
                 name={name}
                 prefix={currencySymbol}
                 thousandSeparator={true}
-                value={purchase_price}
+                value={(coin_amount * current_price).toFixed(2)}
               />
               <Text>Amount Price Change Since Purchase: </Text>
               <AssetInfo
