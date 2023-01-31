@@ -1,4 +1,6 @@
+import { useRef, useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import BackToUp from "@uiw/react-back-to-top";
 import { CoinListRow } from "components";
 import {
   TableContainer,
@@ -11,12 +13,15 @@ import {
 } from "./CoinListTable.styled";
 
 const CoinListTable = (props) => {
+  const [element, setElement] = useState();
+  useEffect(() => setElement($dom.current), []);
   const { currencySymbol, isLoading, hasError, error, coinList } = props;
+  const $dom = useRef(null);
   return (
     <TableContainer>
       {isLoading && <span>Fetching all coins...</span>}
       {
-        <ScrollableDiv id="scrollableDiv">
+        <ScrollableDiv id="scrollableDiv" ref={$dom}>
           <InfiniteScroll
             dataLength={coinList.length}
             next={props.next}
@@ -45,6 +50,9 @@ const CoinListTable = (props) => {
               />
             </CoinTable>
           </InfiniteScroll>
+          <BackToUp element={$dom.current} style={{ float: "right" }}>
+            Top
+          </BackToUp>
         </ScrollableDiv>
       }
       {hasError && (

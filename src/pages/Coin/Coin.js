@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import BackToUp from "@uiw/react-back-to-top";
 import { getCoinData } from "store/coin/action";
 import { TopPageContent, BottomPageContent } from "components";
 import { Container } from "./Coin.styled";
@@ -29,6 +30,7 @@ const CoinPage = (props) => {
             currencySymbol={currencySymbol}
             theme={theme}
           />
+          <BackToUp>Top</BackToUp>
         </Container>
       )}
     </>
