@@ -1,47 +1,47 @@
 import { connect } from "react-redux";
 import { handleTheme } from "store/theme/action";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Navbar } from "components";
+import { useWindowSize } from "hooks";
 import { CoinList, Coin, Portfolio } from "pages";
 import { Container, darkTheme, lightTheme } from "App.styled";
 
 const App = (props) => {
   const { theme, activeCurrency, currencySymbol } = props;
+  const { width: screenWidth } = useWindowSize();
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <Container>
-        <BrowserRouter>
-          <Navbar
-            currencySymbol={currencySymbol}
-            activeCurrency={activeCurrency}
-            theme={theme}
-            handleTheme={() => props.handleTheme()}
+      <Container width={screenWidth - window.scrollX * 2}>
+        <Navbar
+          currencySymbol={currencySymbol}
+          activeCurrency={activeCurrency}
+          theme={theme}
+          handleTheme={() => props.handleTheme()}
+        />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <CoinList
+                activeCurrency={activeCurrency}
+                currencySymbol={currencySymbol}
+              />
+            }
           />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <CoinList
-                  activeCurrency={activeCurrency}
-                  currencySymbol={currencySymbol}
-                />
-              }
-            />
-            <Route exact path="/Portfolio" element={<Portfolio />} />
-            <Route
-              path="/Coin/:id"
-              element={
-                <Coin
-                  activeCurrency={activeCurrency}
-                  currencySymbol={currencySymbol}
-                  theme={theme}
-                />
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+          <Route exact path="/Portfolio" element={<Portfolio />} />
+          <Route
+            path="/Coin/:id"
+            element={
+              <Coin
+                activeCurrency={activeCurrency}
+                currencySymbol={currencySymbol}
+                theme={theme}
+              />
+            }
+          />
+        </Routes>
       </Container>
     </ThemeProvider>
   );

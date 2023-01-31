@@ -5,8 +5,9 @@ export const Container = styled.div`
   z-index: 1;
   background: ${(props) => props.theme.main};
   flex-direction: column;
-  max-width: 100%;
-  height: auto;
+  max-width: 1920px;
+  width: 100%;
+  height: ${(props) => props.height}px;
   min-height: ${(props) => (props.assets.length === 1 ? "600px" : "auto")};
   max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
@@ -28,7 +29,7 @@ export const Button = styled.button`
   color: #fff;
   cursor: pointer;
   font-size: 1rem;
-  padding: 1rem 8rem;
+  padding: 1rem 6rem;
   border: none;
   border-radius: 10px;
   &:hover {

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import BackToUp from "@uiw/react-back-to-top";
 import { getCoinHistory, getCoinData } from "store/portfolio/action";
 import { AssetRow, ArrowAnimation, Modal } from "components";
+import { useWindowSize } from "hooks";
 import {
   Container,
   ButtonContainer,
@@ -14,6 +15,7 @@ import {
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { assets, getCoinData, getCoinHistory } = props;
+  const { height: screenHeight } = useWindowSize();
   const handleCoinData = () => {
     getCoinHistory();
     getCoinData();
@@ -25,15 +27,15 @@ const Portfolio = (props) => {
   }, []);
   return (
     <>
-      <Container isOpen={isOpen} assets={assets}>
+      <Container height={screenHeight} isOpen={isOpen} assets={assets}>
         <ButtonContainer>
           <Button onClick={() => handleOpen()}>Add Asset</Button>
         </ButtonContainer>
+        {assets.length === 0 && <ArrowAnimation />}
         {assets && <Header>Your Statistics</Header> && <AssetRow />}
         {props.hasError && <Row>{props.error}</Row>}
         <BackToUp>Top</BackToUp>
       </Container>
-      {assets.length === 0 && <ArrowAnimation />}
       {isOpen && (
         <Modal
           handleCoinData={() => handleCoinData()}

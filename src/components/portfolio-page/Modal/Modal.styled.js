@@ -97,6 +97,12 @@ export const ModalContainer = styled.div`
   @media (min-width: 2560px) {
     right: ${(props) => (props.added ? "30%" : "40%")};
   }
+  @media (max-width: 425px) {
+    right: 18%;
+  }
+  @media (max-width: 390px) {
+    right: 16%;
+  }
   @media (max-width: 375px) {
     right: 15%;
   }
