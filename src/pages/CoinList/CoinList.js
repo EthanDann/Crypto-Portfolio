@@ -8,10 +8,10 @@ import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
 
 const CoinList = (props) => {
   useEffect(() => {
+    props.getAllCoins();
     const intervalCall = setInterval(() => {
-      props.getAllCoins();
       props.getChartInfo();
-    }, 60000);
+    }, 10000);
     return () => {
       // clean up
       clearInterval(intervalCall);
