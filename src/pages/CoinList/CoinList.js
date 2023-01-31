@@ -11,7 +11,7 @@ const CoinList = (props) => {
     props.getAllCoins();
     const intervalCall = setInterval(() => {
       props.getChartInfo();
-    }, 10000);
+    }, 60000);
     return () => {
       clearInterval(intervalCall);
     };
