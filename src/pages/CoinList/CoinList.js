@@ -13,7 +13,6 @@ const CoinList = (props) => {
       props.getChartInfo();
     }, 10000);
     return () => {
-      // clean up
       clearInterval(intervalCall);
     };
     //eslint-disable-next-line
