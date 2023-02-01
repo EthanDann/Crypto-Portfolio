@@ -7,7 +7,8 @@ export const Container = styled.div`
   flex-direction: column;
   max-width: 1920px;
   width: 100%;
-  height: ${(props) => props.height}px;
+  max-height: ${(props) => props.height}px;
+  height: 100%;
   min-height: ${(props) => (props.assets.length === 1 ? "600px" : "auto")};
   max-height: 100%;
   filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
