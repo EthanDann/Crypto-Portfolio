@@ -30,8 +30,10 @@ const CoinList = (props) => {
   const HasCoin = !isLoading && props.coins;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
+  console.log(props.user);
   return (
     <Wrapper>
+      <h1>Hello, {props.user?.nickname}</h1>
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>
           <ChartContainer id="price-chart">

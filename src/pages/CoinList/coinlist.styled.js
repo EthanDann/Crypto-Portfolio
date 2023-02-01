@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   background: ${(props) => props.theme.secondary};
-  padding: 0 0.5em;
+  padding: 0.5em;
   max-width: 1920px;
   margin: auto;
   transition-property: font-size;

@@ -36,7 +36,7 @@ export const StyledLink = styled(NavLink)`
   }
 `;
 export const ThemeContainer = styled.div`
-  order: 4;
+  order: 5;
 `;
 
 export const Button = styled.button`

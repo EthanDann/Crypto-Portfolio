@@ -18,3 +18,5 @@ export { default as VolumeChart } from "components/coin-list-page/Charts/VolumeC
 export { TimeChart } from "./coin-page/TimeChart";
 export { DurationSelector } from "./coin-page/DurationSelector";
 export { default as TimeChartWrapper } from "./coin-page/TimeChartWrapper";
+export { default as LoginButton } from "./login-page/LoginButton";
+export { default as LogoutButton } from "./Navbar/LogoutButton";
