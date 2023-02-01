@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { NumericFormat } from "react-number-format";
 import { AddAssetInput } from "components";
 import { ReactComponent as UpArrow } from "./UpArrow.svg";

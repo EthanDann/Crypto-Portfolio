@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ReactComponent as Filter } from "./filter.svg";
 
 export const TableContainer = styled.div`
   margin-top: 1.5em;
@@ -65,4 +66,20 @@ export const ScrollableDiv = styled.div`
 `;
 export const ScrollText = styled.h4`
   text-align: center;
+`;
+export const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+export const FilterIcon = styled(Filter)`
+  width: 20px;
+  margin-left: 5px;
+  fill: ${(props) => props.theme.fontColor};
+  cursor: pointer;
+  &:hover {
+    outline: solid 1px ${(props) => props.theme.fontColor};
+    border-radius: 7px;
+  }
 `;
