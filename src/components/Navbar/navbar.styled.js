@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { ReactComponent as DarkIcon } from "./Icons/DarkIcon.svg";
-import { ReactComponent as LightIcon } from "./Icons/LightIcon.svg";
+import { ReactComponent as ThemeIcon } from "./Icons/ThemeIcon.svg";
 
 export const Nav = styled.header`
   display: flex;
@@ -48,26 +47,12 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `;
-export const StyledDarkIcon = styled(DarkIcon)`
+export const StyledThemeIcon = styled(ThemeIcon)`
   border-radius: 10px;
   width: 60%;
   height: auto;
   padding: 0.3rem;
-  background-color: #1e2128;
-  &:hover {
-    width: 59%;
-  }
-  @media (max-width: 425px) {
-    width: 45%;
-    padding: 0.25rem;
-  }
-`;
-export const StyledLightIcon = styled(LightIcon)`
-  border-radius: 10px;
-  width: 60%;
-  height: auto;
-  padding: 0.3rem;
-  background-color: #f7f7f7;
+  background-color: transparent;
   &:hover {
     width: 59%;
   }

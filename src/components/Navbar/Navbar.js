@@ -5,8 +5,7 @@ import {
   Container,
   Button,
   ThemeContainer,
-  StyledDarkIcon,
-  StyledLightIcon,
+  StyledThemeIcon,
 } from "./navbar.styled";
 
 function Navbar(props) {
@@ -25,7 +24,7 @@ function Navbar(props) {
         <LogoutButton />
         <ThemeContainer>
           <Button onClick={handleTheme}>
-            {theme === "dark" ? <StyledDarkIcon /> : <StyledLightIcon />}
+            <StyledThemeIcon />
           </Button>
         </ThemeContainer>
       </Container>

@@ -21,15 +21,7 @@ const CoinListTable = (props, { history }) => {
   const [element, setElement] = useState();
   const navigate = useNavigate();
   useEffect(() => setElement($dom.current), []);
-  const {
-    currencySymbol,
-    isLoading,
-    hasError,
-    error,
-    coinList,
-    sortBy,
-    sortAsc,
-  } = props;
+  const { currencySymbol, hasError, error, coinList, sortBy, sortAsc } = props;
   const $dom = useRef(null);
 
   const handleFilter = (value, sortAsc) => {
@@ -45,7 +37,6 @@ const CoinListTable = (props, { history }) => {
   }, []);
   return (
     <TableContainer>
-      {isLoading && <span>Fetching all coins...</span>}
       {
         <ScrollableDiv id="scrollableDiv" ref={$dom}>
           <InfiniteScroll
