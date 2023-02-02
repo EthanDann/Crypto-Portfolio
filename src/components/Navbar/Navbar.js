@@ -1,4 +1,4 @@
-import { CurrencyToggle, SearchInput } from "components";
+import { CurrencyToggle, SearchInput, LogoutButton } from "components";
 import {
   Nav,
   StyledLink,
@@ -22,6 +22,7 @@ function Navbar(props) {
         </StyledLink>
         <SearchInput icon />
         <CurrencyToggle />
+        <LogoutButton />
         <ThemeContainer>
           <Button onClick={handleTheme}>
             {theme === "dark" ? <StyledDarkIcon /> : <StyledLightIcon />}

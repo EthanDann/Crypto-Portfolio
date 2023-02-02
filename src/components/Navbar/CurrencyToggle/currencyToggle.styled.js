@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const DropDownContainer = styled.div`
   display: none;
-  order: 3;
   @media (min-width: 430px) {
     display: flex;
     justify-content: center;

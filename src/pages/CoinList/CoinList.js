@@ -9,7 +9,12 @@ import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
 const CoinList = (props) => {
   useEffect(() => {
     props.getAllCoins();
-    props.getChartInfo();
+    const intervalCall = setInterval(() => {
+      props.getChartInfo();
+    }, 60000);
+    return () => {
+      clearInterval(intervalCall);
+    };
     //eslint-disable-next-line
   }, []);
   const {
@@ -27,6 +32,7 @@ const CoinList = (props) => {
   const HasVolumeData = !isLoading && volumeData;
   return (
     <Wrapper>
+      <h1>Hello, {props.user?.nickname}</h1>
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>
           <ChartContainer id="price-chart">
