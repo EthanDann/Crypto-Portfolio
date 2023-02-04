@@ -33,7 +33,7 @@ const CurrencyToggle = () => {
   const handleOpen = () => setIsOpen(!isOpen);
   useEffect(() => {
     dispatch(getSupportedCurrencies());
-  }, []);
+  }, [dispatch]);
   const ref = useRef(null);
   useOnClickOutside(ref, () => setIsOpen(false));
 
@@ -44,18 +44,15 @@ const CurrencyToggle = () => {
   };
   const handleTextToggle = (currency: string) => {
     setCurrency(currency);
-    console.log(currency);
     dispatch(toggleCurrency(String(currency)));
     currency.length === 3 ? setIsOpen(false) : setIsOpen(true);
   };
-  let currencies = [...supportedCurrencies];
-  if (activeCurrency.length) {
-    const regex = new RegExp(`^${activeCurrency}`, "i");
-    currencies = [
-      ...supportedCurrencies.filter((v) => regex.test(v)),
-      ...supportedCurrencies.filter((v) => !regex.test(v)).sort(),
-    ];
-  }
+  const currencies = [...supportedCurrencies].sort((a, b) => {
+    if (a.startsWith(activeCurrency)) return -1;
+    if (b.startsWith(activeCurrency)) return 1;
+    return a.localeCompare(b);
+  });
+
   return (
     <>
       <DropDownContainer>
@@ -80,7 +77,7 @@ const CurrencyToggle = () => {
                 currencies.map((currency) => (
                   <ListItem
                     onClick={() => handleToggle(currency)}
-                    key={Math.random()}
+                    key={currency}
                     value={currency}
                   >
                     {currency.toUpperCase()}

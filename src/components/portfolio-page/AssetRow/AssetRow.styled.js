@@ -324,7 +324,7 @@ export const AssetInput = styled(NumericFormat)`
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
-  width: 17%;
+  width: 34%;
   &::placeholder {
     color: ${(props) => props.theme.fontColor};
   }
@@ -332,7 +332,7 @@ export const AssetInput = styled(NumericFormat)`
     outline: none;
   }
   @media (min-width: 1024px) {
-    width: 8%;
+    width: 10%;
     font-size: 0.8rem;
   }
   @media (min-width: 1440px) {
@@ -349,7 +349,7 @@ export const DateAsset = styled.input`
   font-size: 1rem;
   margin: 0.5rem 0;
   margin-left: 0.25rem;
-  width: 28%;
+  width: 33%;
   border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
   background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};

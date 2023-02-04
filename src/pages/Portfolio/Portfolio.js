@@ -14,7 +14,7 @@ import {
 
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { assets, getCoinData, getCoinHistory } = props;
+  const { currencySymbol, assets, getCoinData, getCoinHistory } = props;
   const { height: screenHeight } = useWindowSize();
   const handleCoinData = () => {
     getCoinHistory();
@@ -32,7 +32,9 @@ const Portfolio = (props) => {
           <Button onClick={() => handleOpen()}>Add Asset</Button>
         </ButtonContainer>
         {assets.length === 0 && <ArrowAnimation />}
-        {assets && <Header>Your Statistics</Header> && <AssetRow />}
+        {assets && <Header>Your Statistics</Header> && (
+          <AssetRow currencySymbol={currencySymbol} />
+        )}
         {props.hasError && <Row>{props.error}</Row>}
         <BackToUp>Top</BackToUp>
       </Container>
@@ -40,6 +42,7 @@ const Portfolio = (props) => {
         <Modal
           handleCoinData={() => handleCoinData()}
           handleOpen={() => handleOpen()}
+          currencySymbol={currencySymbol}
         />
       )}
     </>

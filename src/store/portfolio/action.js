@@ -1,5 +1,6 @@
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import getSymbolFromCurrency from "currency-symbol-map";
 import {
   SELECT_COIN,
   GET_COIN_HISTORY,
@@ -62,7 +63,7 @@ export const getCoinData = () => (dispatch, getState) => {
   const source = axios.CancelToken.source();
   try {
     const state = getState();
-    const currency = state.supportedCurrencies.activeCurrency;
+    const currency = state.currencies.toLowerCase();
     state.portfolio.assets.map(async (coin) => {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coin.id}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`,
@@ -134,8 +135,8 @@ export const handleAddAsset = () => (dispatch, getState) => {
         purchase_price: state.portfolio.selectedCoin.purchase_price,
         purchase_date: state.portfolio.selectedCoin.purchase_date,
         price_on_purchase_date: coin[0].current_price,
-        purchase_currency: state.supportedCurrencies.activeCurrency,
-        purchase_currency_symbol: state.supportedCurrencies.currencySymbol,
+        purchase_currency: state.currencies,
+        purchase_currency_symbol: getSymbolFromCurrency(state.currencies),
       },
     });
   }
