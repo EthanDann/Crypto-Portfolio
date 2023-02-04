@@ -132,7 +132,6 @@ const mapStateToProps = (state) => ({
   selectedCoin: state.portfolio.selectedCoin,
   purchase_price: state.portfolio.purchase_price,
   purchase_date: state.portfolio.purchase_date,
-  currencySymbol: state.supportedCurrencies.currencySymbol,
 });
 const mapDispatchToProps = {
   handleCoinClick,

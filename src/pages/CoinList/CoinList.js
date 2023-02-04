@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import BackToUp from "@uiw/react-back-to-top";
+import { useAuth0 } from "@auth0/auth0-react";
 import { getAllCoins, getMoreCoins } from "store/coinList/action";
 import { getChartInfo } from "store/charts/action";
-import { CoinListTable, PriceChart, VolumeChart } from "components";
+import { CoinListTable, PriceChart, VolumeChart, AuthModal } from "components";
 import {
   Wrapper,
   Header,
@@ -12,6 +13,8 @@ import {
 } from "./coinlist.styled";
 
 const CoinList = (props) => {
+  const { user, isAuthenticated } = useAuth0();
+
   useEffect(() => {
     props.getAllCoins();
     const intervalCall = setInterval(() => {
@@ -37,6 +40,7 @@ const CoinList = (props) => {
   const HasVolumeData = !isLoading && volumeData;
   return (
     <Wrapper>
+      {!isAuthenticated && <AuthModal />}
       <Header>Hello, {props.user?.nickname}</Header>
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>

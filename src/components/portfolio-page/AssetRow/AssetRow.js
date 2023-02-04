@@ -84,7 +84,6 @@ const AssetRow = (props) => {
     }
     props.handleUpdateDate(date, e.target.name);
   };
-
   return assets.map((coin) => {
     const {
       image,
@@ -247,8 +246,6 @@ const mapStateToProps = (state) => ({
   assets: state.portfolio.assets,
   purchase_price: state.portfolio.purchase_price,
   purchase_date: state.portfolio.purchase_date,
-  activeCurrency: state.supportedCurrencies.activeCurrency,
-  currencySymbol: state.supportedCurrencies.currencySymbol,
 });
 const mapDispatchToProps = {
   handleUpdateAmount,
