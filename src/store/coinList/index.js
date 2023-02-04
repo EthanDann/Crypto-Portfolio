@@ -41,7 +41,7 @@ const coinListReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         hasError: true,
-        error: action.payload,
+        error: action.payload.response.data,
       };
     case GET_MORE_COINS_SUCCESS: {
       return {
@@ -75,7 +75,7 @@ const coinListReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         hasError: true,
-        error: action.payload,
+        error: action.payload.response.data,
       };
     }
     case SORT_COINS: {

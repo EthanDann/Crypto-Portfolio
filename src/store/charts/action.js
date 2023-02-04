@@ -10,7 +10,7 @@ export const getChartInfo = () => async (dispatch, getState) => {
     const state = getState();
     dispatch({ type: GET_CHART_DATA_LOADING });
     const { data } = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${state.supportedCurrencies.activeCurrency}&days=30&interval=daily`
+      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${state.currencies}&days=30&interval=daily`
     );
     const priceData = data.prices.map((el) => el[1].toFixed(3));
     const volumeData = data.total_volumes.map((el) => el[1].toFixed(3));

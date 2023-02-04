@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import BackToUp from "@uiw/react-back-to-top";
+import { useWindowSize } from "usehooks-ts";
 import { getCoinHistory, getCoinData } from "store/portfolio/action";
 import { AssetRow, ArrowAnimation, Modal } from "components";
-import { useWindowSize } from "hooks";
 import {
   Container,
   ButtonContainer,

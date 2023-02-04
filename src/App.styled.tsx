@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  color: ${(props) => props.theme.fontColor};
-  width: ${(props) => props.width}px;
+export const Container = styled.div<{ width: number }>`
+  color: ${({ theme }) => theme.fontColor};
+  width: ${({ width }) => width}px;
 `;
 export const darkTheme = {
   main: "rgba(24,27,31,255)",

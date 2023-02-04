@@ -6,7 +6,8 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
-import { useWindowSize } from "hooks";
+import { useWindowSize } from "usehooks-ts";
+
 import { Line } from "react-chartjs-2";
 import { options } from "./TimeChartOptions";
 import { Wrapper } from "./TimeChart.styled";

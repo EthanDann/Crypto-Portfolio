@@ -4,7 +4,12 @@ import BackToUp from "@uiw/react-back-to-top";
 import { getAllCoins, getMoreCoins } from "store/coinList/action";
 import { getChartInfo } from "store/charts/action";
 import { CoinListTable, PriceChart, VolumeChart } from "components";
-import { Wrapper, ChartWrapper, ChartContainer } from "./coinlist.styled";
+import {
+  Wrapper,
+  Header,
+  ChartWrapper,
+  ChartContainer,
+} from "./coinlist.styled";
 
 const CoinList = (props) => {
   useEffect(() => {
@@ -27,12 +32,12 @@ const CoinList = (props) => {
     isLoading,
     hasError,
   } = props;
-  const HasCoin = !isLoading && props.coins;
+  const HasCoin = !isLoading && coins;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
   return (
     <Wrapper>
-      <h1>Hello, {props.user?.nickname}</h1>
+      <Header>Hello, {props.user?.nickname}</Header>
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>
           <ChartContainer id="price-chart">
@@ -50,10 +55,16 @@ const CoinList = (props) => {
             currencySymbol={currencySymbol}
             hasError={hasError}
             error={error}
-            isLoading={isLoading}
             next={() => getMoreCoins()}
           />
         </>
+      )}
+      {isLoading && <span>Fetching data...</span>}
+      {hasError && (
+        <span>
+          There was an error. Please refresh the page, or wait until connection
+          can be made.
+        </span>
       )}
       <BackToUp>Top</BackToUp>
     </Wrapper>

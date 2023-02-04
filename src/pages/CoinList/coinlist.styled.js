@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   background: ${(props) => props.theme.secondary};
   padding: 0.5em;
-  max-width: 1920px;
+  max-width: 2560px;
   margin: auto;
   transition-property: font-size;
   transition-duration: 4s;
@@ -14,6 +14,9 @@ export const Wrapper = styled.div`
   @media (min-width: 1440px) {
     padding: 1em 5em;
   }
+`;
+export const Header = styled.h1`
+  color: ${(props) => props.theme.fontColor};
 `;
 export const ChartWrapper = styled.div`
   width: 100%;

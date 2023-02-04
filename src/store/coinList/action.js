@@ -10,10 +10,11 @@ import {
 export const getAllCoins = () => async (dispatch, getState) => {
   try {
     const state = getState();
+
     dispatch({ type: GET_COINS_LOADING });
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${state.supportedCurrencies.activeCurrency}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${state.currencies}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
       )
       .then(({ data }) => {
         dispatch({
@@ -59,9 +60,7 @@ export const getMoreCoins = () => async (dispatch, getState) => {
     state.coins.pageNum += 1;
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${state.supportedCurrencies.activeCurrency.toLowerCase()}&order=market_cap_desc&per_page=10&page=${
-          state.coins.pageNum
-        }&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${state.currencies}&order=market_cap_desc&per_page=10&page=${state.coins.pageNum}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
       )
       .then((res) => {
         const sortBy = state.coins.sortBy;

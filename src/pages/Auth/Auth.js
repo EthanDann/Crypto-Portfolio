@@ -1,4 +1,4 @@
-import { useWindowSize } from "hooks";
+import { useWindowSize } from "usehooks-ts";
 import { LoginButton } from "components";
 import { Wrapper, Header } from "./Auth.styled";
 

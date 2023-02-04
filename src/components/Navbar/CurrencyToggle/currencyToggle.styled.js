@@ -54,7 +54,7 @@ export const DropDownList = styled.ul`
 
   list-style: none;
   position: absolute;
-  right: 16vw;
+  right: 18.5vw;
   background: ${(props) => props.theme.main};
   width: 100%;
   max-height: 220px;
@@ -74,8 +74,17 @@ export const DropDownList = styled.ul`
     outline: 1px solid #2c2f36;
     border-radius: 4px;
   }
-  @media (max-width: 768px) {
-    right: 13.5vw;
+  @media (min-width: 1024px) {
+    right: 23vw;
+  }
+  @media (min-width: 1200px) {
+    right: 24.7vw;
+  }
+  @media (min-width: 1440px) {
+    right: 27.8vw;
+  }
+  @media (min-width: 2560px) {
+    right: 33vw;
   }
 `;
 
