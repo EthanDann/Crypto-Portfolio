@@ -26,7 +26,7 @@ export const StyledSearchIcon = styled.div`
   margin: 0;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
   transition: ${(props) => props.theme.transition};
   height: 2.95rem;
   width: 4rem;
@@ -38,6 +38,7 @@ export const StyledLightSearchIcon = styled(LightSearchIcon)`
   }
 `;
 export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
+  fill: ${({ theme }) => theme.fontColor};
   @media (max-width: 425px) {
     height: 100%;
     width: 100%;

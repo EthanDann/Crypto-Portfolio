@@ -10,14 +10,11 @@ import {
   StyledInput,
 } from "./SearchInput.styled";
 
-interface Props {
-  theme: string;
-}
 interface CoinProps {
   name: string;
 }
 
-const SearchInput = ({ theme }: Props) => {
+const SearchInput = () => {
   const [results, setResults] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -61,11 +58,7 @@ const SearchInput = ({ theme }: Props) => {
   return (
     <SearchContainer onSubmit={(e) => e.preventDefault()}>
       <StyledSearchIcon>
-        {theme === "dark" ? (
-          <StyledLightSearchIcon />
-        ) : (
-          <StyledDarkSearchIcon />
-        )}
+        <StyledDarkSearchIcon />
       </StyledSearchIcon>
       <StyledInput
         type="text"
