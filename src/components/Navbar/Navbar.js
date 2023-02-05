@@ -9,7 +9,7 @@ import {
 } from "./navbar.styled";
 
 function Navbar(props) {
-  const { handleTheme, theme } = props;
+  const { handleTheme } = props;
   return (
     <Nav>
       <Container>
@@ -19,7 +19,7 @@ function Navbar(props) {
         <StyledLink to="/Portfolio" order={2}>
           Portfolio
         </StyledLink>
-        <SearchInput icon />
+        <SearchInput />
         <CurrencyToggle />
         <LogoutButton />
         <ThemeContainer>

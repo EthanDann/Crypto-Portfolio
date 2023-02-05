@@ -7,8 +7,8 @@ import {
   selectCurrency,
 } from "store/currencies/currenciesSlicer";
 import { getSupportedCurrencies } from "store/supportedCurrencies/supportedCurrenciesSlicer";
-import { ReactComponent as DownArrow } from "./DownArrow.svg";
-import { ReactComponent as UpArrow } from "./UpArrow.svg";
+import { ReactComponent as DownArrow } from "components/Navbar/Icons/DownArrow.svg";
+import { ReactComponent as UpArrow } from "components/Navbar/Icons/UpArrow.svg";
 import {
   DropDownContainer,
   DropDownHeader,

@@ -1,15 +1,13 @@
-import { useRef, useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 import BackToUp from "@uiw/react-back-to-top";
-import { sortCoins } from "store/coinList/action";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { getAllCoins, sortCoins } from "store/coinList/coinListSlicer";
 import { CoinListRow } from "components";
 import {
   TableContainer,
   CoinTable,
   ScrollableDiv,
-  ScrollText,
   TableHeader,
   HeaderTr,
   Styledth,
@@ -17,16 +15,23 @@ import {
   FilterIcon,
 } from "./CoinListTable.styled";
 
-const CoinListTable = (props, { history }) => {
+const CoinListTable = (props) => {
   const [element, setElement] = useState();
+  const dispatch = useAppDispatch();
+  const currency = useAppSelector((state) => state.currency);
+  const { data, pageNum, hasError } = useAppSelector((state) => state.coins);
+  useEffect(() => {
+    dispatch(getAllCoins({ currency, pageNum }));
+  }, [currency, pageNum]);
+  const { sortBy, sortAsc } = useAppSelector((state) => state.coins);
   const navigate = useNavigate();
+  const $dom = React.useRef(null);
   useEffect(() => setElement($dom.current), []);
-  const { currencySymbol, hasError, error, coinList, sortBy, sortAsc } = props;
-  const $dom = useRef(null);
+  const { currencySymbol } = props;
 
-  const handleFilter = (value, sortAsc) => {
+  const handleFilter = (field, sortAsc) => {
     const params = new URLSearchParams();
-    props.sortCoins(value, sortAsc);
+    dispatch(sortCoins({ field, sortAsc }));
     params.append("sortBy", sortBy);
     params.append("sortAsc", sortAsc);
     navigate({ search: params.toString() });
@@ -35,108 +40,94 @@ const CoinListTable = (props, { history }) => {
     handleFilter(sortBy, sortAsc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
-    <TableContainer>
-      {
-        <ScrollableDiv id="scrollableDiv" ref={$dom}>
-          <InfiniteScroll
-            dataLength={coinList.length}
-            next={props.next}
-            hasMore={true}
-            loader={<ScrollText>Loading...</ScrollText>}
-            scrollableTarget={"scrollableDiv"}
-            endMessage={<ScrollText>Yay! You have seen it all</ScrollText>}
-          >
-            <CoinTable>
-              <TableHeader>
-                <HeaderTr>
-                  <Styledth>#</Styledth>
-                  <Styledth>
-                    <FilterContainer
-                      onClick={() => handleFilter("name", sortAsc)}
-                    >
-                      Name
-                      <FilterIcon />
-                    </FilterContainer>
-                  </Styledth>
-                  <Styledth>
-                    <FilterContainer
-                      onClick={() => handleFilter("current_price", sortAsc)}
-                    >
-                      Price
-                      <FilterIcon />
-                    </FilterContainer>
-                  </Styledth>
-                  <Styledth>
-                    <FilterContainer
-                      onClick={() =>
-                        handleFilter(
-                          "price_change_percentage_1h_in_currency",
-                          sortAsc
-                        )
-                      }
-                    >
-                      1h
-                      <FilterIcon />
-                    </FilterContainer>
-                  </Styledth>
-                  <Styledth>
-                    <FilterContainer
-                      onClick={() =>
-                        handleFilter(
-                          "price_change_percentage_24h_in_currency",
-                          sortAsc
-                        )
-                      }
-                    >
-                      24h
-                      <FilterIcon />
-                    </FilterContainer>
-                  </Styledth>
-                  <Styledth>
-                    <FilterContainer
-                      onClick={() =>
-                        handleFilter(
-                          "price_change_percentage_7d_in_currency",
-                          sortAsc
-                        )
-                      }
-                    >
-                      7d
-                      <FilterIcon />
-                    </FilterContainer>
-                  </Styledth>
-                  <Styledth>24h Vol / Market Cap</Styledth>
-                  <Styledth>Circulating / Total Sup</Styledth>
-                  <Styledth>Last 7d</Styledth>
-                </HeaderTr>
-              </TableHeader>
-              <CoinListRow
-                coinList={coinList}
-                currencySymbol={currencySymbol}
-              />
-            </CoinTable>
-          </InfiniteScroll>
-          <BackToUp element={$dom.current} style={{ float: "right" }}>
-            Top
-          </BackToUp>
-        </ScrollableDiv>
-      }
-      {hasError && (
-        <span>
-          There was an error: <br />${error}
-        </span>
+    <>
+      {data && (
+        <TableContainer>
+          {
+            <ScrollableDiv>
+              <CoinTable>
+                <TableHeader>
+                  <HeaderTr>
+                    <Styledth>#</Styledth>
+                    <Styledth>
+                      <FilterContainer
+                        onClick={() => handleFilter("name", sortAsc)}
+                      >
+                        Name
+                        <FilterIcon />
+                      </FilterContainer>
+                    </Styledth>
+                    <Styledth>
+                      <FilterContainer
+                        onClick={() => handleFilter("current_price", sortAsc)}
+                      >
+                        Price
+                        <FilterIcon />
+                      </FilterContainer>
+                    </Styledth>
+                    <Styledth>
+                      <FilterContainer
+                        onClick={() =>
+                          handleFilter(
+                            "price_change_percentage_1h_in_currency",
+                            sortAsc
+                          )
+                        }
+                      >
+                        1h
+                        <FilterIcon />
+                      </FilterContainer>
+                    </Styledth>
+                    <Styledth>
+                      <FilterContainer
+                        onClick={() =>
+                          handleFilter(
+                            "price_change_percentage_24h_in_currency",
+                            sortAsc
+                          )
+                        }
+                      >
+                        24h
+                        <FilterIcon />
+                      </FilterContainer>
+                    </Styledth>
+                    <Styledth>
+                      <FilterContainer
+                        onClick={() =>
+                          handleFilter(
+                            "price_change_percentage_7d_in_currency",
+                            sortAsc
+                          )
+                        }
+                      >
+                        7d
+                        <FilterIcon />
+                      </FilterContainer>
+                    </Styledth>
+                    <Styledth>24h Vol / Market Cap</Styledth>
+                    <Styledth>Circulating / Total Sup</Styledth>
+                    <Styledth>Last 7d</Styledth>
+                  </HeaderTr>
+                </TableHeader>
+                <CoinListRow data={data} currencySymbol={currencySymbol} />
+              </CoinTable>
+              <BackToUp element={$dom.current} style={{ float: "right" }}>
+                Top
+              </BackToUp>
+            </ScrollableDiv>
+          }
+          {hasError && (
+            <span>
+              There was an error.
+              <br />
+            </span>
+          )}
+        </TableContainer>
       )}
-    </TableContainer>
+    </>
   );
 };
 
-const mapStateToProps = (state) => ({
-  sortBy: state.coins.sortBy,
-  sortAsc: state.coins.sortAsc,
-});
-const mapDispatchToProps = {
-  sortCoins,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoinListTable);
+export default CoinListTable;
