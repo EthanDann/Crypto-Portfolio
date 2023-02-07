@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import { ReactComponent as DarkSearchIcon } from "./DarkSearchIcon.svg";
-import { ReactComponent as LightSearchIcon } from "./LightSearchIcon.svg";
+import { ReactComponent as DarkSearchIcon } from "components/Navbar/Icons/DarkSearchIcon.svg";
+import { ReactComponent as LightSearchIcon } from "components/Navbar/Icons/LightSearchIcon.svg";
 
 export const SearchContainer = styled.form`
   display: flex;
@@ -26,7 +26,7 @@ export const StyledSearchIcon = styled.div`
   margin: 0;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
   transition: ${(props) => props.theme.transition};
   height: 2.95rem;
   width: 4rem;
@@ -38,14 +38,14 @@ export const StyledLightSearchIcon = styled(LightSearchIcon)`
   }
 `;
 export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
+  fill: ${({ theme }) => theme.fontColor};
   @media (max-width: 425px) {
     height: 100%;
     width: 100%;
   }
 `;
 export const StyledInput = styled.input`
-  background-color: ${(props) =>
-    props.main ? props.theme.main : props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   transition: ${(props) => props.theme.transition};
   color: ${(props) => props.theme.fontColor};
   border: none;
@@ -92,18 +92,14 @@ const fadeIn = keyframes`
     }
 `;
 export const ResultsList = styled.ul`
-  display: flex;
-  flex-direction: column;
+  position: absolute;
   width: 100%;
   background: ${(props) => props.theme.secondary};
   border-radius: 10px;
-  display: ${(props) =>
-    props.showResults && props.results.length > 0 ? "flex" : " none"};
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   list-style: none;
-  position: absolute;
   right: 0vw;
   max-height: 210px;
   border-radius: 6px;

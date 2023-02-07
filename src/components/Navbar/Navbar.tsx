@@ -1,3 +1,6 @@
+import { handleTheme } from "store/theme/themeSlicer";
+import { useAppDispatch } from "store/hooks";
+
 import { CurrencyToggle, SearchInput, LogoutButton } from "components";
 import {
   Nav,
@@ -8,22 +11,18 @@ import {
   StyledThemeIcon,
 } from "./navbar.styled";
 
-function Navbar(props) {
-  const { handleTheme, theme } = props;
+function Navbar() {
+  const dispatch = useAppDispatch();
   return (
     <Nav>
       <Container>
-        <StyledLink to="/" order={1}>
-          Coins
-        </StyledLink>
-        <StyledLink to="/Portfolio" order={2}>
-          Portfolio
-        </StyledLink>
-        <SearchInput icon />
+        <StyledLink to="/">Coins</StyledLink>
+        <StyledLink to="/Portfolio">Portfolio</StyledLink>
+        <SearchInput />
         <CurrencyToggle />
         <LogoutButton />
         <ThemeContainer>
-          <Button onClick={handleTheme}>
+          <Button onClick={() => dispatch(handleTheme(null))}>
             <StyledThemeIcon />
           </Button>
         </ThemeContainer>

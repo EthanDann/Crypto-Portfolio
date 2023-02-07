@@ -24,11 +24,13 @@ export const TableHeader = styled.thead`
   color: ${(props) => props.theme.fontColor};
   position: sticky;
   top: -15px;
+  z-index: 100;
   height: 40px;
   @media (min-width: 430px) {
     top: 0px;
   }
 `;
+export const TableBody = styled.tbody``;
 export const HeaderTr = styled.tr``;
 export const Styledth = styled.th`
   font-weight: 300;
