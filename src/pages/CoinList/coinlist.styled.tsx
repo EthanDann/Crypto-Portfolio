@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isOpen: boolean; width: number }>`
   background: ${(props) => props.theme.secondary};
   padding: 0.5em;
   max-width: 2560px;
@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   transition-property: font-size;
   transition-duration: 4s;
   transition-delay: 2s;
+  filter: ${({ isOpen }) => (isOpen ? "brightness(0.8)" : "none")};
   @media (min-width: 430px) {
     padding: 1em 2em;
   }

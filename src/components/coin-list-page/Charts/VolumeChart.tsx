@@ -22,7 +22,12 @@ ChartJS.register(
   Filler
 );
 
-const VolumeChart = (props) => {
+interface Props {
+  volumes: any[];
+  currencySymbol?: string;
+}
+
+const VolumeChart = ({ volumes, currencySymbol }: Props) => {
   const getLabels = () => {
     let labels = [];
     for (let num = 1; num < 33; num++) {
@@ -33,26 +38,24 @@ const VolumeChart = (props) => {
     }
     return labels;
   };
-  const chartData = () => {
-    return {
-      labels: getLabels(),
-      datasets: [
-        {
-          label: "Volume",
-          data: props.volumes,
-          tension: 0.6,
-          borderColor: "rgb(33, 114, 229)",
-          fill: true,
-          backgroundColor: (context) => {
-            const ctx = context.chart.ctx;
-            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, "rgba(33, 114, 229, 0.8)");
-            gradient.addColorStop(1, "rgba(33, 50, 150, 0.5)");
-            return gradient;
-          },
+  const chartData = {
+    labels: getLabels(),
+    datasets: [
+      {
+        label: "Volume",
+        data: volumes,
+        tension: 0.6,
+        borderColor: "rgb(33, 114, 229)",
+        fill: true,
+        backgroundColor: (context: { chart: { ctx: any } }) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+          gradient.addColorStop(0, "rgba(33, 114, 229, 0.8)");
+          gradient.addColorStop(1, "rgba(33, 50, 150, 0.5)");
+          return gradient;
         },
-      ],
-    };
+      },
+    ],
   };
 
   const today = new Date().toString().split(" ").splice(1, 3).join(" ");
@@ -61,12 +64,12 @@ const VolumeChart = (props) => {
       <StyledLegend>
         <StyledH5>Bitcoin Volume</StyledH5>
         <LegendH4>
-          {props.currencySymbol ?? "$"}
-          {currencyFormatter(props.volumes[props.volumes.length - 1], 2)}
+          {currencySymbol ?? "$"}
+          {currencyFormatter(volumes[volumes.length - 1], 2)}
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData()} options={options} />
+      <Line data={chartData} options={options} />
     </Wrapper>
   );
 };

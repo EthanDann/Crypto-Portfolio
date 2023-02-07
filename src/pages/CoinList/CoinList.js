@@ -27,9 +27,9 @@ const CoinList = (props) => {
   const { priceData, volumeData, currencySymbol } = props;
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
+  if (!isAuthenticated) return <AuthModal />;
   return (
     <Wrapper>
-      {!isAuthenticated && <AuthModal />}
       <Header>Hello, {user?.nickname}</Header>
       {HasPriceData && HasVolumeData && !hasError && (
         <ChartWrapper>

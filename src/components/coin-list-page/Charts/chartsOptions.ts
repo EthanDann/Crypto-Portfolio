@@ -1,4 +1,5 @@
-export const options = {
+import Chart from "chart.js";
+export const options: Chart.ChartOptions = {
   layout: {
     padding: {
       top: 100,
