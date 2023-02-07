@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const DropDownContainer = styled.div`
+export const DropDownContainer = styled.div<{ theme: string }>`
   display: none;
   @media (min-width: 430px) {
     display: flex;
     justify-content: center;
     width: 90px;
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
     border-radius: 6px;
     margin-right: 1.5em;
     padding: 0.65em 0.5em;
@@ -28,11 +28,11 @@ export const DropDownHeader = styled.div`
   height: 100%;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ theme: string }>`
   display: flex;
   align-items: center;
-  background: ${(props) => props.theme.secondary};
-  color: ${(props) => props.theme.fontColor};
+  background: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => theme.fontColor};
   font-size: 1rem;
   padding-left: 0.5rem;
   width: 70%;
@@ -48,14 +48,14 @@ export const Input = styled.input`
 export const DropDownListContainer = styled.div`
   display: flex;
 `;
-export const DropDownList = styled.ul`
+export const DropDownList = styled.ul<{ theme: string }>`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   list-style: none;
   position: absolute;
   right: 18.5vw;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   width: 100%;
   max-height: 220px;
   border-radius: 6px;
@@ -88,17 +88,17 @@ export const DropDownList = styled.ul`
   }
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled.li<{ theme: string }>`
   display: flex;
   justify-content: center;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   padding: 0.5em 0;
   font-size: 0.8rem;
   text-transform: uppercase;
   cursor: pointer;
   overflow: auto;
   &:hover {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
 `;
 export const DownArrowContainer = styled.div`
@@ -111,10 +111,10 @@ export const DownArrowContainer = styled.div`
 export const StyledCurrencyIcon = styled.div`
   color: rgb(0, 252, 40);
 `;
-export const Circle = styled.div`
+export const Circle = styled.div<{ theme: string }>`
   margin: 0 5px;
   z-index: 3;
-  background-color: ${(props) => props.theme.main};
+  background-color: ${({ theme }) => theme.main};
   border-radius: 50%;
   height: 1.5rem;
   width: 1.5rem;

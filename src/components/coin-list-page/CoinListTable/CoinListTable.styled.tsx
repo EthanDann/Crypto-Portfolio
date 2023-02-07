@@ -1,27 +1,27 @@
 import styled from "styled-components";
 import { ReactComponent as Filter } from "./filter.svg";
 
-export const TableContainer = styled.div`
+export const TableContainer = styled.div<{ theme: string }>`
   margin-top: 1.5em;
   padding: 1.5em 1em;
   margin-bottom: 1em;
   border-radius: 6px;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   @media (min-width: 430px) {
     margin-bottom: 4em;
   }
 `;
-export const CoinTable = styled.table`
+export const CoinTable = styled.table<{ theme: string }>`
   width: 100%;
   border-radius: 6px;
   font-weight: 400;
   border-collapse: collapse;
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
+  background-color: ${({ theme }) => theme.main};
+  transition: ${({ theme }) => theme.transition};
 `;
-export const TableHeader = styled.thead`
-  background: ${(props) => props.theme.main};
-  color: ${(props) => props.theme.fontColor};
+export const TableHeader = styled.thead<{ theme: string }>`
+  background: ${({ theme }) => theme.main};
+  color: ${({ theme }) => theme.fontColor};
   position: sticky;
   top: -15px;
   z-index: 100;
@@ -44,7 +44,7 @@ export const Styledth = styled.th`
     font-size: 1rem;
   }
 `;
-export const ScrollableDiv = styled.div`
+export const ScrollableDiv = styled.div<{ theme: string }>`
   width: 100%;
   height: 320px;
   overflow: auto;
@@ -53,10 +53,10 @@ export const ScrollableDiv = styled.div`
     height: 5px;
   }
   &::-webkit-scrollbar-corner {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.fontColor};
+    background-color: ${({ theme }) => theme.fontColor};
     border-radius: 4px;
   }
   @media (min-height: 1024px) {
@@ -75,13 +75,13 @@ export const FilterContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-export const FilterIcon = styled(Filter)`
+export const FilterIcon = styled(Filter)<{ theme: string }>`
   width: 20px;
   margin-left: 5px;
-  fill: ${(props) => props.theme.fontColor};
+  fill: ${({ theme }) => theme.fontColor};
   cursor: pointer;
   &:hover {
-    outline: solid 1px ${(props) => props.theme.fontColor};
+    outline: solid 1px ${({ theme }) => theme.fontColor};
     border-radius: 7px;
   }
 `;

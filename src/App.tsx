@@ -23,10 +23,7 @@ const App: React.FC<Props> = () => {
         <>
           <Navbar />
           <Routes>
-            <Route
-              path="/"
-              element={<CoinList currencySymbol={currencySymbol} />}
-            />
+            <Route path="/" element={<CoinList />} />
             <Route
               path="/portfolio"
               element={<Portfolio currencySymbol={currencySymbol} />}

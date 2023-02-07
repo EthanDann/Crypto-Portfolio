@@ -1,11 +1,9 @@
-import Chart from "chart.js";
-export const options: Chart.ChartOptions = {
+export const options = {
   layout: {
     padding: {
       top: 100,
     },
   },
-
   plugins: {
     legend: {
       display: false,

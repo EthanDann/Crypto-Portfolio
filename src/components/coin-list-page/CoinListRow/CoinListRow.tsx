@@ -1,4 +1,5 @@
 import { useRef, useCallback } from "react";
+import getSymbolFromCurrency from "currency-symbol-map";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { incrementPage } from "store/coinList/coinListSlicer";
 import { currencyFormatter } from "utils";
@@ -20,17 +21,37 @@ import {
   Container,
 } from "./CoinListRow.styled";
 
-const CoinListRow = (props) => {
-  const { currencySymbol, data } = props;
+interface Props {
+  data: any[];
+}
+interface Coin {
+  id: string;
+  image: string;
+  name: string;
+  symbol: string;
+  current_price: number;
+  price_change_percentage_1h_in_currency: number;
+  price_change_percentage_24h_in_currency: number;
+  price_change_percentage_7d_in_currency: number;
+  total_volume: number;
+  total_supply: number;
+  market_cap: number;
+  circulating_supply: number;
+  sparkline_in_7d: any;
+}
+
+const CoinListRow: React.FC<Props> = ({ data }) => {
+  const activeCurrency = useAppSelector((state) => state.currency);
+  const currencySymbol = getSymbolFromCurrency(activeCurrency);
   const { hasMore, isLoading } = useAppSelector((state) => state.coins);
   const dispatch = useAppDispatch();
-  const getPercentColor = (num) => {
+  const getPercentColor = (num: number) => {
     if (num < 0) return "true";
     return "false";
   };
-  const observer = useRef(null);
+  const observer = useRef<IntersectionObserver | null>(null);
   const lastListElementRef = useCallback(
-    (node) => {
+    (node: any) => {
       if (isLoading) return;
       if (observer.current) {
         observer.current.disconnect();
@@ -50,7 +71,7 @@ const CoinListRow = (props) => {
   return (
     <>
       <TableBody>
-        {data.map((coin, index) => {
+        {data.map((coin: Coin, index: number) => {
           const {
             id,
             image,
@@ -88,7 +109,6 @@ const CoinListRow = (props) => {
                 </TableDiv>
               </Td>
               <PercentDiv
-                list={data}
                 hourType={getPercentColor(
                   price_change_percentage_1h_in_currency
                 )}

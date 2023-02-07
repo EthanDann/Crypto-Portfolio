@@ -9,6 +9,8 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import getSymbolFromCurrency from "currency-symbol-map";
+import { useAppSelector } from "store/hooks";
 import { currencyFormatter } from "utils";
 import { options } from "./chartsOptions";
 import { Wrapper, StyledLegend, LegendH4, StyledH5 } from "./charts.styled";
@@ -24,12 +26,13 @@ ChartJS.register(
 
 interface Props {
   volumes: any[];
-  currencySymbol?: string;
 }
 
-const VolumeChart = ({ volumes, currencySymbol }: Props) => {
-  const getLabels = () => {
-    let labels = [];
+const VolumeChart: React.FC<Props> = ({ volumes }) => {
+  const activeCurrency = useAppSelector((state) => state.currency);
+  const currencySymbol = getSymbolFromCurrency(activeCurrency);
+  const getLabels = (): string[] => {
+    let labels: string[] = [];
     for (let num = 1; num < 33; num++) {
       const date = new Date();
       date.setDate(date.getDate() - num);

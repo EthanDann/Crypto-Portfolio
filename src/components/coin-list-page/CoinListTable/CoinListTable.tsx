@@ -15,8 +15,8 @@ import {
   FilterIcon,
 } from "./CoinListTable.styled";
 
-const CoinListTable = (props) => {
-  const [element, setElement] = useState();
+const CoinListTable = () => {
+  const [element, setElement] = useState<HTMLElement | undefined>(undefined);
   const dispatch = useAppDispatch();
   const currency = useAppSelector((state) => state.currency);
   const { data, pageNum, hasError } = useAppSelector((state) => state.coins);
@@ -25,15 +25,14 @@ const CoinListTable = (props) => {
   }, [currency, pageNum]);
   const { sortBy, sortAsc } = useAppSelector((state) => state.coins);
   const navigate = useNavigate();
-  const $dom = React.useRef(null);
+  const $dom = React.useRef<HTMLDivElement | undefined>(undefined);
   useEffect(() => setElement($dom.current), []);
-  const { currencySymbol } = props;
 
-  const handleFilter = (field, sortAsc) => {
+  const handleFilter = (field: string, sortAsc: boolean) => {
     const params = new URLSearchParams();
     dispatch(sortCoins({ field, sortAsc }));
     params.append("sortBy", sortBy);
-    params.append("sortAsc", sortAsc);
+    params.append("sortAsc", sortAsc.toString());
     navigate({ search: params.toString() });
   };
   useEffect(() => {
@@ -111,7 +110,7 @@ const CoinListTable = (props) => {
                     <Styledth>Last 7d</Styledth>
                   </HeaderTr>
                 </TableHeader>
-                <CoinListRow data={data} currencySymbol={currencySymbol} />
+                <CoinListRow data={data} />
               </CoinTable>
               <BackToUp element={$dom.current} style={{ float: "right" }}>
                 Top

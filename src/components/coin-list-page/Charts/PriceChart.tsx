@@ -5,9 +5,10 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import getSymbolFromCurrency from "currency-symbol-map";
+import { useAppSelector } from "store/hooks";
 import { currencyFormatter } from "utils";
 import { options } from "./chartsOptions";
 import { Wrapper, StyledLegend, LegendH4, StyledH5 } from "./charts.styled";
@@ -16,10 +17,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
 interface Props {
   prices: any[];
-  currencySymbol?: string;
 }
 
-const PriceChart: React.FC<Props> = ({ prices, currencySymbol }) => {
+const PriceChart: React.FC<Props> = ({ prices }) => {
+  const activeCurrency = useAppSelector((state) => state.currency);
+  const currencySymbol = getSymbolFromCurrency(activeCurrency);
   const getLabels = (): string[] => {
     let labels: string[] = [];
     for (let num = 1; num < 33; num++) {
@@ -61,7 +63,7 @@ const PriceChart: React.FC<Props> = ({ prices, currencySymbol }) => {
         </LegendH4>
         <StyledH5>{today}</StyledH5>
       </StyledLegend>
-      <Line data={chartData} options={options as ChartOptions} />
+      <Line data={chartData} options={options} />
     </Wrapper>
   );
 };

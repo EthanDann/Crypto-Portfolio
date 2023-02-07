@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import coinListSlice from "./coinList/coinListSlicer";
 import coinReducer from "./coin";
-import chartsReducer from "./charts";
+import chartsSlice from "./charts/chartsSlicer";
 import currenciesSlice from "./currencies/currenciesSlicer";
 import supportedCurrenciesSlice from "./supportedCurrencies/supportedCurrenciesSlicer";
 import portfolioReducer from "./portfolio";
@@ -12,7 +12,7 @@ import { persistReducer, persistStore } from "redux-persist";
 
 const reducers = combineReducers({
   coins: coinListSlice,
-  charts: chartsReducer,
+  charts: chartsSlice,
   coin: coinReducer,
   supportedCurrencies: supportedCurrenciesSlice,
   currency: currenciesSlice,
@@ -23,7 +23,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["coins", "coinList"],
+  blacklist: ["coins", "coinList", "charts"],
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
 

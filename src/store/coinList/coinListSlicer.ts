@@ -95,7 +95,7 @@ const coinListSlice = createSlice({
         state.hasMore = payload.length > 0;
       })
       .addCase(getAllCoins.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.hasError = true;
       });
   },

@@ -5,7 +5,6 @@ import { Result } from "./Result";
 import {
   SearchContainer,
   StyledSearchIcon,
-  StyledLightSearchIcon,
   StyledDarkSearchIcon,
   StyledInput,
 } from "./SearchInput.styled";
