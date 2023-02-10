@@ -4,7 +4,6 @@ export const options = {
       top: 100,
     },
   },
-
   plugins: {
     legend: {
       display: false,

@@ -2,12 +2,12 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ThemeIcon } from "./Icons/ThemeIcon.svg";
 
-export const Nav = styled.header`
+export const Nav = styled.header<{ theme: string }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
+  background-color: ${({ theme }) => theme.main};
+  transition: ${({ theme }) => theme.transition};
 `;
 export const Container = styled.div`
   display: flex;
@@ -15,17 +15,17 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const StyledLink = styled(NavLink)`
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
+export const StyledLink = styled(NavLink)<{ theme: string }>`
+  background-color: ${({ theme }) => theme.main};
+  transition: ${({ theme }) => theme.transition};
   border-radius: 10px;
   margin: 1rem;
   padding: 1rem;
   text-decoration: none;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   &:hover,
   &.active {
-    background-color: ${(props) => props.theme.secondary};
+    background-color: ${({ theme }) => theme.secondary};
     cursor: pointer;
   }
   @media (max-width: 425px) {

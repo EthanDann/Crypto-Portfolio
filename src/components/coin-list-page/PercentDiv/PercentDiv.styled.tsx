@@ -13,7 +13,7 @@ export const TableDiv = styled.div`
   display: flex;
   align-items: center;
 `;
-export const StyledPercentDiv = styled(TableDiv)`
+export const StyledPercentDiv = styled(TableDiv)<{ type: string }>`
   color: ${({ type }) =>
     type === "true" ? "rgb(254, 16, 64)" : "rgb(0, 252, 42)"};
 `;

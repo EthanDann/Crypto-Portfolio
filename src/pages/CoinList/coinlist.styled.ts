@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  background: ${(props) => props.theme.secondary};
+export const Wrapper = styled.div<{ theme: string }>`
+  background: ${({ theme }) => theme.secondary};
   padding: 0.5em;
   max-width: 2560px;
   margin: auto;
@@ -15,8 +15,8 @@ export const Wrapper = styled.div`
     padding: 1em 5em;
   }
 `;
-export const Header = styled.h1`
-  color: ${(props) => props.theme.fontColor};
+export const Header = styled.h1<{ theme: string }>`
+  color: ${({ theme }) => theme.fontColor};
 `;
 export const ChartWrapper = styled.div`
   width: 100%;
@@ -35,7 +35,7 @@ export const ChartWrapper = styled.div`
   }
 `;
 
-export const ChartContainer = styled.div`
+export const ChartContainer = styled.div<{ theme: string }>`
   margin-top: 2em;
   width: 100%;
   border-radius: 8px;
@@ -43,7 +43,7 @@ export const ChartContainer = styled.div`
   height: 150px;
   max-width: 840px;
   max-height: 450px;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   @media (min-width: 430px) {
     height: 35vh;
     @media (min-width: 650px) {

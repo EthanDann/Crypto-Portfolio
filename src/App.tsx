@@ -3,8 +3,7 @@ import { ThemeProvider } from "styled-components";
 import getSymbolFromCurrency from "currency-symbol-map";
 import { useWindowSize } from "usehooks-ts";
 import { Navbar } from "components";
-import { useAppDispatch, useAppSelector } from "store/hooks";
-import { handleTheme } from "store/theme/themeSlicer";
+import { useAppSelector } from "store/hooks";
 import { Coin, CoinList, Portfolio } from "pages";
 import { Container, darkTheme, lightTheme } from "App.styled";
 
@@ -24,10 +23,7 @@ const App: React.FC<Props> = () => {
         <>
           <Navbar />
           <Routes>
-            <Route
-              path="/"
-              element={<CoinList currencySymbol={currencySymbol} />}
-            />
+            <Route path="/" element={<CoinList />} />
             <Route
               path="/portfolio"
               element={<Portfolio currencySymbol={currencySymbol} />}

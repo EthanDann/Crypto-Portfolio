@@ -3,11 +3,11 @@ import styled, { keyframes } from "styled-components";
 import { ReactComponent as DarkSearchIcon } from "components/Navbar/Icons/DarkSearchIcon.svg";
 import { ReactComponent as LightSearchIcon } from "components/Navbar/Icons/LightSearchIcon.svg";
 
-export const SearchContainer = styled.form`
+export const SearchContainer = styled.form<{ theme: string }>`
   display: flex;
   width: 408px;
   height: 50px;
-  background: ${(props) => props.theme.secondary};
+  background: ${({ theme }) => theme.secondary};
   border-radius: 10px;
   align-items: center;
   position: relative;
@@ -19,7 +19,7 @@ export const SearchContainer = styled.form`
   }
 `;
 
-export const StyledSearchIcon = styled.div`
+export const StyledSearchIcon = styled.div<{ theme: string }>`
   display: flex;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -27,7 +27,7 @@ export const StyledSearchIcon = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.secondary};
-  transition: ${(props) => props.theme.transition};
+  transition: ${({ theme }) => theme.transition};
   height: 2.95rem;
   width: 4rem;
 `;
@@ -44,10 +44,10 @@ export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
     width: 100%;
   }
 `;
-export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const StyledInput = styled.input<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -57,7 +57,7 @@ export const StyledInput = styled.input`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -73,12 +73,12 @@ export const StyledInput = styled.input`
     height: 1vh;
   }
 `;
-export const StyledLink = styled(NavLink)`
+export const StyledLink = styled(NavLink)<{ theme: string }>`
   text-decoration: none;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   width: 100%;
   &:hover {
-    background-color: ${(props) => props.theme.secondary};
+    background-color: ${({ theme }) => theme.secondary};
     text-decoration: underline;
     cursor: pointer;
   }
@@ -91,10 +91,10 @@ const fadeIn = keyframes`
         opacity: 1;
     }
 `;
-export const ResultsList = styled.ul`
+export const ResultsList = styled.ul<{ theme: string }>`
   position: absolute;
   width: 100%;
-  background: ${(props) => props.theme.secondary};
+  background: ${({ theme }) => theme.secondary};
   border-radius: 10px;
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
@@ -121,15 +121,15 @@ export const ResultsList = styled.ul`
     display: none;
   }
 `;
-export const ListItem = styled.li`
+export const ListItem = styled.li<{ theme: string }>`
   display: flex;
   justify-content: flex-start;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   padding: 0.5em 0;
   font-size: 1.1rem;
   cursor: pointer;
   overflow: auto;
   &:hover {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
 `;

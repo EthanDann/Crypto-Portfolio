@@ -2,7 +2,7 @@ import { useWindowSize } from "usehooks-ts";
 import { LoginButton } from "components";
 import { Wrapper, Header } from "./AuthModal.styled";
 
-const AuthModal = () => {
+const AuthModal: React.FC = () => {
   const { height: screenHeight } = useWindowSize();
   return (
     <Wrapper height={screenHeight}>

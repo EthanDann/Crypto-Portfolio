@@ -18,6 +18,6 @@ export { default as VolumeChart } from "./coin-list-page/Charts/VolumeChart";
 export { TimeChart } from "./coin-page/TimeChart";
 export { DurationSelector } from "./coin-page/DurationSelector";
 export { default as TimeChartWrapper } from "./coin-page/TimeChartWrapper";
-export { default as LoginButton } from "./login-page/LoginButton";
+export { default as LoginButton } from "./coin-list-page/LoginButton";
 export { default as LogoutButton } from "./Navbar/LogoutButton";
 export { default as AuthModal } from "./coin-list-page/AuthModal";

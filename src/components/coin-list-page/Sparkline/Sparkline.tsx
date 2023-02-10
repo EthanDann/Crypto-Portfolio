@@ -10,17 +10,21 @@ import { Line } from "react-chartjs-2";
 import { Wrapper } from "./sparkline.styled";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
-const Sparkline = (props) => {
+interface Props {
+  prices: any[];
+}
+
+const Sparkline: React.FC<Props> = ({ prices }) => {
   let borderColor;
-  props.prices[0] > props.prices[props.prices.length - 1]
+  prices[0] > prices[prices.length - 1]
     ? (borderColor = "rgba(254, 16, 64, 1)")
     : (borderColor = "rgba(0, 255, 95, 1)");
   const chartData = {
-    labels: new Array(props.prices?.length).fill(""),
+    labels: new Array(prices?.length).fill(""),
     datasets: [
       {
         label: "Price",
-        data: props.prices,
+        data: prices,
         tension: 0.4,
         borderColor,
         fill: false,
@@ -49,7 +53,6 @@ const Sparkline = (props) => {
         },
         ticks: {
           display: false,
-          beginAtZero: true,
           maxTicksLimit: 5,
         },
       },
@@ -60,7 +63,6 @@ const Sparkline = (props) => {
         },
         ticks: {
           display: false,
-          beginAtZero: true,
           maxTicksLimit: 5,
         },
       },
