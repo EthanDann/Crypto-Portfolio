@@ -8,12 +8,37 @@ import {
   Header,
 } from "./BottomPageContent.styled";
 
-export const BottomPageContent = (props) => {
-  const { coin, currencySymbol, theme, id } = props;
+interface Props {
+  coin: CoinProps;
+  currencySymbol: string | undefined;
+  activeCurrency: string | any;
+  theme: string;
+  id: string | undefined;
+}
+interface CoinProps {
+  description: any;
+  links: LinkProps;
+  symbol: string;
+  market_data: MarketData;
+}
+interface LinkProps {
+  blockchain_site: string[];
+}
+interface MarketData {
+  current_price: number[];
+}
+
+export const BottomPageContent: React.FC<Props> = ({
+  coin,
+  currencySymbol,
+  activeCurrency,
+  theme,
+  id,
+}) => {
+  console.log(coin);
   const { description, links, symbol, market_data } = coin;
   const { blockchain_site } = links;
   const { current_price } = market_data;
-  const activeCurrency = props.activeCurrency.toLowerCase();
   return (
     <Container>
       <Header>Description</Header>

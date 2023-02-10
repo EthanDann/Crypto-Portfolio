@@ -33,7 +33,6 @@ const TimeChartWrapper = (props) => {
     },
   ]);
   const { chart_data } = props;
-
   const handleDurationClick = (duration) => {
     const arr = durations.map((time) => {
       return {

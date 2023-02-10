@@ -34,7 +34,7 @@ export const getChartData = (duration, id) => async (dispatch, getState) => {
   const startDate = todaysDate - duration;
   try {
     dispatch({ type: GET_CHART_LOADING, payload: true });
-    const currency = state.supportedCurrencies.activeCurrency;
+    const currency = state.currency;
     const { data } = await axios.get(
       `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=${currency}&from=${startDate}&to=${todaysDate}
 `

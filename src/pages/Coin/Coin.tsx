@@ -1,18 +1,23 @@
 import { useEffect } from "react";
-import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import BackToUp from "@uiw/react-back-to-top";
+import getSymbolFromCurrency from "currency-symbol-map";
+import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getCoinData } from "store/coin/action";
 import { TopPageContent, BottomPageContent } from "components";
 import { Container } from "./Coin.styled";
 
-const CoinPage = (props) => {
-  let { id } = useParams();
+const CoinPage = () => {
+  const { id } = useParams();
+  const coin = useAppSelector((state) => state.coin.data);
+  const activeCurrency: string = useAppSelector((state) => state.currency);
+  const currencySymbol: string | undefined =
+    getSymbolFromCurrency(activeCurrency);
+  const theme: string = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    getCoinData(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const { getCoinData, coin, activeCurrency, currencySymbol, theme } = props;
+    dispatch(getCoinData(id));
+  }, [id]);
   return (
     <>
       {coin.id && (
@@ -37,12 +42,4 @@ const CoinPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  coin: state.coin.data,
-  isLoading: state.coin.isLoading,
-  error: state.coin.error,
-});
-const mapDispatchToProps = {
-  getCoinData,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(CoinPage);
+export default CoinPage;
