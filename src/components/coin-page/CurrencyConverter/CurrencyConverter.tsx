@@ -9,17 +9,29 @@ import {
   StyledLightSwitchIcon,
 } from "./CurrencyConverter.styled";
 
-export const CurrencyConverter = (props) => {
-  const [firstValue, setFirstValue] = useState(1);
-  const [secondValue, setSecondValue] = useState(1);
-  const [currencies, setCurrencies] = useState([
-    props.activeCurrency,
-    props.coinSymbol,
+interface Props {
+  activeCurrency: string | any;
+  coinPrice: number;
+  coinSymbol: string;
+  theme: string;
+}
+
+export const CurrencyConverter: React.FC<Props> = ({
+  activeCurrency,
+  coinPrice,
+  coinSymbol,
+  theme,
+}) => {
+  const [firstValue, setFirstValue] = useState<any | number>(1);
+  const [secondValue, setSecondValue] = useState<any | number>(1);
+  const [currencies, setCurrencies] = useState<any[]>([
+    activeCurrency,
+    coinSymbol,
   ]);
-  const handleFirstValue = (value) => {
+  const handleFirstValue = (value: number) => {
     setFirstValue(value);
   };
-  const handleSecondValue = (value) => {
+  const handleSecondValue = (value: number) => {
     setSecondValue(value);
   };
   const handleSwitch = () => {
@@ -28,9 +40,9 @@ export const CurrencyConverter = (props) => {
     setCurrencies(currencies.reverse());
   };
   const convertedValue =
-    currencies[0] !== props.coinSymbol
-      ? (firstValue / props.coinPrice).toFixed(6)
-      : firstValue * Number(props.coinPrice.toFixed(2));
+    currencies[0] !== coinSymbol
+      ? (firstValue / coinPrice).toFixed(6)
+      : firstValue * Number(coinPrice.toFixed(2));
   return (
     <Container>
       <InputContainer>
@@ -42,7 +54,7 @@ export const CurrencyConverter = (props) => {
           onValueChange={({ value }) => handleFirstValue(Number(value))}
         />
       </InputContainer>
-      {props.theme ? (
+      {theme ? (
         <StyledDarkSwitchIcon onClick={handleSwitch} />
       ) : (
         <StyledLightSwitchIcon onClick={handleSwitch} />

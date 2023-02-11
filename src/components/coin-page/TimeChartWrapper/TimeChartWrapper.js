@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getChartData } from "store/coin/action";
+import { useAppSelector, useAppDispatch } from "store/hooks";
+import { getChartData } from "store/coin/coinSlicer";
 import { TimeChart, DurationSelector } from "components";
 import { convertDurationToUnix } from "utils";
 import { Wrapper } from "./TimeChartWrapper.styled";
 
 const TimeChartWrapper = (props) => {
+  const dispatch = useAppDispatch();
+  const chart_data = useAppSelector((state) => state.coin.chart_data);
   const [durations, setDurations] = useState([
     {
       duration: "1d",
@@ -32,7 +35,6 @@ const TimeChartWrapper = (props) => {
       active: false,
     },
   ]);
-  const { chart_data } = props;
   const handleDurationClick = (duration) => {
     const arr = durations.map((time) => {
       return {
@@ -46,15 +48,18 @@ const TimeChartWrapper = (props) => {
     durations.map(
       (duration) =>
         duration.active &&
-        props.getChartData(
-          convertDurationToUnix(duration.duration),
-          props.coinId
+        dispatch(
+          getChartData(convertDurationToUnix(duration.duration), props.coinId)
         )
     );
+
     // eslint-disable-next-line
   }, [durations]);
   useEffect(() => {
-    props.getChartData(convertDurationToUnix("1d"), props.coinId);
+    dispatch(getChartData(convertDurationToUnix("1d"), props.coinId));
+    console.log(
+      dispatch(getChartData(convertDurationToUnix("1d"), props.coinId))
+    );
     // eslint-disable-next-line
   }, []);
   return (

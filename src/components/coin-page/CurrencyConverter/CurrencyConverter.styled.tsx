@@ -26,13 +26,13 @@ export const Label = styled.label`
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 `;
-export const Input = styled(NumericFormat)`
+export const Input = styled(NumericFormat)<{ theme: string }>`
   align-items: center;
   font-size: 1rem;
   width: 70%;
   padding-left: 1rem;
-  background: ${(props) => props.theme.main};
-  color: ${(props) => props.theme.fontColor};
+  background: ${({ theme }) => theme.main};
+  color: ${({ theme }) => theme.fontColor};
   border-color: transparent;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;

@@ -36,7 +36,6 @@ const CurrencyToggle = () => {
   }, [dispatch]);
   const ref = useRef(null);
   useOnClickOutside(ref, () => setIsOpen(false));
-
   const handleToggle = (currency: string) => {
     setCurrency(currency);
     dispatch(toggleCurrency(String(currency)));
@@ -44,7 +43,7 @@ const CurrencyToggle = () => {
   };
   const handleTextToggle = (currency: string) => {
     setCurrency(currency);
-    dispatch(toggleCurrency(String(currency)));
+    if (currency.length === 3) dispatch(toggleCurrency(String(currency)));
     currency.length === 3 ? setIsOpen(false) : setIsOpen(true);
   };
   const currencies = [...supportedCurrencies].sort((a, b) => {

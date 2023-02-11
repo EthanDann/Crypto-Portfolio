@@ -18,11 +18,11 @@ export const Header = styled.h1`
   font-size: 1.5rem;
   margin: 1em;
 `;
-export const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled.div<{ theme: string }>`
   font-size: 0.8rem;
   margin-bottom: 1rem;
   padding: 3em 2em;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   border-radius: 12px;
   margin-bottom: 1em;
   @media (min-width: 1024px) {
