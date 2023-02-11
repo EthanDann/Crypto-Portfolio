@@ -6,13 +6,10 @@ import {
 } from "./DurationSelector.styled";
 
 interface Props {
-  durations: any[];
-  handleDurationClick: (d: object) => void;
+  durations: Duration[];
+  handleDurationClick: (duration: Duration) => void;
 }
 interface Duration {
-  duration: DurationProps;
-}
-interface DurationProps {
   duration: string;
   active: boolean;
 }
@@ -22,15 +19,15 @@ export const DurationSelector: React.FC<Props> = ({
 }) => {
   return (
     <Wrapper>
-      {durations.map(({ duration }: Duration) => (
+      {durations.map(({ duration, active }: Duration) => (
         <ButtonSpan>
           <RadioButton
             type="radio"
-            key={duration.duration}
-            isSelected={duration.active}
-            onClick={() => handleDurationClick(duration)}
+            key={duration}
+            isSelected={active}
+            onClick={() => handleDurationClick({ duration, active })}
           />
-          <ButtonLabel>{duration.duration}</ButtonLabel>
+          <ButtonLabel>{duration}</ButtonLabel>
         </ButtonSpan>
       ))}
     </Wrapper>

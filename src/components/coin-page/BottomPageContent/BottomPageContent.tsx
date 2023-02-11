@@ -7,31 +7,7 @@ import {
   Description,
   Header,
 } from "./BottomPageContent.styled";
-
-interface KeyNumberIsString {
-  [key: number]: string;
-}
-interface KeyStringIsNumber {
-  [key: string]: number;
-}
-interface MarketData {
-  current_price: KeyStringIsNumber;
-}
-interface Coin {
-  market_data: MarketData;
-  links: {
-    homepage: KeyNumberIsString;
-    blockchain_site: KeyNumberIsString;
-  };
-  symbol: string;
-  description: { en: string };
-}
-interface Props {
-  coin: Coin;
-  activeCurrency: string | any;
-  theme: string;
-  id: string | undefined;
-}
+import { Props } from "./BottomPageContent.types";
 
 export const BottomPageContent: React.FC<Props> = ({
   coin,
@@ -63,7 +39,7 @@ export const BottomPageContent: React.FC<Props> = ({
         coinPrice={market_data.current_price[activeCurrency.toLowerCase()]}
         theme={theme}
       />
-      <TimeChartWrapper coinId={id} activeCurrency={activeCurrency} />
+      <TimeChartWrapper id={id} currency={activeCurrency} />
     </Container>
   );
 };

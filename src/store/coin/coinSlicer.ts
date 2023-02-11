@@ -16,8 +16,8 @@ const initialState: InitialState = {
   error: "",
 };
 interface Duration {
-  id: string;
-  duration: any;
+  length: any;
+  id: string | undefined;
   currency: string;
 }
 
@@ -27,15 +27,14 @@ export const getCoinData = createAsyncThunk(
     const { data } = await axios.get(
       `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
     );
-    console.log(data);
     return data;
   }
 );
 export const getChartData = createAsyncThunk(
   "coins/getChartData",
-  async ({ id, duration, currency }: Duration) => {
+  async ({ length, id, currency }: Duration) => {
     const todaysDate = new Date().valueOf() / 1000;
-    const startDate = todaysDate - duration;
+    const startDate = todaysDate - length;
     const { data } = await axios.get(
       `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=${currency}&from=${startDate}&to=${todaysDate}`
     );
@@ -65,7 +64,7 @@ const coinSlice = createSlice({
       })
       .addCase(getChartData.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.chart_data = payload;
+        state.chart_data = payload.prices;
       })
       .addCase(getChartData.rejected, (state, action) => {
         state.isLoading = false;

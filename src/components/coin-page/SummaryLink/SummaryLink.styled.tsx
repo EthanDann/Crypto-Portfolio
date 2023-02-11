@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const CoinLinkContainer = styled.div`
+export const CoinLinkContainer = styled.div<{ theme: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   border-radius: 12px;
   height: 100%;
   padding: 1em 0;
@@ -23,7 +23,7 @@ export const IconContainer = styled.div`
   padding: 0 2em;
 `;
 
-export const SiteLink = styled.a`
+export const SiteLink = styled.a<{ theme: string }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -39,7 +39,7 @@ export const SiteLink = styled.a`
   &:link,
   &:active {
     text-decoration: none;
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   @media (min-width: 1024px) {
     font-size: 0.9rem;

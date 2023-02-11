@@ -34,7 +34,7 @@ const CoinList = () => {
   return (
     <Wrapper>
       <Header>Hello, {user?.nickname}</Header>
-      {HasPriceData && HasVolumeData && !hasError && (
+      {HasPriceData && HasVolumeData && !hasError && !isLoading && (
         <ChartWrapper>
           <ChartContainer id="price-chart">
             <PriceChart prices={priceData} />

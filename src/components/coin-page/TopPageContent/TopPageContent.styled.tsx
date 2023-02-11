@@ -5,9 +5,9 @@ import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import { ReactComponent as PlusIcon } from "./Plus.svg";
 import { ReactComponent as StackIcon } from "./StackIcon.svg";
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<{ theme: string }>`
   display: flex;
-  background-color: ${(props) => props.theme.main};
+  background-color: ${({ theme }) => theme.main};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -67,11 +67,11 @@ export const InnerContainer = styled.div`
     font-size: 0.7em;
   }
 `;
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{ theme: string }>`
   padding: 1.5em;
   border-radius: 12px;
   margin-bottom: 0;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
 `;
 export const Image = styled.img`
   height: 35px;
@@ -112,7 +112,7 @@ export const LinkIconContainer = styled.div`
   align-items: center;
   padding: 0;
 `;
-export const Anchor = styled.a`
+export const Anchor = styled.a<{ theme: string }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -129,7 +129,7 @@ export const Anchor = styled.a`
   &:link,
   &:active {
     text-decoration: none;
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   @media (min-width: 768px) {
     margin-right: 0;
@@ -151,7 +151,7 @@ export const AllTimeHeader = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const PercentDiv = styled.div`
+export const PercentDiv = styled.div<{ type: boolean }>`
   margin: 5px;
   color: ${({ type }) => (type ? "rgb(254, 16, 64)" : "rgb(0, 252, 42)")};
   font-size: 20px;

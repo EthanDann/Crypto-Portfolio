@@ -14,27 +14,31 @@ import { Wrapper } from "./TimeChart.styled";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
-const TimeChart = (props) => {
+interface Props {
+  chart: Array<[number]>;
+}
+
+const TimeChart: React.FC<Props> = ({ chart }) => {
   const { width: screenWidth } = useWindowSize();
-  const getLabels = (arr) => {
-    let labels = arr.map((arr) =>
-      new Date(arr[0]).toLocaleString(undefined, {
+  const getLabels = (arr: Array<[number]>): string[] => {
+    let labels = arr.map((val: number[]) => {
+      return new Date(val[0]).toLocaleString(undefined, {
         month: "short",
         day: "numeric",
-      })
-    );
+      });
+    });
     return labels;
   };
-  const chartData = () => {
+  const chartData = (): { labels: string[]; datasets: any[] } => {
     return {
-      labels: getLabels(props.chart),
+      labels: getLabels(chart),
       datasets: [
         {
-          data: props.chart,
+          data: chart,
           tension: 0.4,
           borderColor: "rgba(44, 47, 54, 1)",
           fill: true,
-          backgroundColor: (context) => {
+          backgroundColor: (context: { chart: { ctx: any } }) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
             gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
@@ -45,7 +49,6 @@ const TimeChart = (props) => {
       ],
     };
   };
-
   return (
     <Wrapper width={screenWidth - window.scrollX * 2}>
       <Line data={chartData()} options={options} />

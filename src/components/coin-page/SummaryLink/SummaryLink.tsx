@@ -6,14 +6,18 @@ import {
 import { ReactComponent as ChainIcon } from "./ChainIcon.svg";
 import { ReactComponent as TabsIcon } from ".//TabsIcon.svg";
 
-export const SummaryLink = (props) => {
+interface Props {
+  url: string;
+}
+
+export const SummaryLink: React.FC<Props> = ({ url }) => {
   return (
     <CoinLinkContainer>
       <IconContainer>
         <ChainIcon />
       </IconContainer>
-      <SiteLink target="_blank" href={props.url}>
-        {props.url}
+      <SiteLink target="_blank" href={url}>
+        {url}
       </SiteLink>
       <IconContainer>
         <TabsIcon />
