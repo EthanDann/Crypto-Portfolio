@@ -5,7 +5,7 @@ import coinSlice from "./coin/coinSlicer";
 import chartsSlice from "./charts/chartsSlicer";
 import currenciesSlice from "./currencies/currenciesSlicer";
 import supportedCurrenciesSlice from "./supportedCurrencies/supportedCurrenciesSlicer";
-import portfolioReducer from "./portfolio";
+import portfolioSlicer from "./portfolio/portfolioSlicer";
 import themeReducer from "./theme/themeSlicer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -16,7 +16,7 @@ const reducers = combineReducers({
   coin: coinSlice,
   supportedCurrencies: supportedCurrenciesSlice,
   currency: currenciesSlice,
-  portfolio: portfolioReducer,
+  portfolio: portfolioSlicer,
   theme: themeReducer,
 });
 const persistConfig = {

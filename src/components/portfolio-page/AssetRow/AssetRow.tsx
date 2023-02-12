@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { connect } from "react-redux";
 import getSymbolFromCurrency from "currency-symbol-map";
-
+import { useAppSelector, useAppDispatch } from "store/hooks";
 import {
-  handleEdit,
-  handleUpdate,
-  handleDelete,
-  handleConfirmDelete,
-  handleUpdateAmount,
-  handleUpdateDate,
-} from "store/portfolio/action";
+  getCoinData,
+  editAsset,
+  deleteAsset,
+  confirmDeleteAsset,
+  updateAsset,
+  updateAmount,
+  updateDate,
+} from "store/portfolio/portfolioSlicer";
 import nFormatter from "utils/nFormatter/";
 import {
   DeleteButton,
@@ -42,31 +42,29 @@ import {
   Subtitle,
 } from "./AssetRow.styled";
 
-const AssetRow = (props) => {
+const AssetRow = (currencySymbol: string) => {
   const [hasDateError, setHasDateError] = useState(false);
-  const { currencySymbol, assets } = props;
-
-  const handleUpdate = (name) => {
-    props.handleUpdate(name);
-    props.handleCoinData();
+  const assets = useAppSelector((state) => state.portfolio.assets);
+  const dispatch = useAppDispatch();
+  const handleUpdate = (name: string) => {
+    dispatch(updateAsset(name));
+    dispatch(getCoinData());
   };
-  const handleConfirmDelete = (id) => {
-    props.handleConfirmDelete(id);
+  const handleUpdateAmount = (e: {
+    target: {
+      value: string;
+      name: string;
+    };
+  }) => {
+    dispatch(
+      updateAmount({ purchase_price: e.target.value, name: e.target.name })
+    );
   };
-  const handleDelete = (name) => {
-    props.handleDelete(name);
-  };
-  const handleEdit = (name) => {
-    props.handleEdit(name);
-  };
-  const handleUpdateAmount = (e) => {
-    props.handleUpdateAmount(e.target.value, e.target.name);
-  };
-  const handleUpdateDate = (e) => {
+  const handleUpdateDate = (e: { target: { value: string; name: string } }) => {
     let date = e.target.value;
     let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
+    let dd: any = today.getDate();
+    let mm: any = today.getMonth() + 1;
     let yyyy = today.getFullYear();
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
@@ -82,17 +80,16 @@ const AssetRow = (props) => {
     } else {
       setHasDateError(false);
     }
-    props.handleUpdateDate(date, e.target.name);
+    dispatch(updateDate({ purchase_date: date, name: e.target.name }));
   };
   return assets.map((coin) => {
     const {
       image,
       name,
-      uniqueId,
       symbol,
       current_price,
       purchase_price,
-      price_on_purchase_date,
+      historic_price,
       purchase_date,
       price_change_24h,
       max_supply,
@@ -103,7 +100,7 @@ const AssetRow = (props) => {
       editable,
     } = coin;
     const coin_amount = (
-      Number(purchase_price.replace(/[^0-9.-]+/g, "")) / price_on_purchase_date
+      Number(purchase_price.replace(/[^0-9.-]+/g, "")) / Number(historic_price)
     ).toFixed(2);
     return (
       <Row key={name}>
@@ -123,12 +120,12 @@ const AssetRow = (props) => {
           <RowHeader>
             Market Price:
             {!confirm_delete && (
-              <TrashContainer onClick={() => handleDelete(name)}>
+              <TrashContainer onClick={() => dispatch(deleteAsset(name))}>
                 <StyledTrashIcon />
               </TrashContainer>
             )}
             {confirm_delete && (
-              <DeleteButton onClick={() => handleConfirmDelete(uniqueId)}>
+              <DeleteButton onClick={() => dispatch(confirmDeleteAsset(name))}>
                 Delete
               </DeleteButton>
             )}
@@ -179,7 +176,7 @@ const AssetRow = (props) => {
             Your Coin:
             {!editable && (
               <>
-                <EditIconContainer onClick={() => handleEdit(name)}>
+                <EditIconContainer onClick={() => dispatch(editAsset(name))}>
                   <StyledEditIcon />
                 </EditIconContainer>
                 <Subtitle>
@@ -209,24 +206,23 @@ const AssetRow = (props) => {
                 name={name}
                 prefix={currencySymbol}
                 thousandSeparator={true}
-                value={(coin_amount * current_price).toFixed(2)}
+                value={(Number(coin_amount) * current_price).toFixed(2)}
               />
               <Text>Amount Price Change Since Purchase: </Text>
               <AssetInfo
                 color={
-                  current_price / Number(price_on_purchase_date) >= 0
+                  current_price / Number(historic_price) >= 0
                     ? "#00FC2A"
                     : "#fe1040"
                 }
               >
-                {current_price / Number(price_on_purchase_date) >= 0 ? (
+                {current_price / Number(historic_price) >= 0 ? (
                   <StyledUpArrow />
                 ) : (
                   <StyledDownArrow />
                 )}
 
-                {(current_price / Number(price_on_purchase_date)).toFixed(2) +
-                  "%"}
+                {(current_price / Number(historic_price)).toFixed(2) + "%"}
               </AssetInfo>
               <Text>Purchase Date: </Text>
               <DateAsset
@@ -242,17 +238,5 @@ const AssetRow = (props) => {
     );
   });
 };
-const mapStateToProps = (state) => ({
-  assets: state.portfolio.assets,
-  purchase_price: state.portfolio.purchase_price,
-  purchase_date: state.portfolio.purchase_date,
-});
-const mapDispatchToProps = {
-  handleUpdateAmount,
-  handleUpdateDate,
-  handleEdit,
-  handleUpdate,
-  handleDelete,
-  handleConfirmDelete,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(AssetRow);
+
+export default AssetRow;

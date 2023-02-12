@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ width: number }>`
+export const Container = styled.div<{ width: number; theme: string }>`
   color: ${({ theme }) => theme.fontColor};
   width: ${({ width }) => width}px;
 `;

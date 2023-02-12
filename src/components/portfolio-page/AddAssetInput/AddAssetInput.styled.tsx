@@ -1,6 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { ReactComponent as DarkSearchIcon } from "./DarkSearchIcon.svg";
-import { ReactComponent as LightSearchIcon } from "./LightSearchIcon.svg";
 
 export const SearchContainer = styled.form`
   display: flex;
@@ -15,35 +13,10 @@ export const SearchContainer = styled.form`
     height: 50px;
   }
 `;
-
-export const StyledSearchIcon = styled.div`
-  display: flex;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  margin: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  height: 2.95rem;
-  width: 4rem;
-`;
-export const StyledLightSearchIcon = styled(LightSearchIcon)`
-  @media (max-width: 425px) {
-    height: 100%;
-    width: 100%;
-  }
-`;
-export const StyledDarkSearchIcon = styled(DarkSearchIcon)`
-  @media (max-width: 425px) {
-    height: 100%;
-    width: 100%;
-  }
-`;
-export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const StyledInput = styled.input<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -52,7 +25,7 @@ export const StyledInput = styled.input`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -61,7 +34,7 @@ export const StyledInput = styled.input`
     width: 80.5%;
   }
   @media (min-width: 1024px) {
-    background-color: ${(props) => props.theme.main};
+    background-color: ${({ theme }) => theme.main};
   }
   @media (min-width: 2560px) {
     font-size: 1.4rem;
@@ -73,13 +46,13 @@ export const StyledInput = styled.input`
     height: 1vh;
   }
 `;
-export const StyledText = styled.p`
+export const StyledText = styled.p<{ theme: string }>`
   text-decoration: none;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   margin-left: 1rem;
   width: 100%;
   &:hover {
-    background-color: ${(props) => props.theme.secondary};
+    background-color: ${({ theme }) => theme.secondary};
     text-decoration: underline;
     cursor: pointer;
   }
@@ -92,14 +65,18 @@ const fadeIn = keyframes`
         opacity: 1;
     }
 `;
-export const ResultsList = styled.ul`
+export const ResultsList = styled.ul<{
+  theme: string;
+  showResults: boolean;
+  results: any[];
+}>`
   display: flex;
   flex-direction: column;
   width: 77%;
-  background: ${(props) => props.theme.secondary};
+  background: ${({ theme }) => theme.secondary};
   border-radius: 10px;
-  display: ${(props) =>
-    props.showResults && props.results.length > 0 ? "flex" : " none"};
+  display: ${({ showResults, results }) =>
+    showResults && results.length > 0 ? "flex" : " none"};
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -129,15 +106,15 @@ export const ResultsList = styled.ul`
     width: 88%;
   }
 `;
-export const ListItem = styled.li`
+export const ListItem = styled.li<{ theme: string }>`
   display: flex;
   justify-content: flex-start;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   padding: 0.5em 0;
   font-size: 1.1rem;
   cursor: pointer;
-  overflow: auto;
+  overflow: none;
   &:hover {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
 `;

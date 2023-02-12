@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { connect } from "react-redux";
-import {
-  handleCoinClick,
-  handlePurchasedAmount,
-  handlePurchaseDate,
-  handleAddAsset,
-} from "store/portfolio/action";
+import { useAppSelector } from "store/hooks";
+// import {
+//   handlePurchasedAmount,
+//   handlePurchaseDate,
+//   handleAddAsset,
+// } from "store/portfolio/portfolioSlicer";
 import {
   ModalButtonContainer,
   ModalInputContainer,
@@ -27,37 +26,38 @@ import {
 
 const Modal = (props) => {
   const [hasDateError, setHasDateError] = useState(false);
-  const { selectedCoin, currencySymbol } = props;
+  const { currencySymbol } = props;
+  const selectedCoin = useAppSelector((state) => state.portfolio.selectedCoin);
 
-  const handleAddAsset = () => {
-    props.handleAddAsset();
-    props.handleOpen();
-    props.handleCoinData();
-  };
-  const handlePurchasedAmount = (e) => {
-    props.handlePurchasedAmount(e.target.value);
-  };
-  const handlePurchaseDate = (e) => {
-    let date = e.target.value;
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-    let yyyy = today.getFullYear();
-    const year = new Date(date).getFullYear();
-    const month = new Date(date).getMonth() + 1;
-    const day = new Date(date).getDate();
-    if (dd < 10) {
-      dd = "0" + dd;
-    }
+  // const handleAddAsset = () => {
+  //   props.handleAddAsset();
+  //   props.handleOpen();
+  //   props.handleCoinData();
+  // };
+  // const handlePurchasedAmount = (e) => {
+  //   props.handlePurchasedAmount(e.target.value);
+  // };
+  // const handlePurchaseDate = (e) => {
+  //   let date = e.target.value;
+  //   let today = new Date();
+  //   let dd = today.getDate();
+  //   let mm = today.getMonth() + 1;
+  //   let yyyy = today.getFullYear();
+  //   const year = new Date(date).getFullYear();
+  //   const month = new Date(date).getMonth() + 1;
+  //   const day = new Date(date).getDate();
+  //   if (dd < 10) {
+  //     dd = "0" + dd;
+  //   }
 
-    if (mm < 10) {
-      mm = "0" + mm;
-    }
-    if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
-      setHasDateError(true);
-    } else setHasDateError(false);
-    props.handlePurchaseDate(date);
-  };
+  //   if (mm < 10) {
+  //     mm = "0" + mm;
+  //   }
+  //   if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
+  //     setHasDateError(true);
+  //   } else setHasDateError(false);
+  //   props.handlePurchaseDate(date);
+  // };
   return (
     <ModalContainer added={selectedCoin.name}>
       <AddAssetModal>
@@ -77,14 +77,11 @@ const Modal = (props) => {
           )}
           <ModalInputContainer>
             <InputContainer>
-              <StyledSearchInput
-                handleCoinClick={(coin) => props.handleCoinClick(coin)}
-                placeholder={"Search for Coin..."}
-              />
+              <StyledSearchInput />
             </InputContainer>
             <InputContainer>
               <PriceInput
-                onChange={handlePurchasedAmount}
+                // onChange={handlePurchasedAmount}
                 placeholder="Purchase Amount"
                 prefix={currencySymbol}
                 thousandSeparator={true}
@@ -92,7 +89,7 @@ const Modal = (props) => {
             </InputContainer>
             <InputContainer>
               <StyledInput
-                onChange={handlePurchaseDate}
+                // onChange={handlePurchaseDate}
                 placeholder="Purchase Date"
               />
               {hasDateError && (
@@ -111,7 +108,7 @@ const Modal = (props) => {
             Close
           </ModalButton>
           <ModalButton
-            onClick={handleAddAsset}
+            // onClick={handleAddAsset}
             disabled={
               hasDateError ||
               selectedCoin.name == null ||
@@ -128,15 +125,4 @@ const Modal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedCoin: state.portfolio.selectedCoin,
-  purchase_price: state.portfolio.purchase_price,
-  purchase_date: state.portfolio.purchase_date,
-});
-const mapDispatchToProps = {
-  handleCoinClick,
-  handlePurchasedAmount,
-  handlePurchaseDate,
-  handleAddAsset,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default Modal;
