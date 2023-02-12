@@ -7,7 +7,7 @@ interface InitialState {
   selectedCoin: SelectedCoin;
   isLoading: boolean;
   hasError: boolean;
-  error: string;
+  error?: string;
 }
 
 const initialState: InitialState = {
@@ -31,10 +31,12 @@ interface Asset {
   coinId: string;
   symbol: string;
   image: string;
+  purchase_currency?: string;
+  purchase_currency_symbol?: string;
   current_price: number;
   purchase_date: string;
   purchase_price: string;
-  historic_price: string;
+  historic_price: number;
   price_change_24h: number;
   max_supply: number;
   total_volume: number;
@@ -48,8 +50,8 @@ interface SelectedCoin {
   id: string;
   image: string;
   symbol: string;
-  purchase_price?: string;
-  purchase_date?: string;
+  purchase_price: string;
+  purchase_date: string;
 }
 interface AssetAmount {
   name: string;
@@ -64,45 +66,41 @@ export const getCoinData = createAsyncThunk(
   "portfolio/getCoinData",
   async (arg, { getState }) => {
     const state: any = getState();
-    const requests = state.assets.map(async (coin: Asset) => {
+    const requests = await state.portfolio.assets.map(async (coin: Asset) => {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coin.coinId}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
       );
       return data;
     });
     const results = await Promise.all(requests);
-    return results;
+    return results[0];
   }
 );
 
 export const getCoinHistory = createAsyncThunk(
   "portfolio/getCoinHistory",
-  async (asset: Asset, { getState }) => {
+  async (arg, { getState }) => {
     const state: any = getState();
-    let { coinId, purchase_price, purchase_date } = asset;
-    const year = new Date(purchase_date).getFullYear();
-    const month = new Date(purchase_date).getMonth() + 1;
-    const day = new Date(purchase_date).getDate();
-    purchase_date = day + "-" + month + "-" + year;
-    const requests = state.assets.map(async (coin: Asset) => {
+
+    const requests = await state.portfolio.assets.map(async (coin: Asset) => {
+      let { coinId, purchase_date } = coin;
+      const year = new Date(purchase_date).getFullYear();
+      const month = new Date(purchase_date).getMonth() + 1;
+      const day = new Date(purchase_date).getDate();
+      purchase_date = day + "-" + month + "-" + year;
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${purchase_date}`
       );
       const historic_price = data?.market_data.current_price.usd;
-      const { image, name, symbol, id } = data;
+      const { id } = data;
       const assetData = {
-        name,
-        symbol,
-        coinId: id,
-        image: image.large,
-        purchase_date,
-        purchase_price,
+        id,
         historic_price,
       };
       return assetData;
     });
     const results = await Promise.all(requests);
-    return results;
+    return results[0];
   }
 );
 
@@ -115,6 +113,26 @@ const portfolioSlice = createSlice({
       state.selectedCoin.id = action.payload.id;
       state.selectedCoin.image = action.payload.image;
       state.selectedCoin.symbol = action.payload.symbol;
+    },
+    addAsset: (state, action: PayloadAction<Asset>) => {
+      const asset_exists = state.assets.find(
+        (asset) => asset.name === action.payload.name
+      );
+      if (!asset_exists) {
+        state.assets.push(action.payload);
+      } else {
+        state.assets = state.assets.map((asset) => {
+          if (asset.name === action.payload.name) {
+            return {
+              ...asset,
+              purchase_price:
+                action.payload.purchase_price + asset.purchase_price,
+              purchase_date: action.payload.purchase_date,
+            };
+          }
+          return asset;
+        });
+      }
     },
     editAsset: (state, action: PayloadAction<string>) => {
       state.assets.map((coin) => {
@@ -197,27 +215,56 @@ const portfolioSlice = createSlice({
       })
       .addCase(getCoinData.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.assets = payload;
+        state.assets = state.assets.map((coin, index) => {
+          if (coin.name === payload.id) {
+            return {
+              ...coin,
+              coinId: payload.coinId,
+              symbol: payload.symbol,
+              image: payload.image,
+              current_price: payload.current_price,
+              price_change_24h: payload.price_change_24h,
+              market_cap: payload.market_cap,
+              total_volume: payload.total_volume,
+              circulating_supply: payload.circulating_supply,
+              max_supply: payload.max_supply,
+              confirm_delete: false,
+              editable: false,
+            };
+          }
+          return coin;
+        });
       })
       .addCase(getCoinData.rejected, (state, action) => {
         state.isLoading = false;
         state.hasError = true;
+        state.error = action.error.message;
       })
       .addCase(getCoinHistory.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getCoinHistory.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.history = payload;
+        state.assets = state.assets.map((coin, index) => {
+          if (coin.name.toLowerCase() === payload.id) {
+            return {
+              ...coin,
+              historic_price: payload.historic_price,
+            };
+          }
+          return coin;
+        });
       })
       .addCase(getCoinHistory.rejected, (state, action) => {
         state.isLoading = false;
         state.hasError = true;
+        state.error = action.error.message;
       });
   },
 });
 export const {
   selectCoin,
+  addAsset,
   editAsset,
   deleteAsset,
   confirmDeleteAsset,

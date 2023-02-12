@@ -322,7 +322,7 @@ export const AssetInput = styled(NumericFormat)<{
   font-size: 1rem;
   margin: 0.5rem 0;
   margin-left: 0.25rem;
-  border: ${({ disabled }) => (disabled ? "1px solid gray" : "none")};
+  border: ${({ disabled }) => (disabled ? "none" : "1px solid gray")};
   background-color: ${({ theme }) => theme.main};
   transition: ${({ theme }) => theme.transition};
   color: ${({ theme }) => theme.fontColor};
@@ -378,6 +378,7 @@ export const DateAsset = styled.input<{
 export const SaveButton = styled.button`
   background: rgb(6, 213, 84);
   color: #fff;
+  cursor: pointer;
   padding: 0.25rem 0.75rem;
   margin: 0 0.5rem;
   border-radius: 10px;

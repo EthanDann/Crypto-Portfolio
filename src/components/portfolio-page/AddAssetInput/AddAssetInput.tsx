@@ -34,6 +34,8 @@ const AddAssetInput = () => {
         id: data[0].id,
         image: data[0].image,
         symbol: data[0].symbol.toUpperCase(),
+        purchase_price: "",
+        purchase_date: "",
       })
     );
     setShowResults(false);

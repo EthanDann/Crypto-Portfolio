@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { NumericFormat } from "react-number-format";
 import { AddAssetInput } from "components";
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<{ theme: string }>`
   display: flex;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-radius: 12px;
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
 `;
 export const CoinName = styled.div`
@@ -24,11 +24,11 @@ export const CoinName = styled.div`
     font-size: 2.5rem;
   }
 `;
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{ theme: string }>`
   padding: 1.5em;
   border-radius: 12px;
   margin-bottom: 0;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
 `;
 
 export const Image = styled.img`
@@ -39,29 +39,32 @@ export const Image = styled.img`
     width: 75px;
   }
 `;
-export const StyledSearchInput = styled(AddAssetInput)`
-  background-color: ${(props) => props.theme.secondary};
+export const StyledSearchInput = styled(AddAssetInput)<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
 `;
-export const ModalButton = styled.button`
+export const ModalButton = styled.button<{
+  background?: string;
+  hover?: string;
+}>`
   width: 60%;
-  background: ${(props) =>
-    props.background ? props.background : "rgb(6, 213, 84)"};
-  color: ${(props) => (props.background ? "rgb(6, 213, 84)" : "#fff")};
+  background: ${({ background }) =>
+    background ? background : "rgb(6, 213, 84)"};
+  color: ${({ background }) => (background ? "rgb(6, 213, 84)" : "#fff")};
   cursor: pointer;
   font-size: 0.8rem;
   margin: 0 0.5rem;
   border: none;
   border-radius: 10px;
   &:hover {
-    background: ${(props) => (props.hover ? props.hover : "rgb(6, 175, 84)")};
+    background: ${({ hover }) => (hover ? hover : "rgb(6, 175, 84)")};
   }
   &:disabled {
     cursor: not-allowed;
-    background: ${(props) =>
-      props.background ? props.background : "rgb(6, 213, 84)"};
+    background: ${({ background }) =>
+      background ? background : "rgb(6, 213, 84)"};
   }
   @media (min-width: 768px) {
     padding: 1rem 0;
@@ -77,7 +80,7 @@ export const ModalButtonContainer = styled.div`
   flex-direction: row;
   margin: 2rem;
 `;
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ added: string }>`
   display: flex;
   position: absolute;
   right: 19%;
@@ -86,16 +89,16 @@ export const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   @media (min-width: 1024px) {
-    right: ${(props) => (props.added ? "15%" : "27%")};
+    right: ${({ added }) => (added ? "15%" : "27%")};
   }
   @media (min-width: 1200px) {
-    right: ${(props) => (props.added ? "22%" : "32%")};
+    right: ${({ added }) => (added ? "22%" : "32%")};
   }
   @media (min-width: 1440px) {
-    right: ${(props) => (props.added ? "25%" : "35%")};
+    right: ${({ added }) => (added ? "25%" : "35%")};
   }
   @media (min-width: 2560px) {
-    right: ${(props) => (props.added ? "30%" : "40%")};
+    right: ${({ added }) => (added ? "30%" : "40%")};
   }
   @media (max-width: 425px) {
     right: 18%;
@@ -110,10 +113,10 @@ export const ModalContainer = styled.div`
     right: 9%;
   }
 `;
-export const AddAssetModal = styled.div`
+export const AddAssetModal = styled.div<{ theme: string }>`
   width: 100%;
   height: auto;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -122,7 +125,7 @@ export const AddAssetModal = styled.div`
     height: 50%;
   }
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
     width: auto;
   }
   @media (min-width: 2560px) {
@@ -134,7 +137,7 @@ export const ModalInputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-export const Header = styled.h1`
+export const Header = styled.h1<{ modal: boolean }>`
   display: flex;
   justify-content: flex-start;
   font-weight: 400;
@@ -143,8 +146,8 @@ export const Header = styled.h1`
   margin: 0 1em 2em 1em;
   padding-top: 1em;
   @media (min-width: 2560px) {
-    font-size: ${(props) => (props.modal ? "3rem" : "1.5rem")};
-    margin: ${(props) => (props.modal ? "0 1em 1em 1em" : "0 1em 2em 1em")};
+    font-size: ${({ modal }) => (modal ? "3rem" : "1.5rem")};
+    margin: ${({ modal }) => (modal ? "0 1em 1em 1em" : "0 1em 2em 1em")};
   }
 `;
 export const ModalContentContainer = styled.div`
@@ -159,9 +162,9 @@ export const ModalContentContainer = styled.div`
     margin: 1rem;
   }
 `;
-export const ModalInfoContainer = styled(StyledDiv)`
+export const ModalInfoContainer = styled(StyledDiv)<{ theme: string }>`
   margin-bottom: 1rem;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   @media (min-width: 425px) {
     width: 100%;
     &:nth-child(1) {
@@ -177,11 +180,11 @@ export const ModalInfoContainer = styled(StyledDiv)`
     }
   }
 `;
-export const ModalImageContainer = styled.div`
+export const ModalImageContainer = styled.div<{ theme: string }>`
   padding: 1em;
   border-radius: 12px;
   margin-bottom: 0;
-  background: ${(props) => props.theme.secondary};
+  background: ${({ theme }) => theme.secondary};
 `;
 export const InputContainer = styled.div`
   margin: 0 0 1rem 3rem;
@@ -204,10 +207,10 @@ export const InputContainer = styled.div`
     width: 800px;
   }
 `;
-export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const StyledInput = styled.input<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -217,7 +220,7 @@ export const StyledInput = styled.input`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -226,7 +229,7 @@ export const StyledInput = styled.input`
     width: 77.5%;
   }
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
   @media (min-width: 2560px) {
     width: 79%;
@@ -239,10 +242,10 @@ export const StyledInput = styled.input`
     height: 1vh;
   }
 `;
-export const PriceInput = styled(NumericFormat)`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const PriceInput = styled(NumericFormat)<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -252,7 +255,7 @@ export const PriceInput = styled(NumericFormat)`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -261,7 +264,7 @@ export const PriceInput = styled(NumericFormat)`
     width: 77.5%;
   }
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
   @media (min-width: 2560px) {
     width: 79%;

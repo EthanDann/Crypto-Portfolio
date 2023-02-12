@@ -42,13 +42,14 @@ import {
   Subtitle,
 } from "./AssetRow.styled";
 
-const AssetRow = (currencySymbol: string) => {
+const AssetRow = () => {
   const [hasDateError, setHasDateError] = useState(false);
   const assets = useAppSelector((state) => state.portfolio.assets);
+  const currency = useAppSelector((state) => state.currency);
+  const currencySymbol = getSymbolFromCurrency(currency);
   const dispatch = useAppDispatch();
-  const handleUpdate = (name: string) => {
+  const handleUpdateAsset = (name: string) => {
     dispatch(updateAsset(name));
-    dispatch(getCoinData());
   };
   const handleUpdateAmount = (e: {
     target: {
@@ -75,7 +76,10 @@ const AssetRow = (currencySymbol: string) => {
     if (mm < 10) {
       mm = "0" + mm;
     }
-    if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
+    if (
+      year > yyyy ||
+      (day > Number(dd) && month >= Number(mm) && year >= yyyy)
+    ) {
       setHasDateError(true);
     } else {
       setHasDateError(false);
@@ -100,7 +104,7 @@ const AssetRow = (currencySymbol: string) => {
       editable,
     } = coin;
     const coin_amount = (
-      Number(purchase_price.replace(/[^0-9.-]+/g, "")) / Number(historic_price)
+      Number(purchase_price.replace(/[^0-9.-]+/g, "")) / historic_price
     ).toFixed(2);
     return (
       <Row key={name}>
@@ -186,7 +190,7 @@ const AssetRow = (currencySymbol: string) => {
             )}
             {editable && (
               <SaveButton
-                onClick={() => handleUpdate(name)}
+                onClick={() => handleUpdateAsset(name)}
                 disabled={hasDateError}
               >
                 Save
@@ -206,23 +210,25 @@ const AssetRow = (currencySymbol: string) => {
                 name={name}
                 prefix={currencySymbol}
                 thousandSeparator={true}
-                value={(Number(coin_amount) * current_price).toFixed(2)}
+                value={
+                  !editable
+                    ? (Number(coin_amount) * current_price).toFixed(2)
+                    : purchase_price
+                }
               />
               <Text>Amount Price Change Since Purchase: </Text>
               <AssetInfo
                 color={
-                  current_price / Number(historic_price) >= 0
-                    ? "#00FC2A"
-                    : "#fe1040"
+                  current_price / historic_price >= 0 ? "#00FC2A" : "#fe1040"
                 }
               >
-                {current_price / Number(historic_price) >= 0 ? (
+                {current_price / historic_price >= 0 ? (
                   <StyledUpArrow />
                 ) : (
                   <StyledDownArrow />
                 )}
 
-                {(current_price / Number(historic_price)).toFixed(2) + "%"}
+                {(current_price / historic_price).toFixed(2) + "%"}
               </AssetInfo>
               <Text>Purchase Date: </Text>
               <DateAsset

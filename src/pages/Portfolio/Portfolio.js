@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import BackToUp from "@uiw/react-back-to-top";
+import getSymbolFromCurrency from "currency-symbol-map";
 import { useWindowSize } from "usehooks-ts";
-import { getCoinHistory, getCoinData } from "store/portfolio/action";
+import { useAppSelector, useAppDispatch } from "store/hooks";
+import { getCoinHistory, getCoinData } from "store/portfolio/portfolioSlicer";
 import { AssetRow, ArrowAnimation, Modal } from "components";
 import {
   Container,
@@ -14,11 +16,14 @@ import {
 
 const Portfolio = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { currencySymbol, assets, getCoinData, getCoinHistory } = props;
+  const { assets, hasError, error } = useAppSelector(
+    (state) => state.portfolio
+  );
+  const dispatch = useAppDispatch();
   const { height: screenHeight } = useWindowSize();
   const handleCoinData = () => {
-    getCoinHistory();
-    getCoinData();
+    dispatch(getCoinHistory());
+    dispatch(getCoinData());
   };
   const handleOpen = () => setIsOpen(!isOpen);
   useEffect(() => {
@@ -32,17 +37,14 @@ const Portfolio = (props) => {
           <Button onClick={() => handleOpen()}>Add Asset</Button>
         </ButtonContainer>
         {assets.length === 0 && <ArrowAnimation />}
-        {assets && <Header>Your Statistics</Header> && (
-          <AssetRow currencySymbol={currencySymbol} />
-        )}
-        {props.hasError && <Row>{props.error}</Row>}
+        {assets && <Header>Your Statistics</Header> && <AssetRow />}
+        {hasError && <Row>{error}</Row>}
         <BackToUp>Top</BackToUp>
       </Container>
       {isOpen && (
         <Modal
           handleCoinData={() => handleCoinData()}
           handleOpen={() => handleOpen()}
-          currencySymbol={currencySymbol}
         />
       )}
     </>
