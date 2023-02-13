@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import BackToUp from "@uiw/react-back-to-top";
-import getSymbolFromCurrency from "currency-symbol-map";
 import { useWindowSize } from "usehooks-ts";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getCoinHistory, getCoinData } from "store/portfolio/portfolioSlicer";

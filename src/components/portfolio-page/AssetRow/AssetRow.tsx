@@ -2,7 +2,6 @@ import { useState } from "react";
 import getSymbolFromCurrency from "currency-symbol-map";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import {
-  getCoinData,
   editAsset,
   deleteAsset,
   confirmDeleteAsset,

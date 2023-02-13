@@ -36,7 +36,6 @@ const Modal: React.FC<Props> = ({ handleOpen, handleCoinData }) => {
   const currency = useAppSelector((state) => state.currency.toLowerCase());
   const currencySymbol = getSymbolFromCurrency(currency);
   const selectedCoin = useAppSelector((state) => state.portfolio.selectedCoin);
-  const assets = useAppSelector((state) => state.portfolio.assets);
 
   const dispatch = useAppDispatch();
   const handleAddAsset = () => {

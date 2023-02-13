@@ -133,6 +133,14 @@ const portfolioSlice = createSlice({
           return asset;
         });
       }
+      state.selectedCoin = {
+        name: "",
+        id: "",
+        image: "",
+        symbol: "",
+        purchase_price: "",
+        purchase_date: "",
+      };
     },
     editAsset: (state, action: PayloadAction<string>) => {
       state.assets.map((coin) => {
@@ -163,8 +171,10 @@ const portfolioSlice = createSlice({
       state.selectedCoin.purchase_date = action.payload;
     },
     updateAsset: (state, action: PayloadAction<string>) => {
-      state.assets.map((coin, index) => {
+      const assets = state.assets.map((coin, index) => {
         if (coin.name === action.payload) {
+          console.log(coin.purchase_price);
+          console.log(coin.editable);
           return {
             ...coin,
             purchase_price: coin.purchase_price,
@@ -174,14 +184,7 @@ const portfolioSlice = createSlice({
         }
         return coin;
       });
-      state.selectedCoin = {
-        name: "",
-        id: "",
-        image: "",
-        symbol: "",
-        purchase_price: "",
-        purchase_date: "",
-      };
+      state.assets = assets;
     },
     updateAmount: (state, action: PayloadAction<AssetAmount>) => {
       const updatedAmount: Asset[] = state.assets.map((coin, index) => {
