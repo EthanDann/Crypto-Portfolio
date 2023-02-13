@@ -63,7 +63,7 @@ export const getCoinData = () => (dispatch, getState) => {
   const source = axios.CancelToken.source();
   try {
     const state = getState();
-    const currency = state.currencies.toLowerCase();
+    const currency = state.currency.toLowerCase();
     state.portfolio.assets.map(async (coin) => {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${coin.id}?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`,

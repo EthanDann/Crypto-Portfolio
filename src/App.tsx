@@ -28,15 +28,7 @@ const App: React.FC<Props> = () => {
               path="/portfolio"
               element={<Portfolio currencySymbol={currencySymbol} />}
             />
-            <Route
-              path="/coin/:id"
-              element={
-                <Coin
-                  currencySymbol={currencySymbol}
-                  activeCurrency={activeCurrency}
-                />
-              }
-            />
+            <Route path="/coin/:id" element={<Coin />} />
           </Routes>
         </>
       </Container>

@@ -7,13 +7,15 @@ import {
   Description,
   Header,
 } from "./BottomPageContent.styled";
+import { Props } from "./BottomPageContent.types";
 
-export const BottomPageContent = (props) => {
-  const { coin, currencySymbol, theme, id } = props;
+export const BottomPageContent: React.FC<Props> = ({
+  coin,
+  activeCurrency,
+  theme,
+  id,
+}) => {
   const { description, links, symbol, market_data } = coin;
-  const { blockchain_site } = links;
-  const { current_price } = market_data;
-  const activeCurrency = props.activeCurrency.toLowerCase();
   return (
     <Container>
       <Header>Description</Header>
@@ -22,23 +24,22 @@ export const BottomPageContent = (props) => {
       </DescriptionContainer>
       <CoinLinksContainer>
         <Link>
-          <SummaryLink url={blockchain_site[0]} />
+          <SummaryLink url={links.blockchain_site[0]} />
         </Link>
         <Link>
-          <SummaryLink url={blockchain_site[1]} />
+          <SummaryLink url={links.blockchain_site[1]} />
         </Link>
         <Link>
-          <SummaryLink url={blockchain_site[2]} />
+          <SummaryLink url={links.blockchain_site[2]} />
         </Link>
       </CoinLinksContainer>
       <CurrencyConverter
         activeCurrency={activeCurrency}
-        currencySymbol={currencySymbol}
         coinSymbol={symbol.toUpperCase()}
-        coinPrice={current_price[activeCurrency]}
+        coinPrice={market_data.current_price[activeCurrency.toLowerCase()]}
         theme={theme}
       />
-      <TimeChartWrapper coinId={id} activeCurrency={activeCurrency} />
+      <TimeChartWrapper id={id} currency={activeCurrency} />
     </Container>
   );
 };

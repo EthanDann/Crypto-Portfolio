@@ -28,13 +28,18 @@ import {
   StyledLinkIcon,
   StyledStackIcon,
 } from "./TopPageContent.styled";
+import { Props } from "./TopPageContent.types";
 
-export const TopPageContent = (props) => {
-  const getPercentColor = (num) => {
+export const TopPageContent: React.FC<Props> = ({
+  coin,
+  activeCurrency,
+  currencySymbol,
+}) => {
+  const getPercentColor = (num: number) => {
     if (num < 0) return true;
     return false;
   };
-  const { image, name, symbol, links, market_data } = props.coin;
+  const { image, name, symbol, links, market_data } = coin;
   const {
     current_price,
     ath_change_percentage,
@@ -48,8 +53,7 @@ export const TopPageContent = (props) => {
     circulating_supply,
     max_supply,
   } = market_data;
-  const activeCurrency = props.activeCurrency.toLowerCase();
-  const currencySymbol = props.currencySymbol;
+
   return (
     <>
       <Header>Your Summary</Header>
@@ -78,14 +82,15 @@ export const TopPageContent = (props) => {
         </Column>
         <AllTimeContent>
           <AllTimeHeader>
-            {currencySymbol +
-              nFormatter(current_price[activeCurrency], "1,000")}
+            {currencySymbol?.toLowerCase() +
+              nFormatter(current_price[activeCurrency.toLowerCase()], "1,000")}
             <PercentDiv
               type={getPercentColor(
-                ath_change_percentage[activeCurrency].toFixed(1)
+                ath_change_percentage[activeCurrency.toLowerCase()]
               )}
             >
-              {ath_change_percentage[activeCurrency].toFixed(1) + "%"}
+              {ath_change_percentage[activeCurrency.toLowerCase()].toFixed(1) +
+                "%"}
             </PercentDiv>
           </AllTimeHeader>
           <StackIconContainer>
@@ -96,18 +101,22 @@ export const TopPageContent = (props) => {
               <StyledUpArrow />
             </IconContainer>
             All-Time High:
-            {" " + currencySymbol + nFormatter(ath[activeCurrency], "1,000")}
+            {" " +
+              currencySymbol?.toLowerCase() +
+              nFormatter(ath[activeCurrency.toLowerCase()], "1,000")}
             <br />
-            {dateFormatter(ath_date[activeCurrency])}
+            {dateFormatter(ath_date[activeCurrency.toLowerCase()])}
           </AllTimeText>
           <AllTimeText>
             <IconContainer>
               <StyledDownArrow />
             </IconContainer>
             All-Time Low:
-            {" " + currencySymbol + atl[activeCurrency]}
+            {" " +
+              currencySymbol?.toLowerCase() +
+              atl[activeCurrency.toLowerCase()]}
             <br />
-            {dateFormatter(atl_date[activeCurrency])}
+            {dateFormatter(atl_date[activeCurrency.toLowerCase()])}
           </AllTimeText>
         </AllTimeContent>
         <MarketDataContent>
@@ -117,16 +126,19 @@ export const TopPageContent = (props) => {
                 <StyledPlusIcon />
               </IconContainer>
               {"Market Cap: " +
-                currencySymbol +
-                nFormatter(market_cap[activeCurrency], "10,000")}
+                currencySymbol?.toLowerCase() +
+                nFormatter(market_cap[activeCurrency.toLowerCase()], "10,000")}
             </ListItem>
             <ListItem>
               <IconContainer>
                 <StyledPlusIcon />
               </IconContainer>
               {"Fully Diluted Valuation: " +
-                currencySymbol +
-                nFormatter(fully_diluted_valuation[activeCurrency], "10,000")}
+                currencySymbol?.toLowerCase() +
+                nFormatter(
+                  fully_diluted_valuation[activeCurrency.toLowerCase()],
+                  "10,000"
+                )}
             </ListItem>
             <ListItem>
               <IconContainer>
@@ -134,7 +146,8 @@ export const TopPageContent = (props) => {
               </IconContainer>
               {"Volume/Market: " +
                 (
-                  total_volume[activeCurrency] / market_cap[activeCurrency]
+                  total_volume[activeCurrency.toLowerCase()] /
+                  market_cap[activeCurrency.toLowerCase()]
                 ).toFixed(5)}
             </ListItem>
             <ListItem>
@@ -142,7 +155,10 @@ export const TopPageContent = (props) => {
                 <StyledPlusIcon />
               </IconContainer>
               {"Total Volume: " +
-                nFormatter(total_volume[activeCurrency], "10,000") +
+                nFormatter(
+                  total_volume[activeCurrency.toLowerCase()],
+                  "10,000"
+                ) +
                 " " +
                 symbol.toUpperCase()}
             </ListItem>
