@@ -17,12 +17,11 @@ export const FillerDiv = styled.div<{ theme: string }>`
   }
 `;
 export const ArrowContainer = styled.div`
-   {
-    height: 120px;
-    width: 120px;
-    margin: 3rem auto 0;
-    position: relative;
-  }
+  font-family: "Courier", sans-serif;
+  height: 120px;
+  width: 120px;
+  margin: 3rem auto 0;
+  position: relative;
 `;
 const ArrowAnimation = keyframes`
   {
@@ -74,7 +73,7 @@ export const Arrow = styled.i`
     color: rgb(6, 213, 84);
     bottom: 27px;
     position: absolute;
-    left: 50%;
+    left: 53%;
     margin-left: -18px;
     animation-name: ${ArrowAnimation};
     animation-duration: 1s;

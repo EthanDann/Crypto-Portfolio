@@ -16,7 +16,10 @@ const AddAssetInput = () => {
   }) => {
     setSearchTerm(e.target.value);
     if (e.target.value.length > 0) {
-      const filteredResults: any[] = coins.data.filter((coin) =>
+      const uniqueData = Array.from(
+        new Set(coins.data.map((item) => item.id))
+      ).map((id) => coins.data.find((item) => item.id === id));
+      const filteredResults: any[] = uniqueData.filter((coin) =>
         coin.name.toLowerCase().includes(e.target.value)
       );
       setResults(filteredResults);

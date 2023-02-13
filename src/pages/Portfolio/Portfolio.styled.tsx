@@ -1,19 +1,24 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  theme: string;
+  height: number;
+  assets: any[];
+  isOpen: boolean;
+}>`
   display: flex;
   z-index: 1;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   flex-direction: column;
   max-width: 1920px;
   width: 100%;
-  max-height: ${(props) => props.height}px;
+  max-height: ${({ height }) => height}px;
   height: 100%;
-  min-height: ${(props) => (props.assets.length === 1 ? "600px" : "auto")};
+  min-height: ${({ assets }) => (assets.length === 1 ? "600px" : "auto")};
   max-height: 100%;
-  filter: ${(props) => (props.isOpen ? "brightness(0.8)" : "none")};
+  filter: ${({ isOpen }) => (isOpen ? "brightness(0.8)" : "none")};
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
 `;
 export const ButtonContainer = styled.div`
@@ -53,11 +58,11 @@ export const Header = styled.h1`
   margin: 0 1em 2em 1em;
   padding-top: 1em;
   @media (min-width: 2560px) {
-    font-size: ${(props) => (props.modal ? "3rem" : "1.5rem")};
-    margin: ${(props) => (props.modal ? "0 1em 1em 1em" : "0 1em 2em 1em")};
+    font-size: 1.5rem;
+    margin: 0 1em 2em 1em;
   }
 `;
-export const Row = styled.div`
+export const Row = styled.div<{ theme: string }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,6 +75,6 @@ export const Row = styled.div`
     justify-content: space-evenly;
   }
   @media (max-width: 768px) {
-    border-bottom: 3px solid ${(props) => props.theme.secondary};
+    border-bottom: 3px solid ${({ theme }) => theme.secondary};
   }
 `;

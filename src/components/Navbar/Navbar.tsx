@@ -1,7 +1,13 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { handleTheme } from "store/theme/themeSlicer";
 import { useAppDispatch } from "store/hooks";
 
-import { CurrencyToggle, SearchInput, LogoutButton } from "components";
+import {
+  CurrencyToggle,
+  SearchInput,
+  AuthenticationButton,
+  LogoutButton,
+} from "components";
 import {
   Nav,
   StyledLink,
@@ -11,8 +17,9 @@ import {
   StyledThemeIcon,
 } from "./navbar.styled";
 
-function Navbar() {
+const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAuth0();
   return (
     <Nav>
       <Container>
@@ -20,7 +27,7 @@ function Navbar() {
         <StyledLink to="/Portfolio">Portfolio</StyledLink>
         <SearchInput />
         <CurrencyToggle />
-        <LogoutButton />
+        <AuthenticationButton />
         <ThemeContainer>
           <Button onClick={() => dispatch(handleTheme(null))}>
             <StyledThemeIcon />
@@ -29,6 +36,6 @@ function Navbar() {
       </Container>
     </Nav>
   );
-}
+};
 
 export default Navbar;

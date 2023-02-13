@@ -326,7 +326,6 @@ export const AssetInput = styled(NumericFormat)<{
   background-color: ${({ theme }) => theme.main};
   transition: ${({ theme }) => theme.transition};
   color: ${({ theme }) => theme.fontColor};
-  border: none;
   width: 34%;
   &::placeholder {
     color: ${({ theme }) => theme.fontColor};
@@ -356,7 +355,7 @@ export const DateAsset = styled.input<{
   margin: 0.5rem 0;
   margin-left: 0.25rem;
   width: 33%;
-  border: ${({ disabled }) => (disabled ? "1px solid gray" : "none")};
+  border: ${({ disabled }) => (disabled ? "none" : "1px solid gray")};
   background-color: ${({ theme }) => theme.secondary};
   transition: ${({ theme }) => theme.transition};
   color: ${({ theme }) => theme.fontColor};

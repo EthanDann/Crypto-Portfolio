@@ -6,10 +6,12 @@ import store, { persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
 const container = document.getElementById("root");
+if (!container) {
+  throw new Error("Root container not found");
+}
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
