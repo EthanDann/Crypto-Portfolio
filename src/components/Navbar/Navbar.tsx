@@ -1,13 +1,7 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { handleTheme } from "store/theme/themeSlicer";
 import { useAppDispatch } from "store/hooks";
 
-import {
-  CurrencyToggle,
-  SearchInput,
-  AuthenticationButton,
-  LogoutButton,
-} from "components";
+import { CurrencyToggle, SearchInput, AuthenticationButton } from "components";
 import {
   Nav,
   StyledLink,
@@ -19,7 +13,6 @@ import {
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAuth0();
   return (
     <Nav>
       <Container>

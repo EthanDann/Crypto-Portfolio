@@ -3,13 +3,7 @@ import BackToUp from "@uiw/react-back-to-top";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getChartInfo } from "store/charts/chartsSlicer";
-import {
-  CoinListTable,
-  PriceChart,
-  VolumeChart,
-  AuthModal,
-  AuthenticationButton,
-} from "components";
+import { CoinListTable, PriceChart, VolumeChart, AuthModal } from "components";
 import {
   Wrapper,
   Header,

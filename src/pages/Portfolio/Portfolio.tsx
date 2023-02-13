@@ -18,7 +18,7 @@ const Portfolio = () => {
   const { assets, hasError, error } = useAppSelector(
     (state) => state.portfolio
   );
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const dispatch = useAppDispatch();
   const { height: screenHeight } = useWindowSize();
