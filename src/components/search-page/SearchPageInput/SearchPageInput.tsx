@@ -7,7 +7,7 @@ import {
   StyledSearchIcon,
   StyledDarkSearchIcon,
   StyledInput,
-} from "./SearchInput.styled";
+} from "./SearchPageInput.styled";
 
 interface CoinProps {
   name: string;

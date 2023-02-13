@@ -22,3 +22,4 @@ export { default as TimeChartWrapper } from "./coin-page/TimeChartWrapper";
 export { default as LoginButton } from "./Authentication/LoginButton";
 export { default as LogoutButton } from "./Authentication/LogoutButton";
 export { default as AuthModal } from "./portfolio-page/AuthModal";
+export { default as SearchPageInput } from "./search-page/SearchPageInput";
