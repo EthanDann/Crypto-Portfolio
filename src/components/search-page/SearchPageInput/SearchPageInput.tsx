@@ -7,7 +7,11 @@ import {
   StyledSearchIcon,
   StyledDarkSearchIcon,
   StyledInput,
-} from "./SearchInput.styled";
+} from "./SearchPageInput.styled";
+
+interface CoinProps {
+  name: string;
+}
 
 const SearchInput = () => {
   const [results, setResults] = useState<any[]>([]);

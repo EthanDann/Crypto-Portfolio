@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
+  display: none;
   background: rgb(6, 213, 84);
   cursor: pointer;
   color: #fff;
@@ -13,6 +14,7 @@ export const Button = styled.button`
     background: rgb(10, 185, 90);
   }
   @media (min-width: 1024px) {
+    display: flex;
     padding: 0.75rem 1rem;
     font-size: 1rem;
   }

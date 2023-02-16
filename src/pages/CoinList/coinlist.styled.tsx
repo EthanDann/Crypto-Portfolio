@@ -39,8 +39,8 @@ export const ChartContainer = styled.div<{ theme: string }>`
   margin-top: 2em;
   width: 100%;
   border-radius: 8px;
-  padding: 0.5em;
-  height: 150px;
+  padding: 0.5em 0;
+  height: 250px;
   max-width: 840px;
   max-height: 450px;
   background: ${({ theme }) => theme.main};
