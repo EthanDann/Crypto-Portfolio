@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import BackToUp from "@uiw/react-back-to-top";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getChartInfo } from "store/charts/chartsSlicer";
-import { CoinListTable, PriceChart, VolumeChart, AuthModal } from "components";
+import { CoinListTable, PriceChart, VolumeChart } from "components";
 import {
   Wrapper,
   Header,
@@ -18,7 +17,6 @@ const CoinList = () => {
   const priceData = useAppSelector((state) => state.charts.priceData);
   const volumeData = useAppSelector((state) => state.charts.volumeData);
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated } = useAuth0();
   useEffect(() => {
     dispatch(getChartInfo({ currency }));
     const intervalCall = setInterval(() => {
@@ -30,10 +28,9 @@ const CoinList = () => {
   }, [currency]);
   const HasPriceData = !isLoading && priceData;
   const HasVolumeData = !isLoading && volumeData;
-  if (!isAuthenticated) return <AuthModal />;
   return (
     <Wrapper>
-      <Header>Hello, {user?.nickname}</Header>
+      <Header>Your Overview</Header>
       {HasPriceData && HasVolumeData && !hasError && !isLoading && (
         <ChartWrapper>
           <ChartContainer id="price-chart">

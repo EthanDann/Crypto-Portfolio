@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import BackToUp from "@uiw/react-back-to-top";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useWindowSize } from "usehooks-ts";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getCoinHistory, getCoinData } from "store/portfolio/portfolioSlicer";
-import { AssetRow, ArrowAnimation, Modal, AuthModal } from "components";
+import { AssetRow, ArrowAnimation, Modal } from "components";
 import {
   Container,
   ButtonContainer,
@@ -18,7 +17,6 @@ const Portfolio = () => {
   const { assets, hasError, error } = useAppSelector(
     (state) => state.portfolio
   );
-  const { isAuthenticated } = useAuth0();
 
   const dispatch = useAppDispatch();
   const { height: screenHeight } = useWindowSize();
@@ -32,7 +30,6 @@ const Portfolio = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!isAuthenticated) return <AuthModal />;
   return (
     <>
       <Container height={screenHeight} isOpen={isOpen} assets={assets}>

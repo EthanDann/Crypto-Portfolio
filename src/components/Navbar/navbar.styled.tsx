@@ -38,6 +38,11 @@ export const StyledLink = styled(NavLink)<{ theme: string }>`
     padding: 0.5rem;
     margin: 0.5rem;
   }
+  &:nth-child(3) {
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
 `;
 export const StyledButton = styled.button<{ theme: string }>`
   display: flex;
