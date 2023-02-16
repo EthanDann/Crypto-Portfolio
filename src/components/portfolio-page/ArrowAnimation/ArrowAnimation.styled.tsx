@@ -1,28 +1,27 @@
 import styled, { keyframes } from "styled-components";
 
-export const FillerDiv = styled.div`
+export const FillerDiv = styled.div<{ theme: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 430px;
-  background: ${(props) => props.theme.main};
-  color: ${(props) => props.theme.fontColor};
+  background: ${({ theme }) => theme.main};
+  color: ${({ theme }) => theme.fontColor};
   font-size: 3rem;
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.secondary};
+    background: ${({ theme }) => theme.secondary};
   }
   @media (max-width: 425px) {
     min-height: 475px;
   }
 `;
 export const ArrowContainer = styled.div`
-   {
-    height: 120px;
-    width: 120px;
-    margin: 3rem auto 0;
-    position: relative;
-  }
+  font-family: "Courier", sans-serif;
+  height: 120px;
+  width: 120px;
+  margin: 3rem auto 0;
+  position: relative;
 `;
 const ArrowAnimation = keyframes`
   {
@@ -74,7 +73,7 @@ export const Arrow = styled.i`
     color: rgb(6, 213, 84);
     bottom: 27px;
     position: absolute;
-    left: 50%;
+    left: 53%;
     margin-left: -18px;
     animation-name: ${ArrowAnimation};
     animation-duration: 1s;

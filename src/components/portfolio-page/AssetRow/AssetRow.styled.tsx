@@ -6,15 +6,15 @@ import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import { ReactComponent as EditIcon } from "./EditIcon.svg";
 import { ReactComponent as TrashIcon } from "./TrashIcon.svg";
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<{ theme: string }>`
   display: flex;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-radius: 12px;
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
 `;
 export const Button = styled.button`
@@ -38,7 +38,7 @@ export const Button = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  background: ${(props) => (props.background ? props.background : "#e8113d")};
+  background: #e8113d;
   color: #fff;
   cursor: pointer;
   font-size: 0.9rem;
@@ -47,11 +47,11 @@ export const DeleteButton = styled.button`
   border: none;
   border-radius: 10px;
   &:hover {
-    background: ${(props) => (props.hover ? props.hover : "#d22030")};
+    background: #d22030;
   }
   &:disabled {
     cursor: not-allowed;
-    background: ${(props) => (props.background ? props.background : "#e8113d")};
+    background: #e8113d;
   }
 `;
 export const ButtonContainer = styled.div`
@@ -108,16 +108,16 @@ export const InputContainer = styled.div`
     width: 800px;
   }
 `;
-export const StyledSearchInput = styled(AddAssetInput)`
-  background-color: ${(props) => props.theme.secondary};
+export const StyledSearchInput = styled(AddAssetInput)<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
 `;
-export const StyledInput = styled.input`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const StyledInput = styled.input<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -127,7 +127,7 @@ export const StyledInput = styled.input`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -136,7 +136,7 @@ export const StyledInput = styled.input`
     width: 77.5%;
   }
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
   @media (min-width: 2560px) {
     width: 79%;
@@ -149,10 +149,10 @@ export const StyledInput = styled.input`
     height: 1vh;
   }
 `;
-export const PriceInput = styled(NumericFormat)`
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+export const PriceInput = styled(NumericFormat)<{ theme: string }>`
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -162,7 +162,7 @@ export const PriceInput = styled(NumericFormat)`
   padding-left: 2rem;
   font-size: 1.1rem;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -171,7 +171,7 @@ export const PriceInput = styled(NumericFormat)`
     width: 77.5%;
   }
   @media (min-width: 1024px) {
-    background: ${(props) => props.theme.main};
+    background: ${({ theme }) => theme.main};
   }
   @media (min-width: 2560px) {
     width: 79%;
@@ -193,7 +193,7 @@ export const Header = styled.h1`
   margin: 0 1em 2em 1em;
   padding-top: 1em;
 `;
-export const Row = styled.div`
+export const Row = styled.div<{ theme: string }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -206,7 +206,7 @@ export const Row = styled.div`
     justify-content: space-evenly;
   }
   @media (max-width: 768px) {
-    border-bottom: 3px solid ${(props) => props.theme.secondary};
+    border-bottom: 3px solid ${({ theme }) => theme.secondary};
   }
 `;
 export const ContentRow = styled.div`
@@ -218,10 +218,10 @@ export const ContentRow = styled.div`
     flex-direction: row;
   }
 `;
-export const CoinInfoContainer = styled(StyledDiv)`
+export const CoinInfoContainer = styled(StyledDiv)<{ theme: string }>`
   padding-top: 2em;
   margin-top: 2em;
-  background: ${(props) => props.theme.main};
+  background: ${({ theme }) => theme.main};
   @media (min-width: 1024px) {
     margin: 0;
     margin-bottom: 2em;
@@ -256,11 +256,11 @@ export const InnerContainer = styled.div`
     font-size: 0.7em;
   }
 `;
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{ theme: string }>`
   padding: 1.5em;
   border-radius: 12px;
   margin-bottom: 0;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${({ theme }) => theme.secondary};
 `;
 export const Image = styled.img`
   height: 35px;
@@ -281,8 +281,8 @@ export const CoinName = styled.div`
     font-size: 2.5rem;
   }
 `;
-export const Text = styled.p`
-  font-color: ${(props) => props.theme.fontColor};
+export const Text = styled.p<{ theme: string }>`
+  font-color: ${({ theme }) => theme.fontColor};
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
@@ -296,8 +296,8 @@ export const Text = styled.p`
     font-size: 1.5rem;
   }
 `;
-export const AssetInfo = styled.p`
-  color: ${(props) => (props.color ? props.color : props.theme.fontColor)};
+export const AssetInfo = styled.p<{ theme: string; color?: string }>`
+  color: ${({ color, theme }) => (color ? color : theme.fontColor)};
   font-size: 1rem;
   margin: 0.5rem;
   @media (min-width: 1024px) {
@@ -315,18 +315,20 @@ export const AssetInfo = styled.p`
     font-size: 1.5rem;
   }
 `;
-export const AssetInput = styled(NumericFormat)`
+export const AssetInput = styled(NumericFormat)<{
+  theme: string;
+  disabled: boolean;
+}>`
   font-size: 1rem;
   margin: 0.5rem 0;
   margin-left: 0.25rem;
-  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
-  background-color: ${(props) => props.theme.main};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
-  border: none;
+  border: ${({ disabled }) => (disabled ? "none" : "1px solid gray")};
+  background-color: ${({ theme }) => theme.main};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   width: 34%;
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
   &:focus {
     outline: none;
@@ -345,17 +347,20 @@ export const AssetInput = styled(NumericFormat)`
     width: 19%;
   }
 `;
-export const DateAsset = styled.input`
+export const DateAsset = styled.input<{
+  theme: string;
+  disabled: boolean;
+}>`
   font-size: 1rem;
   margin: 0.5rem 0;
   margin-left: 0.25rem;
   width: 33%;
-  border: ${(props) => (props.contentEditable ? "1px solid gray" : "none")};
-  background-color: ${(props) => props.theme.secondary};
-  transition: ${(props) => props.theme.transition};
-  color: ${(props) => props.theme.fontColor};
+  border: ${({ disabled }) => (disabled ? "none" : "1px solid gray")};
+  background-color: ${({ theme }) => theme.secondary};
+  transition: ${({ theme }) => theme.transition};
+  color: ${({ theme }) => theme.fontColor};
   @media (min-width: 1024px) {
-    background-color: ${(props) => props.theme.main};
+    background-color: ${({ theme }) => theme.main};
     font-size: 0.8rem;
     width: 10%;
   }
@@ -372,6 +377,7 @@ export const DateAsset = styled.input`
 export const SaveButton = styled.button`
   background: rgb(6, 213, 84);
   color: #fff;
+  cursor: pointer;
   padding: 0.25rem 0.75rem;
   margin: 0 0.5rem;
   border-radius: 10px;
@@ -401,7 +407,7 @@ const BaseBox = styled.div`
   border: none;
 `;
 
-export const Progress = styled(BaseBox)`
+export const Progress = styled(BaseBox)<{ percent: number }>`
   background: rgb(255, 255, 255);
   width: ${({ percent }) => percent}%;
   min-width: ${({ percent }) => (percent < 2 ? "2" : percent)}%;
@@ -449,12 +455,6 @@ export const AssetContent = styled(StyledDiv)`
   &:nth-child(2) {
     margin-bottom: 0;
   }
-`;
-
-export const PercentDiv = styled.div`
-  margin: 5px;
-  color: ${({ type }) => (type ? "rgb(254, 16, 64)" : "rgb(0, 252, 42)")};
-  font-size: 20px;
 `;
 export const StyledUpArrow = styled(UpArrow)`
   margin: 0 3px 4px 3px;

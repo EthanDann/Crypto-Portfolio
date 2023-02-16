@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+import getSymbolFromCurrency from "currency-symbol-map";
+import { useAppSelector, useAppDispatch } from "store/hooks";
 import {
-  handleCoinClick,
-  handlePurchasedAmount,
-  handlePurchaseDate,
-  handleAddAsset,
-} from "store/portfolio/action";
+  purchaseAmount,
+  purchaseDate,
+  addAsset,
+} from "store/portfolio/portfolioSlicer";
 import {
   ModalButtonContainer,
   ModalInputContainer,
@@ -25,23 +25,48 @@ import {
   Header,
 } from "./Modal.styled";
 
-const Modal = (props) => {
-  const [hasDateError, setHasDateError] = useState(false);
-  const { selectedCoin, currencySymbol } = props;
+interface Props {
+  handleOpen: () => void;
+  handleCoinData: () => void;
+}
 
+const Modal: React.FC<Props> = ({ handleOpen, handleCoinData }) => {
+  const [hasDateError, setHasDateError] = useState(false);
+  const coins = useAppSelector((state) => state.coins);
+  const currency = useAppSelector((state) => state.currency.toLowerCase());
+  const currencySymbol = getSymbolFromCurrency(currency);
+  const selectedCoin = useAppSelector((state) => state.portfolio.selectedCoin);
+
+  const dispatch = useAppDispatch();
   const handleAddAsset = () => {
-    props.handleAddAsset();
-    props.handleOpen();
-    props.handleCoinData();
+    const coin = coins.data.filter((el) => el.name.includes(selectedCoin.name));
+    dispatch(
+      addAsset({
+        name: selectedCoin.name,
+        coinId: coin[0].id,
+        symbol: selectedCoin.symbol,
+        image: selectedCoin.image,
+        current_price: coin[0].current_price,
+        purchase_price: selectedCoin.purchase_price,
+        purchase_date: selectedCoin.purchase_date,
+        historic_price: coin[0].current_price,
+        price_change_24h: coin[0].price_change_24h,
+        max_supply: coin[0].max_supply,
+        total_volume: coin[0].total_volume,
+        market_cap: coin[0].market_cap,
+        circulating_supply: coin[0].circulating_supply,
+        purchase_currency: currency,
+        purchase_currency_symbol: currencySymbol,
+      })
+    );
+    handleOpen();
+    handleCoinData();
   };
-  const handlePurchasedAmount = (e) => {
-    props.handlePurchasedAmount(e.target.value);
-  };
-  const handlePurchaseDate = (e) => {
+  const handlePurchaseDate = (e: { target: { value: string } }) => {
     let date = e.target.value;
     let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
+    let dd: any = today.getDate();
+    let mm: any = today.getMonth() + 1;
     let yyyy = today.getFullYear();
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
@@ -56,14 +81,12 @@ const Modal = (props) => {
     if (year > yyyy || (day > dd && month >= mm && year >= yyyy)) {
       setHasDateError(true);
     } else setHasDateError(false);
-    props.handlePurchaseDate(date);
+    dispatch(purchaseDate(date));
   };
   return (
     <ModalContainer added={selectedCoin.name}>
       <AddAssetModal>
-        <Header center modal>
-          Select Coin
-        </Header>
+        <Header modal>Select Coin</Header>
         <ModalContentContainer>
           {selectedCoin.name && (
             <ModalInfoContainer>
@@ -77,14 +100,11 @@ const Modal = (props) => {
           )}
           <ModalInputContainer>
             <InputContainer>
-              <StyledSearchInput
-                handleCoinClick={(coin) => props.handleCoinClick(coin)}
-                placeholder={"Search for Coin..."}
-              />
+              <StyledSearchInput />
             </InputContainer>
             <InputContainer>
               <PriceInput
-                onChange={handlePurchasedAmount}
+                onChange={(e) => dispatch(purchaseAmount(e.target.value))}
                 placeholder="Purchase Amount"
                 prefix={currencySymbol}
                 thousandSeparator={true}
@@ -105,8 +125,7 @@ const Modal = (props) => {
           <ModalButton
             background={"#rgb(255,255,255)"}
             hover={"rgb(225,225,225)"}
-            padding={"1rem 5rem"}
-            onClick={() => props.handleOpen()}
+            onClick={() => handleOpen()}
           >
             Close
           </ModalButton>
@@ -118,7 +137,6 @@ const Modal = (props) => {
               selectedCoin.purchase_price == null ||
               selectedCoin.purchase_date == null
             }
-            padding={"1rem 3rem"}
           >
             Save and Continue
           </ModalButton>
@@ -128,15 +146,4 @@ const Modal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedCoin: state.portfolio.selectedCoin,
-  purchase_price: state.portfolio.purchase_price,
-  purchase_date: state.portfolio.purchase_date,
-});
-const mapDispatchToProps = {
-  handleCoinClick,
-  handlePurchasedAmount,
-  handlePurchaseDate,
-  handleAddAsset,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default Modal;
