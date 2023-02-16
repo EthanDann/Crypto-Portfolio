@@ -9,10 +9,6 @@ import {
   StyledInput,
 } from "./SearchInput.styled";
 
-interface CoinProps {
-  name: string;
-}
-
 const SearchInput = () => {
   const [results, setResults] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
