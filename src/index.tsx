@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store, { persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -17,17 +16,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Auth0Provider
-          domain="dev-aoscstean7yynyro.us.auth0.com"
-          clientId="FEucREaz4ErMzjUMUZgSUl8Hpb54tSsz"
-          authorizationParams={{
-            redirect_uri: window.location.origin,
-          }}
-        >
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Auth0Provider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>

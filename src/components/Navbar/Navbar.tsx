@@ -1,6 +1,6 @@
 import { handleTheme } from "store/theme/themeSlicer";
 import { useAppDispatch } from "store/hooks";
-import { CurrencyToggle, SearchInput, AuthenticationButton } from "components";
+import { CurrencyToggle, SearchInput } from "components";
 import {
   Nav,
   StyledLink,
@@ -31,7 +31,6 @@ const Navbar: React.FC = () => {
         </StyledLink>
         <SearchInput />
         <CurrencyToggle />
-        <AuthenticationButton />
         <ThemeContainer>
           <Button onClick={() => dispatch(handleTheme(null))}>
             <StyledThemeIcon />
