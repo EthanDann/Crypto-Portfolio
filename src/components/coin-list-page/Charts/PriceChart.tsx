@@ -36,7 +36,7 @@ const PriceChart: React.FC<Props> = ({ prices }) => {
     labels: getLabels(),
     datasets: [
       {
-        label: "Volume",
+        label: "Prices",
         data: prices,
         tension: 0.6,
         borderColor: "rgb(1,226,37)",
