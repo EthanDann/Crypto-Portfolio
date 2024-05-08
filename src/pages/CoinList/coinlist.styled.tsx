@@ -51,3 +51,15 @@ export const ChartContainer = styled.div<{ theme: string }>`
     }
   }
 `;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vh;
+  min-height: 75vh;
+  height: auto;
+  @media (min-height: 800px) {
+    min-height: 90vh;
+  }
+`;

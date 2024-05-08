@@ -12,10 +12,8 @@ export const Container = styled.div<{
   flex-direction: column;
   max-width: 1920px;
   width: 100%;
-  max-height: ${({ height }) => height}px;
-  height: 100%;
+  height: ${({ height }) => height}px;
   min-height: ${({ assets }) => (assets.length === 1 ? "600px" : "auto")};
-  max-height: 100%;
   filter: ${({ isOpen }) => (isOpen ? "brightness(0.8)" : "none")};
   @media (min-width: 1024px) {
     background: ${({ theme }) => theme.secondary};

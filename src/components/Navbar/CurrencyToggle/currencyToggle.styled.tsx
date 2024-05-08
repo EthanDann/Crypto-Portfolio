@@ -51,10 +51,9 @@ export const DropDownListContainer = styled.div`
 export const DropDownList = styled.ul<{ theme: string }>`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
-
   list-style: none;
   position: absolute;
-  right: 18.5vw;
+  left: 75%;
   background: ${({ theme }) => theme.main};
   width: 100%;
   max-height: 220px;

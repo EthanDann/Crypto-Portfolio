@@ -42,7 +42,7 @@ const CoinListTable = () => {
 
   return (
     <>
-      {data && (
+      {data && !hasError && (
         <TableContainer>
           {
             <ScrollableDiv>
@@ -117,12 +117,6 @@ const CoinListTable = () => {
               </BackToUp>
             </ScrollableDiv>
           }
-          {hasError && (
-            <span>
-              There was an error.
-              <br />
-            </span>
-          )}
         </TableContainer>
       )}
     </>

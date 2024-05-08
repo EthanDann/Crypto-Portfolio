@@ -10,7 +10,6 @@ interface InitialState {
   hasMore: boolean;
   isLoading: boolean;
   hasError: boolean;
-  error: string;
 }
 const initialState: InitialState = {
   data: [],
@@ -21,7 +20,6 @@ const initialState: InitialState = {
   hasMore: false,
   isLoading: false,
   hasError: false,
-  error: "",
 };
 interface CoinList {
   currency: string;

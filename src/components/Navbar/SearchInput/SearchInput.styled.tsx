@@ -10,7 +10,6 @@ export const SearchContainer = styled.form<{ theme: string }>`
   background: ${({ theme }) => theme.secondary};
   border-radius: 10px;
   align-items: center;
-  position: relative;
   :hover {
     cursor: text;
   }
@@ -78,8 +77,8 @@ export const StyledLink = styled(NavLink)<{ theme: string }>`
   color: ${({ theme }) => theme.fontColor};
   width: 100%;
   &:hover {
-    background-color: ${({ theme }) => theme.secondary};
-    text-decoration: underline;
+    background: ${({ theme }) => theme.primary};
+    text-decoration: none;
     cursor: pointer;
   }
 `;
@@ -92,20 +91,25 @@ const fadeIn = keyframes`
     }
 `;
 export const ResultsList = styled.ul<{ theme: string }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  width: 100%;
-  background: ${({ theme }) => theme.secondary};
+  width: 408px;
+  z-index: 999;
+  background: ${({ theme }) => theme.primary};
   border-radius: 10px;
-  z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   list-style: none;
-  right: 0vw;
+  right: 32.8vw;
+  top: 25px;
   max-height: 210px;
   border-radius: 6px;
   border: none;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow: auto;
   padding: 0;
   margin-top: 2.7em;
   animation: ${fadeIn} 0.1s ease-in-out;

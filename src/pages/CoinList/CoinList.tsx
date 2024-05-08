@@ -8,6 +8,7 @@ import {
   Header,
   ChartWrapper,
   ChartContainer,
+  ErrorWrapper,
 } from "./coinlist.styled";
 
 const CoinList = () => {
@@ -43,7 +44,14 @@ const CoinList = () => {
       )}
       <CoinListTable />
       {isLoading && <span>Fetching data...</span>}
-      {hasError && <span>There was an error.</span>}
+      {hasError && (
+        <ErrorWrapper>
+          <span>
+            Exceeded the rate limit. <br />
+            Please wait a few minutes.
+          </span>
+        </ErrorWrapper>
+      )}
       <BackToUp>Top</BackToUp>
     </Wrapper>
   );
