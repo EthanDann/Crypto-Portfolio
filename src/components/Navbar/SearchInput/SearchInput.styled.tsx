@@ -98,7 +98,7 @@ export const ResultsList = styled.ul<{ theme: string }>`
   position: absolute;
   width: 408px;
   z-index: 999;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.secondary};
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
